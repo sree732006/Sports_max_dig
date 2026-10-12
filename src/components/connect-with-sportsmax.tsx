@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useLocation } from "@tanstack/react-router";
+import { track } from "@vercel/analytics";
 import {
   Activity,
   AlertCircle,
@@ -693,6 +694,16 @@ export function ConnectWithSportsMaxForm({
         visitorId.current,
         sessionId.current,
       );
+
+      // Vercel Analytics custom event — no PII (no name, email, phone, org)
+      track("contact_form_submitted", {
+        sportsCount: values.sports.length,
+        requirement: values.requirement,
+        jiraCreated: result.jira.created,
+        airtableCreated: result.airtable.created,
+        emailSent: result.email.sent,
+        sheetsRecorded: result.sheetsRecorded,
+      });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Unable to send your request at this time. Please retry or contact us directly.";
       setSubmitError(msg);
