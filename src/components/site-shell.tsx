@@ -6,10 +6,13 @@ import {
   BarChart3,
   Bot,
   BrainCircuit,
+  CalendarRange,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
+  ClipboardList,
   Database,
+  FileBarChart2,
   Flame,
   Gauge,
   Globe,
@@ -24,6 +27,7 @@ import {
   Shield,
   ShieldAlert,
   Sparkles,
+  TrendingUp,
   Trophy,
   User,
   Users,
@@ -735,6 +739,39 @@ export function SiteHeader() {
           >
             Resources
           </Link>
+
+          {/* ── Report Pages divider ── */}
+          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+
+          {/* Site Reports */}
+          <Link
+            to="/reports"
+            id="nav-site-reports"
+            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+          >
+            <CalendarRange className="h-3.5 w-3.5 text-primary" />
+            Reports
+          </Link>
+
+          {/* Google Trends */}
+          <Link
+            to="/google-trends"
+            id="nav-google-trends"
+            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+          >
+            <TrendingUp className="h-3.5 w-3.5 text-primary" />
+            Trends
+          </Link>
+
+          {/* CTA Reports */}
+          <Link
+            to="/cta-report"
+            id="nav-cta-reports"
+            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+          >
+            <ClipboardList className="h-3.5 w-3.5 text-primary" />
+            CTA Reports
+          </Link>
         </nav>
 
         {/* Action Controls */}
@@ -938,6 +975,40 @@ export function SiteHeader() {
                 className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
               >
                 About Company & Mission
+              </Link>
+            </div>
+
+            {/* ── Reports & Data section ── */}
+            <div className="grid gap-1 border-t border-border pt-3">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-2">
+                Reports &amp; Data
+              </span>
+              <Link
+                to="/reports"
+                id="mobile-nav-site-reports"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
+              >
+                <CalendarRange className="h-4 w-4 text-primary shrink-0" />
+                Site Reports
+              </Link>
+              <Link
+                to="/google-trends"
+                id="mobile-nav-google-trends"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
+              >
+                <TrendingUp className="h-4 w-4 text-primary shrink-0" />
+                Google Trends
+              </Link>
+              <Link
+                to="/cta-report"
+                id="mobile-nav-cta-reports"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
+              >
+                <ClipboardList className="h-4 w-4 text-primary shrink-0" />
+                CTA Reports
               </Link>
             </div>
 

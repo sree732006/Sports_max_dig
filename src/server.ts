@@ -111,6 +111,29 @@ export default {
         });
       }
 
+      // Server Endpoint: /api/contact/lead — handles contact lead submissions with Google Sheets, Jira Cloud, and Resend email alerts
+      if (url.pathname === "/api/contact/lead" && request.method === "POST") {
+        try {
+          const body = await request.json();
+          const { processContactLeadWorkflow } = await import("./lib/contact-lead-service");
+          const result = await processContactLeadWorkflow(body, body.page || "/contact");
+          return new Response(JSON.stringify(result), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: unknown) {
+          const errMsg = err instanceof Error ? err.message : String(err);
+          console.error("[Contact Lead Endpoint] Exception processing lead:", errMsg);
+          return new Response(
+            JSON.stringify({
+              success: false,
+              error: `Server processing error: ${errMsg}`,
+            }),
+            { status: 500, headers: { "content-type": "application/json" } }
+          );
+        }
+      }
+
       // Server Endpoint: /api/jira/issues — proxies Jira REST API using server-side credentials
       if (url.pathname === "/api/jira/issues" && request.method === "GET") {
         const domain = process.env["JIRA_DOMAIN"];
@@ -120,7 +143,7 @@ export default {
 
         if (!domain || !email || !token) {
           return new Response(
-            JSON.stringify({ error: "Jira credentials are not configured on the server.", issues: [] }),
+            JSON.stringify({ error: "Jira credentials are not configured on the server.", total: 0, issues: [] }),
             { status: 503, headers: { "content-type": "application/json" } }
           );
         }
@@ -176,16 +199,16 @@ export default {
             // keep default parsedError
           }
           return new Response(
-            JSON.stringify({ error: parsedError, issues: [], status: jiraResponse.status }),
+            JSON.stringify({ error: parsedError, total: 0, issues: [], status: jiraResponse.status }),
             { status: 200, headers: { "content-type": "application/json" } }
           );
         }
 
         const jiraData = await jiraResponse.json() as {
-          total: number;
-          startAt: number;
-          maxResults: number;
-          issues: Array<{
+          total?: number;
+          startAt?: number;
+          maxResults?: number;
+          issues?: Array<{
             id: string;
             key: string;
             fields: {
@@ -204,25 +227,27 @@ export default {
         const issues = (jiraData.issues || []).map((issue) => ({
           id: issue.id,
           key: issue.key,
-          summary: issue.fields.summary,
-          status: issue.fields.status?.name ?? "Unknown",
-          statusColor: issue.fields.status?.statusCategory?.colorName ?? "default",
-          assignee: issue.fields.assignee?.displayName ?? null,
-          priority: issue.fields.priority?.name ?? null,
-          issueType: issue.fields.issuetype?.name ?? "Task",
-          created: issue.fields.created,
-          updated: issue.fields.updated,
-          labels: issue.fields.labels ?? [],
+          summary: issue.fields?.summary || "Untitled Task",
+          status: issue.fields?.status?.name ?? "Unknown",
+          statusColor: issue.fields?.status?.statusCategory?.colorName ?? "default",
+          assignee: issue.fields?.assignee?.displayName ?? null,
+          priority: issue.fields?.priority?.name ?? null,
+          issueType: issue.fields?.issuetype?.name ?? "Task",
+          created: issue.fields?.created || new Date().toISOString(),
+          updated: issue.fields?.updated || new Date().toISOString(),
+          labels: issue.fields?.labels ?? [],
           url: `https://${domain}/browse/${issue.key}`,
         }));
 
+        const totalCount = typeof jiraData.total === "number" ? jiraData.total : issues.length;
+
         return new Response(
-          JSON.stringify({ total: jiraData.total, startAt: jiraData.startAt, issues }),
+          JSON.stringify({ total: totalCount, startAt: jiraData.startAt ?? 0, issues }),
           { status: 200, headers: { "content-type": "application/json" } }
         );
       }
 
-      // Server Endpoint: /api/sheets/dashboard — fetches Google Sheets summary data
+
       if (url.pathname === "/api/sheets/dashboard" && request.method === "GET") {
         const sheetsUrl = process.env["VITE_ANALYTICS_URL"];
         if (!sheetsUrl) {

@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser";
 import { useLocation } from "@tanstack/react-router";
 import {
   Activity,
+  AlertCircle,
   ArrowRight,
   Bot,
   Building2,
@@ -150,21 +151,51 @@ function trackAnalytics(
   }
 }
 
-// ─── Lead Submission via EmailJS ─────────────────────────────────────────────
+export interface JiraSubtaskSubmissionResult {
+  summary: string;
+  created: boolean;
+  issueKey?: string | undefined;
+  issueUrl?: string | undefined;
+  error?: string | undefined;
+}
+
+export interface AirtableSubmissionResult {
+  attempted: boolean;
+  created: boolean;
+  recordId?: string | undefined;
+  error?: string | undefined;
+}
+
+export interface ContactLeadSubmissionResult {
+  success: boolean;
+  leadNumber: string;
+  sheetsRecorded: boolean;
+  sheetsError?: string | undefined;
+  airtable: AirtableSubmissionResult;
+  jira: {
+    attempted: boolean;
+    created: boolean;
+    issueKey?: string | undefined;
+    issueUrl?: string | undefined;
+    error?: string | undefined;
+    subtasks?: JiraSubtaskSubmissionResult[] | undefined;
+  };
+  email: {
+    attempted: boolean;
+    sent: boolean;
+    messageId?: string | undefined;
+    error?: string | undefined;
+  };
+}
 
 async function submitContactLead(
   values: FormValues,
   page: string,
   visitorId: string,
   sessionId: string,
-): Promise<void> {
-  const adminEmail =
-    (import.meta.env["VITE_ADMIN_EMAIL"] as string | undefined) ||
-    "admin@sportsmax.ai";
-
-  const serviceId = import.meta.env["VITE_EMAILJS_SERVICE_ID"] as string | undefined;
-  const templateId = import.meta.env["VITE_EMAILJS_TEMPLATE_ID"] as string | undefined;
-  const publicKey = import.meta.env["VITE_EMAILJS_PUBLIC_KEY"] as string | undefined;
+): Promise<ContactLeadSubmissionResult> {
+  const leadNumber = `LD-${Date.now().toString().slice(-6)}`;
+  const analyticsUrl = import.meta.env["VITE_ANALYTICS_URL"] as string | undefined;
 
   const detailsParts = [
     `Sport(s): ${values.sports.join(", ")}`,
@@ -177,15 +208,14 @@ async function submitContactLead(
     detailsParts.push(`Phone: ${sanitize(values.phone)}`);
   }
 
-  const leadNumber = `LD-${Date.now().toString().slice(-6)}`;
-  const analyticsUrl = import.meta.env["VITE_ANALYTICS_URL"] as string | undefined;
-
-  // 1. Google Sheets / Apps Script Ingestion
+  // 1. Direct browser ping to Google Apps Script /exec (simple text/plain POST without preflight)
+  let directSheetsSuccess = false;
+  let directSheetsError: string | undefined;
   if (analyticsUrl) {
     const hasPhone = Boolean(values.phone.trim());
     const hasAdditionalDetails = Boolean(values.additionalDetails.trim());
 
-    const payload = {
+    const sheetsPayload = {
       action: "contact_lead",
       event: "contact_lead",
       type: "contact_lead",
@@ -209,51 +239,67 @@ async function submitContactLead(
       timestamp: new Date().toISOString(),
     };
 
-    console.log("[SportsMax Contact] Dispatching lead to Apps Script (Lead: " + leadNumber + ")");
-
     try {
       await fetch(analyticsUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(sheetsPayload),
         keepalive: true,
       });
-      console.log("[SportsMax Contact] Lead transmission dispatched successfully to Apps Script.");
-    } catch (err) {
-      console.warn("[SportsMax Analytics] Failed to send contact lead to Apps Script:", err);
+      directSheetsSuccess = true;
+      console.log(`[SportsMax Contact] Lead transmission dispatched to Google Apps Script (${leadNumber})`);
+    } catch (err: unknown) {
+      directSheetsError = err instanceof Error ? err.message : String(err);
+      console.warn("[SportsMax Analytics] Client-side fetch to Apps Script failed:", err);
     }
   }
 
-  // 2. Email Notification via EmailJS (if configured)
-  if (serviceId && templateId && publicKey) {
-    const templateParams = {
-      to_email: adminEmail,
-      lead_number: leadNumber,
-      from_name: sanitize(values.fullName),
-      from_email: sanitize(values.workEmail),
-      role: sanitize(values.roleTitle),
+  // 2. Server-side Lead Workflow Endpoint (Airtable + Jira KAN tickets + Resend admin notification email)
+  let serverWorkflowResult: Partial<ContactLeadSubmissionResult> = {};
+  try {
+    const serverPayload = {
+      leadNumber,
+      fullName: sanitize(values.fullName),
+      workEmail: sanitize(values.workEmail),
+      roleTitle: sanitize(values.roleTitle),
       organization: sanitize(values.organization),
-      sports: values.sports.join(", "),
+      sports: values.sports,
       requirement: sanitize(values.requirement),
-      phone: values.phone.trim() ? sanitize(values.phone) : "Not provided",
-      additional_details: values.additionalDetails.trim()
-        ? sanitize(values.additionalDetails)
-        : "None",
+      phone: values.phone.trim() ? sanitize(values.phone) : undefined,
+      additionalDetails: values.additionalDetails.trim() ? sanitize(values.additionalDetails) : undefined,
       page,
-      submitted_at: new Date().toLocaleString(),
-      visitor_id: visitorId,
-      session_id: sessionId,
-      summary: detailsParts.join(" | "),
+      visitorId,
+      sessionId,
     };
 
-    try {
-      await emailjs.send(serviceId, templateId, templateParams, { publicKey });
-    } catch (err) {
-      console.warn("[SportsMax Contact] EmailJS dispatch failed:", err);
+    const serverRes = await fetch("/api/contact/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(serverPayload),
+    });
+
+    if (serverRes.ok) {
+      serverWorkflowResult = await serverRes.json();
+    } else {
+      const errText = await serverRes.text();
+      console.error(`[SportsMax Contact] Server lead endpoint error (${serverRes.status}):`, errText);
     }
+  } catch (err) {
+    console.warn("[SportsMax Contact] Could not reach server lead endpoint:", err);
   }
+
+  return {
+    success: true,
+    leadNumber,
+    sheetsRecorded: Boolean(serverWorkflowResult.sheetsRecorded || directSheetsSuccess),
+    sheetsError: serverWorkflowResult.sheetsError || directSheetsError,
+    airtable: serverWorkflowResult.airtable || { attempted: false, created: false },
+    jira: serverWorkflowResult.jira || { attempted: false, created: false },
+    email: serverWorkflowResult.email || { attempted: false, sent: false },
+  };
 }
+
 
 // ─── Interactive Assistant Chat Component (Right Column) ──────────────────────
 
@@ -599,6 +645,8 @@ export function ConnectWithSportsMaxForm({
     }
   }
 
+  const [submissionResult, setSubmissionResult] = useState<ContactLeadSubmissionResult | null>(null);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
@@ -615,13 +663,19 @@ export function ConnectWithSportsMaxForm({
     setSubmitError(null);
 
     try {
-      await submitContactLead(
+      const result = await submitContactLead(
         values,
         currentPath,
         visitorId.current,
         sessionId.current,
       );
 
+      // Verify lead was safely recorded in at least one persistence backend
+      if (!result.sheetsRecorded && !result.airtable.created && !result.jira.created && !result.email.sent) {
+        throw new Error("Unable to save lead. Please retry or contact us directly.");
+      }
+
+      setSubmissionResult(result);
       setHasSubmitted(true);
       setIsSuccess(true);
 
@@ -631,15 +685,17 @@ export function ConnectWithSportsMaxForm({
           form: "connect_with_sportsmax",
           sportsCount: values.sports.length,
           requirement: values.requirement,
+          leadNumber: result.leadNumber,
+          jiraCreated: result.jira.created,
+          emailSent: result.email.sent,
         },
         currentPath,
         visitorId.current,
         sessionId.current,
       );
-    } catch {
-      setSubmitError(
-        "Unable to send your request at this time. Please retry or contact us directly.",
-      );
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Unable to send your request at this time. Please retry or contact us directly.";
+      setSubmitError(msg);
       trackAnalytics(
         "contact_form_submission_failed",
         { form: "connect_with_sportsmax" },
@@ -667,18 +723,20 @@ export function ConnectWithSportsMaxForm({
     setIsSuccess(false);
     setHasSubmitted(false);
     setSubmitError(null);
+    setSubmissionResult(null);
   }
 
   const adminEmail =
     (import.meta.env["VITE_ADMIN_EMAIL"] as string | undefined) ||
-    "admin@sportsmax.ai";
+    "sreevarthini2006@gmail.com";
 
-  if (isSuccess) {
+  if (isSuccess && submissionResult) {
     const mailtoSubject = encodeURIComponent(
-      `[SportsMax Lead] Inquiry from ${values.fullName} (${values.organization})`,
+      `[SportsMax Lead ${submissionResult.leadNumber}] Inquiry from ${values.fullName} (${values.organization})`,
     );
     const mailtoBody = encodeURIComponent(
       `SportsMax Analytics Lead Details:\n\n` +
+        `Lead Reference: ${submissionResult.leadNumber}\n` +
         `Full Name: ${values.fullName}\n` +
         `Work Email: ${values.workEmail}\n` +
         `Role / Title: ${values.roleTitle}\n` +
@@ -689,6 +747,7 @@ export function ConnectWithSportsMaxForm({
         (values.additionalDetails
           ? `Additional Details: ${values.additionalDetails}\n`
           : "") +
+        (submissionResult.jira.issueKey ? `Jira Task: ${submissionResult.jira.issueKey}\n` : "") +
         `\nTimestamp: ${new Date().toLocaleString()}`,
     );
     const mailtoUrl = `mailto:${adminEmail}?subject=${mailtoSubject}&body=${mailtoBody}`;
@@ -701,17 +760,101 @@ export function ConnectWithSportsMaxForm({
 
         <div className="max-w-md">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-0.5 text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-2">
-            <Mail className="h-3 w-3" /> Dispatched to Admin
+            Reference: {submissionResult.leadNumber}
           </div>
           <h3 className="font-display text-2xl font-bold text-white">
-            Lead Recorded & Admin Alerted!
+            Lead Recorded Successfully!
           </h3>
           <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Thank you, <strong className="text-white">{values.fullName}</strong>. Your sports analytics
-            inquiry has been collected and dispatched to the administrator at{" "}
-            <span className="text-emerald-400 font-mono font-semibold">{adminEmail}</span>.
+            Thank you, <strong className="text-white">{values.fullName}</strong>. Your sports intelligence inquiry has been safely collected and processed into our backend pipeline.
           </p>
         </div>
+
+        {/* Integration Status Badges */}
+        <div className="w-full max-w-md grid grid-cols-2 sm:grid-cols-4 gap-2 text-left">
+          {/* 1. Google Sheets */}
+          <div className="rounded-lg bg-slate-950/70 border border-slate-800 p-2.5 flex flex-col justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Google Sheets</span>
+            <span className={`text-xs font-semibold mt-1 flex items-center gap-1 ${submissionResult.sheetsRecorded ? "text-emerald-400" : "text-amber-400"}`}>
+              {submissionResult.sheetsRecorded ? "✓ Recorded" : "Pending"}
+            </span>
+          </div>
+
+          {/* 2. Airtable */}
+          <div className="rounded-lg bg-slate-950/70 border border-slate-800 p-2.5 flex flex-col justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Airtable</span>
+            {submissionResult.airtable.created && submissionResult.airtable.recordId ? (
+              <span className="text-xs font-bold text-emerald-400 mt-1 truncate" title={`Airtable ID: ${submissionResult.airtable.recordId}`}>
+                ✓ {submissionResult.airtable.recordId.slice(0, 10)}…
+              </span>
+            ) : submissionResult.airtable.error ? (
+              <span className="text-[10px] font-semibold text-rose-400 mt-1 truncate" title={submissionResult.airtable.error}>
+                Failed
+              </span>
+            ) : (
+              <span className="text-xs font-semibold text-slate-400 mt-1">Pending</span>
+            )}
+          </div>
+
+          {/* 3. Jira Cloud KAN Parent */}
+          <div className="rounded-lg bg-slate-950/70 border border-slate-800 p-2.5 flex flex-col justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Jira Parent</span>
+            {submissionResult.jira.created && submissionResult.jira.issueKey ? (
+              <a
+                href={submissionResult.jira.issueUrl || `https://sreevarthini.atlassian.net/browse/${submissionResult.jira.issueKey}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-sky-400 hover:underline mt-1 truncate"
+                title={submissionResult.jira.issueKey}
+              >
+                {submissionResult.jira.issueKey} ↗
+              </a>
+            ) : (
+              <span className="text-xs font-semibold text-rose-400 mt-1 truncate" title={submissionResult.jira.error || "Failed"}>
+                {submissionResult.jira.error ? "Failed (Logged)" : "Pending"}
+              </span>
+            )}
+          </div>
+
+          {/* 4. Email Alert */}
+          <div className="rounded-lg bg-slate-950/70 border border-slate-800 p-2.5 flex flex-col justify-between">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Email Alert</span>
+            <span className={`text-xs font-semibold mt-1 ${submissionResult.email.sent ? "text-emerald-400" : "text-slate-400"}`}>
+              {submissionResult.email.sent ? "✓ Dispatched" : "Queued"}
+            </span>
+          </div>
+        </div>
+
+        {/* Jira Subtasks Breakdown when available */}
+        {submissionResult.jira.created && submissionResult.jira.subtasks && submissionResult.jira.subtasks.length > 0 && (
+          <div className="w-full max-w-md rounded-xl bg-slate-950/80 border border-sky-900/40 p-3.5 text-left text-xs space-y-2">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 font-bold text-slate-200">
+              <span className="text-[11px] uppercase tracking-wider text-sky-400">Linked Subtasks ({submissionResult.jira.subtasks.filter(s => s.created).length}/4)</span>
+              <span className="text-[10px] text-slate-400">Project KAN</span>
+            </div>
+            <div className="space-y-1.5">
+              {submissionResult.jira.subtasks.map((st, idx) => (
+                <div key={idx} className="flex items-center justify-between text-xs py-0.5">
+                  <span className="text-slate-300 truncate max-w-[220px]" title={st.summary}>
+                    {idx + 1}. {st.summary}
+                  </span>
+                  {st.created && st.issueKey ? (
+                    <a
+                      href={st.issueUrl || `https://sreevarthini.atlassian.net/browse/${st.issueKey}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] font-bold text-sky-400 hover:underline"
+                    >
+                      {st.issueKey} ↗
+                    </a>
+                  ) : (
+                    <span className="text-[10px] text-rose-400 font-medium">Failed</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Lead summary breakdown */}
         <div className="w-full max-w-md rounded-xl bg-slate-950/80 border border-slate-800 p-4 text-left text-xs space-y-1.5 text-slate-300">
@@ -731,6 +874,23 @@ export function ConnectWithSportsMaxForm({
             <span className="text-slate-400">Requirement:</span>
             <span className="text-right">{values.requirement}</span>
           </div>
+          {submissionResult.airtable.recordId && (
+            <div className="flex justify-between border-t border-slate-800 pt-1.5">
+              <span className="text-slate-400">Airtable Record:</span>
+              <span className="text-emerald-400 font-mono font-bold">{submissionResult.airtable.recordId}</span>
+            </div>
+          )}
+          {submissionResult.jira.issueKey ? (
+            <div className="flex justify-between border-t border-slate-800 pt-1.5">
+              <span className="text-slate-400">Jira Ticket:</span>
+              <span className="text-sky-400 font-bold">{submissionResult.jira.issueKey}</span>
+            </div>
+          ) : submissionResult.jira.error ? (
+            <div className="flex justify-between border-t border-slate-800 pt-1.5 text-rose-400 text-[11px]">
+              <span>Jira Note:</span>
+              <span className="truncate max-w-[260px]">{submissionResult.jira.error}</span>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-2 flex flex-wrap gap-2.5 justify-center">
@@ -764,6 +924,7 @@ export function ConnectWithSportsMaxForm({
     );
   }
 
+
   return (
     <form
       id="connect-with-sportsmax-form"
@@ -788,6 +949,16 @@ export function ConnectWithSportsMaxForm({
           Tell us about your sports analytics needs and our team will get in touch.
         </p>
       </div>
+
+      {submitError && (
+        <div className="rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-xs text-red-200 flex items-start gap-3">
+          <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <span className="font-bold text-red-100 block mb-0.5">Submission Notice</span>
+            {submitError}
+          </div>
+        </div>
+      )}
 
       {/* Row 1: Full Name & Work Email */}
       <div className="grid gap-4 sm:grid-cols-2">

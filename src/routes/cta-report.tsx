@@ -398,7 +398,7 @@ function AirtableSection() {
 const STATUS_OPTIONS = ["All", "To Do", "In Progress", "Done", "Blocked"] as const;
 type StatusFilter = (typeof STATUS_OPTIONS)[number];
 
-function JiraSection() {
+function JiraSection({ onDataLoaded }: { onDataLoaded?: (data: JiraResult | null) => void } = {}) {
   const [jiraData, setJiraData] = useState<JiraResult | null>(null);
   const [loadState, setLoadState] = useState<LoadState>("idle");
   const [search, setSearch] = useState("");
@@ -421,15 +421,23 @@ function JiraSection() {
       if (!res.ok || data.error) {
         throw new Error(data.error ?? `HTTP ${res.status}`);
       }
-      setJiraData(data);
+      const safeData: JiraResult = {
+        total: typeof data.total === "number" ? data.total : (Array.isArray(data.issues) ? data.issues.length : 0),
+        startAt: data.startAt ?? 0,
+        issues: Array.isArray(data.issues) ? data.issues : [],
+      };
+      setJiraData(safeData);
       setLoadState("success");
+      onDataLoaded?.(safeData);
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       console.error("[CTA Report] Jira fetch error:", errorMessage);
-      setJiraData({ total: 0, startAt: 0, issues: [], error: errorMessage });
+      const errorResult: JiraResult = { total: 0, startAt: 0, issues: [], error: errorMessage };
+      setJiraData(errorResult);
       setLoadState("error");
+      onDataLoaded?.(errorResult);
     }
-  }, [statusFilter]);
+  }, [statusFilter, onDataLoaded]);
 
   useEffect(() => { fetchJira(); }, [fetchJira]);
 
@@ -457,12 +465,14 @@ function JiraSection() {
     URL.revokeObjectURL(url);
   };
 
+  const totalCount = typeof jiraData?.total === "number" ? jiraData.total : (jiraData?.issues?.length ?? 0);
+
   return (
     <SectionShell
       id="jira-reports"
       icon={TicketCheck}
       title="Jira Task Tracking"
-      badge={jiraData && loadState === "success" ? `${jiraData.total} issues` : "Live"}
+      badge={loadState === "success" ? `${totalCount} issues` : loadState === "loading" ? "Loading…" : "Live"}
       collapsible
     >
       <div className="space-y-4">
@@ -633,6 +643,7 @@ function JiraSection() {
 function CTAReportHubPage() {
   const [sheetsData, setSheetsData] = useState<SheetsDashboard | null>(null);
   const [sheetsState, setSheetsState] = useState<LoadState>("idle");
+  const [jiraSummary, setJiraSummary] = useState<JiraResult | null>(null);
 
   const fetchSheets = useCallback(async () => {
     setSheetsState("loading");
@@ -710,8 +721,8 @@ function CTAReportHubPage() {
               },
               {
                 label: "Jira Issues (KAN)",
-                value: "—",
-                note: "See Jira section below",
+                value: jiraSummary ? `${jiraSummary.total ?? (jiraSummary.issues?.length ?? 0)}` : "—",
+                note: jiraSummary ? "Total tasks in KAN" : "Live synchronization",
                 color: "text-accent",
               },
               {
@@ -738,7 +749,7 @@ function CTAReportHubPage() {
           <LongFormSection sheetsData={sheetsData} sheetsState={sheetsState} />
           <DocumentsSection />
           <AirtableSection />
-          <JiraSection />
+          <JiraSection onDataLoaded={setJiraSummary} />
 
           {/* Footer nav */}
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-2 text-xs">
