@@ -7,18 +7,19 @@
 import { sendReportEmail } from "./email-sender";
 
 export interface ContactLeadInput {
-  leadNumber?: string;
+  leadNumber?: string | undefined;
   fullName: string;
   workEmail: string;
   roleTitle: string;
   organization: string;
   sports: string[];
   requirement: string;
-  phone?: string;
-  additionalDetails?: string;
-  page?: string;
-  visitorId?: string;
-  sessionId?: string;
+  phone?: string | undefined;
+  additionalDetails?: string | undefined;
+  page?: string | undefined;
+  visitorId?: string | undefined;
+  sessionId?: string | undefined;
+  source?: string | undefined;
 }
 
 export interface JiraSubtaskResult {
@@ -204,7 +205,7 @@ async function recordContactLeadInAirtable(
       "Role": input.roleTitle,
       "Organization": input.organization || "SportsMax Visitor",
       "Status": "New",
-      "Source": "Website Contact Form",
+      "Source": input.source || "Website Contact Form",
       "Message": messageParts.join("\n"),
     },
   };
@@ -347,7 +348,8 @@ async function createJiraIssueWithSubtasks(
   }
 
   // Summary required: "New SportsMax Contact Lead - [lead reference]"
-  const summary = `New SportsMax Contact Lead - [${leadNumber}]`;
+  const summarySourceSuffix = input.source ? ` (${input.source})` : "";
+  const summary = `New SportsMax Contact Lead - [${leadNumber}]${summarySourceSuffix}`;
   const submissionUtc = new Date().toISOString();
 
   // Clean, standards-compliant paragraph-based ADF for description

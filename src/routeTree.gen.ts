@@ -34,6 +34,8 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as RunAnalyticsRouteImport } from './routes/run-analytics'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WebsiteAnalyticsRouteImport } from './routes/website-analytics'
+import { Route as YoutubeRouteImport } from './routes/youtube'
+import { Route as YoutubeAdminRouteImport } from './routes/youtube-admin'
 import { Route as SportsIndexRouteImport } from './routes/sports.index'
 import { Route as SportsFootballRouteImport } from './routes/sports.football'
 import { Route as SportsGameAnalysisRouteImport } from './routes/sports.game-analysis'
@@ -168,6 +170,16 @@ const WebsiteAnalyticsRoute = WebsiteAnalyticsRouteImport.update({
   path: '/website-analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const YoutubeRoute = YoutubeRouteImport.update({
+  id: '/youtube',
+  path: '/youtube',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YoutubeAdminRoute = YoutubeAdminRouteImport.update({
+  id: '/youtube-admin',
+  path: '/youtube-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SportsIndexRoute = SportsIndexRouteImport.update({
   id: '/sports/',
   path: '/sports/',
@@ -235,6 +247,8 @@ export interface FileRoutesByFullPath {
   '/run-analytics': typeof RunAnalyticsRoute
   '/terms': typeof TermsRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
+  '/youtube': typeof YoutubeRoute
+  '/youtube-admin': typeof YoutubeAdminRoute
   '/sports/football': typeof SportsFootballRoute
   '/sports/game-analysis': typeof SportsGameAnalysisRoute
   '/sports/hockey': typeof SportsHockeyRoute
@@ -270,6 +284,8 @@ export interface FileRoutesByTo {
   '/run-analytics': typeof RunAnalyticsRoute
   '/terms': typeof TermsRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
+  '/youtube': typeof YoutubeRoute
+  '/youtube-admin': typeof YoutubeAdminRoute
   '/sports/football': typeof SportsFootballRoute
   '/sports/game-analysis': typeof SportsGameAnalysisRoute
   '/sports/hockey': typeof SportsHockeyRoute
@@ -306,6 +322,8 @@ export interface FileRoutesById {
   '/run-analytics': typeof RunAnalyticsRoute
   '/terms': typeof TermsRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
+  '/youtube': typeof YoutubeRoute
+  '/youtube-admin': typeof YoutubeAdminRoute
   '/sports/football': typeof SportsFootballRoute
   '/sports/game-analysis': typeof SportsGameAnalysisRoute
   '/sports/hockey': typeof SportsHockeyRoute
@@ -343,6 +361,8 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/terms'
     | '/website-analytics'
+    | '/youtube'
+    | '/youtube-admin'
     | '/sports/football'
     | '/sports/game-analysis'
     | '/sports/hockey'
@@ -378,6 +398,8 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/terms'
     | '/website-analytics'
+    | '/youtube'
+    | '/youtube-admin'
     | '/sports/football'
     | '/sports/game-analysis'
     | '/sports/hockey'
@@ -413,6 +435,8 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/terms'
     | '/website-analytics'
+    | '/youtube'
+    | '/youtube-admin'
     | '/sports/football'
     | '/sports/game-analysis'
     | '/sports/hockey'
@@ -449,6 +473,8 @@ export interface RootRouteChildren {
   RunAnalyticsRoute: typeof RunAnalyticsRoute
   TermsRoute: typeof TermsRoute
   WebsiteAnalyticsRoute: typeof WebsiteAnalyticsRoute
+  YoutubeRoute: typeof YoutubeRoute
+  YoutubeAdminRoute: typeof YoutubeAdminRoute
   SportsFootballRoute: typeof SportsFootballRoute
   SportsGameAnalysisRoute: typeof SportsGameAnalysisRoute
   SportsHockeyRoute: typeof SportsHockeyRoute
@@ -636,6 +662,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WebsiteAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/youtube': {
+      id: '/youtube'
+      path: '/youtube'
+      fullPath: '/youtube'
+      preLoaderRoute: typeof YoutubeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/youtube-admin': {
+      id: '/youtube-admin'
+      path: '/youtube-admin'
+      fullPath: '/youtube-admin'
+      preLoaderRoute: typeof YoutubeAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sports/': {
       id: '/sports/'
       path: '/sports'
@@ -721,6 +761,8 @@ const rootRouteChildren: RootRouteChildren = {
   RunAnalyticsRoute: RunAnalyticsRoute,
   TermsRoute: TermsRoute,
   WebsiteAnalyticsRoute: WebsiteAnalyticsRoute,
+  YoutubeRoute: YoutubeRoute,
+  YoutubeAdminRoute: YoutubeAdminRoute,
   SportsFootballRoute: SportsFootballRoute,
   SportsGameAnalysisRoute: SportsGameAnalysisRoute,
   SportsHockeyRoute: SportsHockeyRoute,

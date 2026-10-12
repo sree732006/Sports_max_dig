@@ -294,6 +294,340 @@ export default {
         }
       }
 
+      // ─── YOUTUBE AUTOMATION ENDPOINTS ──────────────────────────────────────────
+
+      // 1. POST /api/youtube/auth/login
+      if (url.pathname === "/api/youtube/auth/login" && request.method === "POST") {
+        const { validateAdminPassword, signSession, buildSetCookieHeader, checkAirtableRateLimit, hashClientIp, validateCsrfOrigin } = await import("./lib/youtube-session");
+
+        if (!validateCsrfOrigin(request)) {
+          return new Response(JSON.stringify({ success: false, error: "Invalid origin or CSRF check failed" }), {
+            status: 403,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+        const ipHash = hashClientIp(clientIp);
+        const rateCheck = await checkAirtableRateLimit(`login_${ipHash}`, 5, 15 * 60);
+        if (!rateCheck.allowed) {
+          return new Response(JSON.stringify({ success: false, error: "Too many login attempts. Please try again later." }), {
+            status: 429,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        try {
+          const body = await request.json().catch(() => ({}));
+          const password = body.password;
+          if (!password || !validateAdminPassword(password)) {
+            return new Response(JSON.stringify({ success: false, error: "Invalid admin credentials" }), {
+              status: 401,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const token = signSession();
+          const cookieHeader = buildSetCookieHeader(token);
+          return new Response(JSON.stringify({ success: true }), {
+            status: 200,
+            headers: {
+              "content-type": "application/json",
+              "Set-Cookie": cookieHeader,
+            },
+          });
+        } catch (err) {
+          return new Response(JSON.stringify({ success: false, error: "Authentication processing failed" }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // 2. POST /api/youtube/auth/logout
+      if (url.pathname === "/api/youtube/auth/logout" && request.method === "POST") {
+        const { buildClearCookieHeader, validateCsrfOrigin } = await import("./lib/youtube-session");
+        if (!validateCsrfOrigin(request)) {
+          return new Response(JSON.stringify({ success: false, error: "Invalid origin or CSRF check failed" }), {
+            status: 403,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        return new Response(JSON.stringify({ success: true }), {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "Set-Cookie": buildClearCookieHeader(),
+          },
+        });
+      }
+
+      // 3. GET /api/youtube/oauth/start (Admin-protected)
+      if (url.pathname === "/api/youtube/oauth/start" && request.method === "GET") {
+        const { verifySession } = await import("./lib/youtube-session");
+        const cookie = request.headers.get("cookie");
+        if (!verifySession(cookie)) {
+          return new Response(JSON.stringify({ error: "Unauthorized: Admin session required" }), {
+            status: 401,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        try {
+          const { buildAuthorizationUrl } = await import("./lib/youtube-oauth");
+          const authUrl = await buildAuthorizationUrl();
+          return new Response(null, {
+            status: 302,
+            headers: { Location: authUrl },
+          });
+        } catch (err: any) {
+          console.error("[YouTube OAuth Start] Error:", err?.message || err);
+          return new Response(JSON.stringify({ error: "Failed to initialize OAuth authorization flow" }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // 4. GET /api/youtube/oauth/callback (Public callback from Google)
+      if (url.pathname === "/api/youtube/oauth/callback" && request.method === "GET") {
+        const code = url.searchParams.get("code");
+        const state = url.searchParams.get("state");
+        const error = url.searchParams.get("error");
+
+        if (error) {
+          return new Response(null, {
+            status: 302,
+            headers: { Location: `/youtube-admin?error=${encodeURIComponent(`Google authorization error: ${error}`)}` },
+          });
+        }
+
+        if (!code || !state) {
+          return new Response(null, {
+            status: 302,
+            headers: { Location: "/youtube-admin?error=Missing+authorization+code+or+state" },
+          });
+        }
+
+        try {
+          const { handleOAuthCallback } = await import("./lib/youtube-oauth");
+          const result = await handleOAuthCallback(code, state);
+
+          if (!result.success) {
+            return new Response(null, {
+              status: 302,
+              headers: { Location: `/youtube-admin?error=${encodeURIComponent(result.error || "OAuth exchange failed")}` },
+            });
+          }
+
+          return new Response(null, {
+            status: 302,
+            headers: { Location: "/youtube-admin?connected=true" },
+          });
+        } catch (err: any) {
+          console.error("[YouTube OAuth Callback] Unexpected error:", err?.message || err);
+          return new Response(null, {
+            status: 302,
+            headers: { Location: "/youtube-admin?error=Internal+OAuth+callback+error" },
+          });
+        }
+      }
+
+      // 5. GET /api/youtube/channel (Admin-protected)
+      if (url.pathname === "/api/youtube/channel" && request.method === "GET") {
+        const { verifySession } = await import("./lib/youtube-session");
+        const cookie = request.headers.get("cookie");
+        if (!verifySession(cookie)) {
+          return new Response(JSON.stringify({ error: "Unauthorized: Admin session required" }), {
+            status: 401,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        try {
+          const { getChannelDetails } = await import("./lib/youtube-service");
+          const channel = await getChannelDetails();
+          return new Response(JSON.stringify({ connected: true, channel }), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          const msg = err?.message || "";
+          if (msg.startsWith("NOT_AUTHENTICATED")) {
+            return new Response(JSON.stringify({ connected: false, error: "Not authenticated" }), {
+              status: 200,
+              headers: { "content-type": "application/json" },
+            });
+          }
+          if (msg.startsWith("REAUTH_REQUIRED")) {
+            return new Response(JSON.stringify({ connected: false, reauthRequired: true, error: msg }), {
+              status: 200,
+              headers: { "content-type": "application/json" },
+            });
+          }
+          console.error("[YouTube Channel] API error:", msg);
+          return new Response(JSON.stringify({ error: "Failed to fetch YouTube channel details" }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // 6. GET /api/youtube/videos (Admin-protected)
+      if (url.pathname === "/api/youtube/videos" && request.method === "GET") {
+        const { verifySession } = await import("./lib/youtube-session");
+        const cookie = request.headers.get("cookie");
+        if (!verifySession(cookie)) {
+          return new Response(JSON.stringify({ error: "Unauthorized: Admin session required" }), {
+            status: 401,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        try {
+          const { listChannelVideos } = await import("./lib/youtube-service");
+          const videos = await listChannelVideos(20);
+          return new Response(JSON.stringify({ videos }), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          console.error("[YouTube Videos] API error:", err?.message || err);
+          return new Response(JSON.stringify({ error: "Failed to list YouTube videos" }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // 7. POST /api/youtube/upload (Admin-protected)
+      if (url.pathname === "/api/youtube/upload" && request.method === "POST") {
+        const { verifySession, validateCsrfOrigin } = await import("./lib/youtube-session");
+        const cookie = request.headers.get("cookie");
+        if (!verifySession(cookie)) {
+          return new Response(JSON.stringify({ error: "Unauthorized: Admin session required" }), {
+            status: 401,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        if (!validateCsrfOrigin(request)) {
+          return new Response(JSON.stringify({ error: "Invalid origin or CSRF check failed" }), {
+            status: 403,
+            headers: { "content-type": "application/json" },
+          });
+        }
+
+        try {
+          const formData = await request.formData();
+          const file = formData.get("video") as File | null;
+          const title = formData.get("title")?.toString()?.trim();
+          const description = formData.get("description")?.toString()?.trim() || "";
+          const privacyStatus = (formData.get("privacyStatus")?.toString() || "private") as "private" | "unlisted" | "public";
+          const publishAt = formData.get("publishAt")?.toString()?.trim() || undefined;
+
+          if (!file || !title) {
+            return new Response(JSON.stringify({ error: "Video file and title are required." }), {
+              status: 400,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const arrayBuffer = await file.arrayBuffer();
+          const fileBuffer = Buffer.from(arrayBuffer);
+          const mimeType = file.type || "video/mp4";
+
+          const { uploadVideo } = await import("./lib/youtube-service");
+          const result = await uploadVideo({
+            title,
+            description,
+            privacyStatus,
+            publishAt,
+            fileBuffer,
+            mimeType,
+          });
+
+          return new Response(JSON.stringify({ success: true, video: result }), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          console.error("[YouTube Upload] Error:", err?.message || err);
+          return new Response(JSON.stringify({ error: err?.message || "Failed to upload video to YouTube" }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // 8. POST /api/youtube/lead (Public Lead capture with rate limit and Jira dedup)
+      if (url.pathname === "/api/youtube/lead" && request.method === "POST") {
+        const { checkAirtableRateLimit, hashClientIp } = await import("./lib/youtube-session");
+        const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+        const ipHash = hashClientIp(clientIp);
+
+        // Rate limiting: 5 requests per 10 minutes per IP hash.
+        // Documented: Airtable rate limiting is non-atomic and may fail open; input validation and dedup remain active.
+        const rateCheck = await checkAirtableRateLimit(`lead_${ipHash}`, 5, 10 * 60);
+        if (!rateCheck.allowed) {
+          return new Response(
+            JSON.stringify({ success: false, error: "Too many submission attempts. Please try again later." }),
+            { status: 429, headers: { "content-type": "application/json" } }
+          );
+        }
+
+        try {
+          const body = await request.json();
+          const { fullName, workEmail, organization, requirement, sports, phone, additionalDetails, videoId } = body;
+
+          // Input validation
+          if (!fullName || typeof fullName !== "string" || !fullName.trim()) {
+            return new Response(JSON.stringify({ success: false, error: "Full name is required." }), {
+              status: 400,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          if (!workEmail || typeof workEmail !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(workEmail.trim())) {
+            return new Response(JSON.stringify({ success: false, error: "A valid email address is required." }), {
+              status: 400,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const { processContactLeadWorkflow } = await import("./lib/contact-lead-service");
+          const sourceString = videoId ? `YouTube Lead (Video: ${videoId})` : "YouTube Lead Form";
+
+          const workflowResult = await processContactLeadWorkflow(
+            {
+              fullName: fullName.trim(),
+              workEmail: workEmail.trim(),
+              roleTitle: "YouTube Viewer",
+              organization: (organization && typeof organization === "string" ? organization.trim() : "") || "YouTube Audience",
+              requirement: (requirement && typeof requirement === "string" ? requirement.trim() : "") || "YouTube Channel Lead Inquiry",
+              sports: Array.isArray(sports) && sports.length > 0 ? sports : ["General Sports"],
+              phone: phone ? String(phone).trim() : undefined,
+              additionalDetails: additionalDetails ? String(additionalDetails).trim() : undefined,
+              source: sourceString,
+              page: "/youtube",
+            },
+            request.url
+          );
+
+          return new Response(JSON.stringify(workflowResult), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          console.error("[YouTube Lead Workflow] Failed:", err?.message || err);
+          return new Response(JSON.stringify({ success: false, error: "Failed to process YouTube lead." }), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
