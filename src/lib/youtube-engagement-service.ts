@@ -312,7 +312,26 @@ export async function runYouTubeEngagementSync(): Promise<SyncEngagementResult> 
       syncTimestamp
     );
 
-    allComments.push(...videoComments);
+    if (videoComments.length > 0) {
+      allComments.push(...videoComments);
+    } else {
+      // If video has no comments yet, record the video itself so metrics appear in the sheet
+      allComments.push({
+        commentId: `vid_${v.videoId}`,
+        videoId: v.videoId,
+        videoTitle: v.title,
+        totalViews: v.views,
+        totalLikes: v.likes,
+        totalComments: v.commentsCount,
+        commentText: "(No comments yet)",
+        commenterDisplayName: "Channel Video",
+        commenterChannelId: "",
+        commentLikes: 0,
+        commentDate: syncTimestamp,
+        commentUrl: `https://www.youtube.com/watch?v=${v.videoId}`,
+        lastSyncedTime: syncTimestamp,
+      });
+    }
   }
 
   // 3. Deduplicate comments in-memory by commentId
