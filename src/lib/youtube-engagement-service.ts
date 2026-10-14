@@ -176,7 +176,7 @@ export async function fetchVideoComments(
 
       const commentId = item.snippet?.topLevelComment?.id || item.id;
       const commenterChannelId =
-        topComment.authorChannelId?.value || "";
+        topComment.authorChannelUrl || topComment.authorChannelId?.value || "";
 
       comments.push({
         commentId,
