@@ -19,6 +19,7 @@ import {
   Webhook,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LinkedInEngagementDashboard } from "@/components/linkedin-engagement-dashboard";
 
 export const Route = createFileRoute("/reports")({
   head: () => ({
@@ -442,6 +443,9 @@ function ReportsPage() {
               </table>
             </div>
           </div>
+
+          {/* LinkedIn Engagement & Attribution Dashboard */}
+          <LinkedInEngagementDashboard />
 
           {/* Integration Info */}
           <div className="surface-card p-6 border border-primary/10 bg-primary/5 rounded-xl">

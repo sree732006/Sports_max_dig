@@ -25,6 +25,7 @@ import { Route as GoogleTrendsRouteImport } from './routes/google-trends'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as InstitutionRouteImport } from './routes/institution'
+import { Route as LinkedinRouteImport } from './routes/linkedin'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -123,6 +124,11 @@ const InsightsRoute = InsightsRouteImport.update({
 const InstitutionRoute = InstitutionRouteImport.update({
   id: '/institution',
   path: '/institution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinkedinRoute = LinkedinRouteImport.update({
+  id: '/linkedin',
+  path: '/linkedin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -238,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/help': typeof HelpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
+  '/linkedin': typeof LinkedinRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByTo {
   '/help': typeof HelpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
+  '/linkedin': typeof LinkedinRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -313,6 +321,7 @@ export interface FileRoutesById {
   '/help': typeof HelpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
+  '/linkedin': typeof LinkedinRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -352,6 +361,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/insights'
     | '/institution'
+    | '/linkedin'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -389,6 +399,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/insights'
     | '/institution'
+    | '/linkedin'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -426,6 +437,7 @@ export interface FileRouteTypes {
     | '/help'
     | '/insights'
     | '/institution'
+    | '/linkedin'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -464,6 +476,7 @@ export interface RootRouteChildren {
   HelpRoute: typeof HelpRoute
   InsightsRoute: typeof InsightsRoute
   InstitutionRoute: typeof InstitutionRoute
+  LinkedinRoute: typeof LinkedinRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -597,6 +610,13 @@ declare module '@tanstack/react-router' {
       path: '/institution'
       fullPath: '/institution'
       preLoaderRoute: typeof InstitutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/linkedin': {
+      id: '/linkedin'
+      path: '/linkedin'
+      fullPath: '/linkedin'
+      preLoaderRoute: typeof LinkedinRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -752,6 +772,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelpRoute: HelpRoute,
   InsightsRoute: InsightsRoute,
   InstitutionRoute: InstitutionRoute,
+  LinkedinRoute: LinkedinRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,

@@ -16,6 +16,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteFooter, SiteHeader } from "@/components/site-shell";
 import { DigitalPresenceAssistant } from "@/components/digital-presence-assistant";
 import { AuthProvider } from "@/lib/auth-context";
+import { captureUtmParams } from "@/lib/utm-tracker";
 
 // IN27-52: Microsoft Clarity Integration — Project ID: yrxe87qisd
 function initMicrosoftClarity() {
@@ -141,9 +142,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  // IN27-52: Init Microsoft Clarity on first render (client-side only)
+  // IN27-52: Init Microsoft Clarity & UTM capture on first render (client-side only)
   useEffect(() => {
     initMicrosoftClarity();
+    captureUtmParams();
   }, []);
 
   return (

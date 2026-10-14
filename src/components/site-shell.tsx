@@ -1251,6 +1251,14 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link to="/linkedin" className="text-sky-400 hover:text-sky-300 transition font-medium flex items-center gap-1.5">
+                  <span>LinkedIn Hub</span>
+                  <span className="rounded bg-sky-500/20 px-1 py-0.2 text-[8px] font-black uppercase text-sky-400">
+                    Pro
+                  </span>
+                </Link>
+              </li>
+              <li>
                 <Link to="/privacy" className="hover:text-primary transition">
                   Privacy Policy
                 </Link>

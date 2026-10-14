@@ -25,6 +25,7 @@ import {
   Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getStoredUtmParams } from "@/lib/utm-tracker";
 
 // ─── Constants & Types ─────────────────────────────────────────────────────────
 
@@ -216,6 +217,8 @@ async function submitContactLead(
     const hasPhone = Boolean(values.phone.trim());
     const hasAdditionalDetails = Boolean(values.additionalDetails.trim());
 
+    const utm = getStoredUtmParams();
+
     const sheetsPayload = {
       action: "contact_lead",
       event: "contact_lead",
@@ -237,6 +240,16 @@ async function submitContactLead(
       page,
       visitorId,
       sessionId,
+      source: utm.utmSource || "website",
+      utmSource: utm.utmSource || "",
+      utm_source: utm.utmSource || "",
+      utmMedium: utm.utmMedium || "",
+      utm_medium: utm.utmMedium || "",
+      utmCampaign: utm.utmCampaign || "",
+      utm_campaign: utm.utmCampaign || "",
+      utmContent: utm.utmContent || "",
+      utm_content: utm.utmContent || "",
+      landingPage: utm.landingPage || page,
       timestamp: new Date().toISOString(),
     };
 
@@ -259,6 +272,7 @@ async function submitContactLead(
   // 2. Server-side Lead Workflow Endpoint (Airtable + Jira KAN tickets + Resend admin notification email)
   let serverWorkflowResult: Partial<ContactLeadSubmissionResult> = {};
   try {
+    const utm = getStoredUtmParams();
     const serverPayload = {
       leadNumber,
       fullName: sanitize(values.fullName),
@@ -272,6 +286,12 @@ async function submitContactLead(
       page,
       visitorId,
       sessionId,
+      source: utm.utmSource ? `LinkedIn / ${utm.utmSource}` : undefined,
+      utmSource: utm.utmSource || undefined,
+      utmMedium: utm.utmMedium || undefined,
+      utmCampaign: utm.utmCampaign || undefined,
+      utmContent: utm.utmContent || undefined,
+      landingPage: utm.landingPage || page,
     };
 
     const serverRes = await fetch("/api/contact/lead", {

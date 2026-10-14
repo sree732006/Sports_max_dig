@@ -20,6 +20,12 @@ export interface ContactLeadInput {
   visitorId?: string | undefined;
   sessionId?: string | undefined;
   source?: string | undefined;
+  utmSource?: string | undefined;
+  utmMedium?: string | undefined;
+  utmCampaign?: string | undefined;
+  utmContent?: string | undefined;
+  utmTerm?: string | undefined;
+  landingPage?: string | undefined;
 }
 
 export interface JiraSubtaskResult {
@@ -193,10 +199,26 @@ async function recordContactLeadInAirtable(
   if (pageUrl) {
     messageParts.push(`Source Page: ${pageUrl}`);
   }
+  if (input.utmSource) {
+    messageParts.push(`Campaign Source: ${input.utmSource}`);
+  }
+  if (input.utmMedium) {
+    messageParts.push(`Medium: ${input.utmMedium}`);
+  }
+  if (input.utmCampaign) {
+    messageParts.push(`Campaign: ${input.utmCampaign}`);
+  }
+  if (input.utmContent) {
+    messageParts.push(`Campaign Content: ${input.utmContent}`);
+  }
 
   // Map to actual writable Airtable fields in Contact Leads table:
   // "Lead Number", "Name", "Email", "Role", "Organization", "Status", "Source", "Message"
   // Note: "Created At" is an Airtable computed field and automatically populated upon record creation.
+  const leadSource = input.utmSource
+    ? `LinkedIn / ${input.utmSource}${input.utmCampaign ? ` (${input.utmCampaign})` : ""}`
+    : input.source || "Website Contact Form";
+
   const payload = {
     fields: {
       "Lead Number": leadNumber,
@@ -205,7 +227,7 @@ async function recordContactLeadInAirtable(
       "Role": input.roleTitle,
       "Organization": input.organization || "SportsMax Visitor",
       "Status": "New",
-      "Source": input.source || "Website Contact Form",
+      "Source": leadSource,
       "Message": messageParts.join("\n"),
     },
   };
@@ -385,16 +407,26 @@ async function createJiraIssueWithSubtasks(
       ...(input.phone ? [makeAdfParagraph("Phone", input.phone)] : []),
       ...(input.additionalDetails ? [makeAdfParagraph("Message Summary", input.additionalDetails)] : []),
       makeAdfParagraph("Source Page", pageUrl),
+      ...(input.utmSource ? [makeAdfParagraph("Campaign Source", input.utmSource)] : []),
+      ...(input.utmMedium ? [makeAdfParagraph("Medium", input.utmMedium)] : []),
+      ...(input.utmCampaign ? [makeAdfParagraph("Campaign Name", input.utmCampaign)] : []),
+      ...(input.utmContent ? [makeAdfParagraph("Campaign Content", input.utmContent)] : []),
+      ...(input.landingPage ? [makeAdfParagraph("Landing Page", input.landingPage)] : []),
       makeAdfParagraph("UTC Submission Timestamp", submissionUtc),
     ],
   };
+
+  const labels = ["sportsmax-lead", "contact-form", "inquiry"];
+  if (input.utmSource?.toLowerCase().includes("linkedin") || pageUrl.includes("/linkedin")) {
+    labels.push("linkedin-lead");
+  }
 
   const parentPayload: any = {
     fields: {
       project: { key: projectKey },
       summary,
       description: parentDescriptionAdf,
-      labels: ["sportsmax-lead", "contact-form", "inquiry"],
+      labels,
     },
   };
 
@@ -626,6 +658,18 @@ async function sendAdminLeadEmail(
           <td style="padding: 10px 0; color: #cbd5e1;">${input.phone}</td>
         </tr>
         ` : ""}
+        ${input.utmSource ? `
+        <tr style="border-bottom: 1px solid #1e293b;">
+          <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Traffic Source</td>
+          <td style="padding: 10px 0; color: #0284c7; font-weight: 700;">${input.utmSource}${input.utmMedium ? ` / ${input.utmMedium}` : ""}</td>
+        </tr>
+        ` : ""}
+        ${input.utmCampaign ? `
+        <tr style="border-bottom: 1px solid #1e293b;">
+          <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Campaign</td>
+          <td style="padding: 10px 0; color: #cbd5e1;">${input.utmCampaign}</td>
+        </tr>
+        ` : ""}
         ${input.additionalDetails ? `
         <tr style="border-bottom: 1px solid #1e293b;">
           <td style="padding: 10px 0; color: #64748b; font-weight: 600; vertical-align: top;">Message</td>
@@ -752,6 +796,19 @@ export async function processContactLeadWorkflow(
       page: pageUrl,
       visitorId: input.visitorId || "server-lead",
       sessionId: input.sessionId || "server-lead",
+      source: input.utmSource || input.source || "Website Contact",
+      utmSource: input.utmSource || "",
+      utm_source: input.utmSource || "",
+      utmMedium: input.utmMedium || "",
+      utm_medium: input.utmMedium || "",
+      utmCampaign: input.utmCampaign || "",
+      utm_campaign: input.utmCampaign || "",
+      utmContent: input.utmContent || "",
+      utm_content: input.utmContent || "",
+      utmTerm: input.utmTerm || "",
+      utm_term: input.utmTerm || "",
+      landingPage: input.landingPage || pageUrl,
+      landing_page: input.landingPage || pageUrl,
       timestamp: new Date().toISOString(),
     };
 
