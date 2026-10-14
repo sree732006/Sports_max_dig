@@ -628,6 +628,50 @@ export default {
         }
       }
 
+      // 9. POST /api/youtube/engagement/sync (YouTube engagement sync — writes only to Google Sheets)
+      if (
+        url.pathname === "/api/youtube/engagement/sync" &&
+        request.method === "POST"
+      ) {
+        const { verifySession, validateCsrfOrigin } = await import("./lib/youtube-session");
+
+        if (!verifySession(request.headers.get("cookie"))) {
+          return new Response(
+            JSON.stringify({ success: false, error: "Unauthorized: Admin session required" }),
+            { status: 401, headers: { "content-type": "application/json" } }
+          );
+        }
+
+        if (!validateCsrfOrigin(request)) {
+          return new Response(
+            JSON.stringify({ success: false, error: "Invalid origin or CSRF check failed" }),
+            { status: 403, headers: { "content-type": "application/json" } }
+          );
+        }
+
+        try {
+          const { runYouTubeEngagementSync } = await import("./lib/youtube-engagement-service");
+          const result = await runYouTubeEngagementSync();
+
+          return new Response(JSON.stringify(result), {
+            status: result.success && result.sheetsRecorded ? 200 : 502,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err) {
+          console.error(
+            "[YouTube Engagement Sync] Failed:",
+            err instanceof Error ? err.message : "Unknown error"
+          );
+
+          return new Response(
+            JSON.stringify({ success: false, error: "YouTube engagement sync failed." }),
+            { status: 500, headers: { "content-type": "application/json" } }
+          );
+        }
+      }
+
+
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   Youtube,
-  Upload,
   Lock,
   LogOut,
   RefreshCw,
@@ -42,16 +41,8 @@ export function YouTubeAdminDashboard() {
   const [channel, setChannel] = useState<ChannelInfo | null>(null);
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loadingData, setLoadingData] = useState(false);
+  const [syncingEngagement, setSyncingEngagement] = useState(false);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-
-  // Upload form state
-  const [uploadTitle, setUploadTitle] = useState("");
-  const [uploadDescription, setUploadDescription] = useState("");
-  const [uploadPrivacy, setUploadPrivacy] = useState<"private" | "unlisted" | "public">("private");
-  const [schedulePublish, setSchedulePublish] = useState(false);
-  const [publishAtDate, setPublishAtDate] = useState("");
-  const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [uploadLoading, setUploadLoading] = useState(false);
 
   // Check auth and channel info on mount
   useEffect(() => {
@@ -132,51 +123,40 @@ export function YouTubeAdminDashboard() {
     }
   };
 
-  const handleUpload = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!videoFile || !uploadTitle) {
-      setStatusMessage({ type: "error", text: "Please provide a video title and select a video file." });
-      return;
-    }
-
-    setUploadLoading(true);
+  const handleSyncEngagement = async () => {
+    setSyncingEngagement(true);
     setStatusMessage(null);
 
-    const formData = new FormData();
-    formData.append("video", videoFile);
-    formData.append("title", uploadTitle);
-    formData.append("description", uploadDescription);
-    formData.append("privacyStatus", schedulePublish ? "private" : uploadPrivacy);
-
-    if (schedulePublish && publishAtDate) {
-      formData.append("publishAt", new Date(publishAtDate).toISOString());
-    }
-
     try {
-      const res = await fetch("/api/youtube/upload", {
+      const res = await fetch("/api/youtube/engagement/sync", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
       });
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setStatusMessage({ type: "error", text: data.error || "Failed to upload video to YouTube" });
+        setStatusMessage({
+          type: "error",
+          text: data.error || "Failed to sync YouTube engagement to Google Sheets.",
+        });
       } else {
+        const commentMsg =
+          typeof data.totalCommentsCollected === "number"
+            ? `${data.totalCommentsCollected} comments`
+            : "comments";
+        const videoMsg = `${data.videosProcessed || 0} videos`;
         setStatusMessage({
           type: "success",
-          text: `Video uploaded successfully! ID: ${data.video?.id || ""}`,
+          text: `Engagement synchronized to Google Sheets ("YouTube Engagement" tab)! Processed ${videoMsg} and synced ${commentMsg}.`,
         });
-        setUploadTitle("");
-        setUploadDescription("");
-        setVideoFile(null);
-        setSchedulePublish(false);
-        setPublishAtDate("");
-        loadVideos();
       }
     } catch {
-      setStatusMessage({ type: "error", text: "Network error occurred during video upload" });
+      setStatusMessage({
+        type: "error",
+        text: "Network error occurred while syncing engagement data.",
+      });
     } finally {
-      setUploadLoading(false);
+      setSyncingEngagement(false);
     }
   };
 
@@ -262,16 +242,32 @@ export function YouTubeAdminDashboard() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
           {channel ? (
-            <button
-              onClick={checkChannelStatus}
-              disabled={loadingData}
-              className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-slate-700"
-            >
-              <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
-              Refresh
-            </button>
+            <>
+              <button
+                onClick={handleSyncEngagement}
+                disabled={syncingEngagement || loadingData}
+                className="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-600/20 hover:bg-emerald-500 disabled:opacity-50 transition-all"
+                title="Sync video view counts, likes, and public comments to Google Sheets"
+              >
+                {syncingEngagement ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <RefreshCw className="h-3.5 w-3.5" />
+                )}
+                {syncingEngagement ? "Syncing to Sheets..." : "Sync Engagement to Sheets"}
+              </button>
+
+              <button
+                onClick={checkChannelStatus}
+                disabled={loadingData || syncingEngagement}
+                className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-3.5 py-2 text-xs font-medium text-slate-300 hover:bg-slate-700"
+              >
+                <RefreshCw className={`h-3.5 w-3.5 ${loadingData ? "animate-spin" : ""}`} />
+                Refresh
+              </button>
+            </>
           ) : (
             <a
               href="/api/youtube/oauth/start"
@@ -309,160 +305,79 @@ export function YouTubeAdminDashboard() {
         </div>
       )}
 
-      {/* Main Grid: Upload & Recent Videos */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Upload Panel */}
+      {/* Main Content: Recent Videos & Direct Upload Notice */}
+      <div className="space-y-6">
+        {/* Recent Uploads from YouTube Studio */}
         <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm">
-          <div className="flex items-center gap-2.5 mb-5">
-            <Upload className="h-5 w-5 text-red-400" />
-            <h3 className="text-lg font-bold text-white">Publish Video</h3>
-          </div>
-
-          {!channel ? (
-            <div className="rounded-xl border border-slate-800 bg-slate-800/40 p-6 text-center text-xs text-slate-400">
-              Please connect your YouTube channel using the button above before publishing videos.
-            </div>
-          ) : (
-            <form onSubmit={handleUpload} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Video File *</label>
-                <input
-                  type="file"
-                  accept="video/*"
-                  required
-                  onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
-                  className="w-full text-xs text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white hover:file:bg-slate-700"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Title *</label>
-                <input
-                  type="text"
-                  required
-                  value={uploadTitle}
-                  onChange={(e) => setUploadTitle(e.target.value)}
-                  placeholder="SportsMax Match Analysis - Premier League Matchday 12"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-red-500 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Description</label>
-                <textarea
-                  rows={3}
-                  value={uploadDescription}
-                  onChange={(e) => setUploadDescription(e.target.value)}
-                  placeholder="In-depth tactical breakdown and physical performance metrics..."
-                  className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:border-red-500 focus:outline-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-slate-300 mb-1">Visibility</label>
-                  <select
-                    disabled={schedulePublish}
-                    value={uploadPrivacy}
-                    onChange={(e) => setUploadPrivacy(e.target.value as any)}
-                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-xs text-white focus:border-red-500 focus:outline-none"
-                  >
-                    <option value="private">Private</option>
-                    <option value="unlisted">Unlisted</option>
-                    <option value="public">Public</option>
-                  </select>
-                </div>
-
-                <div className="flex flex-col justify-end">
-                  <label className="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer mb-2">
-                    <input
-                      type="checkbox"
-                      checked={schedulePublish}
-                      onChange={(e) => setSchedulePublish(e.target.checked)}
-                      className="rounded border-slate-700 bg-slate-800 text-red-600 focus:ring-0"
-                    />
-                    <span>Schedule Publishing</span>
-                  </label>
-                  {schedulePublish && (
-                    <input
-                      type="datetime-local"
-                      required
-                      value={publishAtDate}
-                      onChange={(e) => setPublishAtDate(e.target.value)}
-                      className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs text-white focus:border-red-500 focus:outline-none"
-                    />
-                  )}
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={uploadLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-600/20 transition-all hover:bg-red-500 disabled:opacity-50"
-              >
-                {uploadLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Uploading to YouTube...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-4 w-4" /> Upload Video
-                  </>
-                )}
-              </button>
-            </form>
-          )}
-        </div>
-
-        {/* Video List */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2.5">
               <Eye className="h-5 w-5 text-red-400" />
-              <h3 className="text-lg font-bold text-white">Recent Uploads</h3>
+              <div>
+                <h3 className="text-lg font-bold text-white">Channel Videos</h3>
+                <p className="text-xs text-slate-400">
+                  Videos uploaded directly via YouTube Studio appear here automatically.
+                </p>
+              </div>
             </div>
-            <span className="text-xs text-slate-500">{videos.length} videos</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700/60">
+                {videos.length} videos loaded
+              </span>
+              <a
+                href="https://studio.youtube.com"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-red-600/10 border border-red-500/20 px-3 py-1.5 text-xs font-medium text-red-400 hover:bg-red-600/20 transition-colors"
+              >
+                <span>Open YouTube Studio</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
           </div>
 
           {videos.length === 0 ? (
-            <div className="rounded-xl border border-slate-800 bg-slate-800/40 p-8 text-center text-xs text-slate-400">
-              No videos found or channel not yet linked.
+            <div className="rounded-xl border border-slate-800 bg-slate-800/40 p-10 text-center text-xs text-slate-400">
+              No videos found or channel not yet linked. Once linked, public and unlisted uploads from YouTube Studio will display here.
             </div>
           ) : (
-            <div className="space-y-3 max-h-[440px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[560px] overflow-y-auto pr-1">
               {videos.map((vid) => (
                 <div
                   key={vid.id}
-                  className="flex items-center gap-3 rounded-xl border border-slate-800/80 bg-slate-800/50 p-3 transition-colors hover:border-slate-700"
+                  className="flex flex-col justify-between rounded-xl border border-slate-800/80 bg-slate-800/50 p-3.5 transition-colors hover:border-slate-700"
                 >
-                  {vid.thumbnailUrl ? (
-                    <img
-                      src={vid.thumbnailUrl}
-                      alt={vid.title}
-                      className="h-14 w-24 rounded-lg object-cover border border-slate-700/50 shrink-0"
-                    />
-                  ) : (
-                    <div className="flex h-14 w-24 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-slate-600">
-                      <Youtube className="h-6 w-6" />
-                    </div>
-                  )}
-
-                  <div className="min-w-0 flex-1">
-                    <h4 className="text-xs font-semibold text-white truncate">{vid.title}</h4>
-                    <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1.5">
-                      <Calendar className="h-3 w-3" />
-                      {vid.publishedAt ? new Date(vid.publishedAt).toLocaleDateString() : ""}
-                    </p>
+                  <div>
+                    {vid.thumbnailUrl ? (
+                      <img
+                        src={vid.thumbnailUrl}
+                        alt={vid.title}
+                        className="w-full aspect-video rounded-lg object-cover border border-slate-700/50 mb-3"
+                      />
+                    ) : (
+                      <div className="flex w-full aspect-video items-center justify-center rounded-lg bg-slate-800 text-slate-600 mb-3">
+                        <Youtube className="h-8 w-8" />
+                      </div>
+                    )}
+                    <h4 className="text-xs font-semibold text-white line-clamp-2" title={vid.title}>
+                      {vid.title}
+                    </h4>
                   </div>
 
-                  <a
-                    href={`https://www.youtube.com/watch?v=${vid.id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="p-2 text-slate-400 hover:text-white"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
+                  <div className="flex items-center justify-between pt-3 mt-2 border-t border-slate-800 text-[11px] text-slate-400">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="h-3 w-3" />
+                      {vid.publishedAt ? new Date(vid.publishedAt).toLocaleDateString() : ""}
+                    </span>
+                    <a
+                      href={`https://www.youtube.com/watch?v=${vid.id}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-1 text-slate-400 hover:text-white transition-colors"
+                      title="Watch on YouTube"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>
