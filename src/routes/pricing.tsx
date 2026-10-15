@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { DemoBadge, PageIntro, SectionHead } from "@/components/sports-ui";
 import { AuthDialog } from "@/components/site-shell";
+import { PricingInquiryForm } from "@/components/pricing-inquiry-form";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -165,6 +166,11 @@ export function PricingPage() {
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/* Quick Pricing Inquiry Form */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <PricingInquiryForm />
           </div>
         </div>
       </section>
