@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import {
+  ArrowRight,
+  Building2,
   CheckCircle2,
+  HelpCircle,
   Loader2,
   Mail,
   Phone,
@@ -10,12 +13,21 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { getStoredUtmParams } from "@/lib/utm-tracker";
 
-export function PricingInquiryForm() {
+interface PricingInquiryFormProps {
+  selectedTier?: string;
+}
+
+export function PricingInquiryForm({ selectedTier }: PricingInquiryFormProps) {
   const [fullName, setFullName] = useState("");
   const [workEmail, setWorkEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [planInterest, setPlanInterest] = useState(selectedTier || "Coach & Squad ($99/mo)");
+  const [athletesCount, setAthletesCount] = useState("10 - 50 Athletes");
+  const [requirement, setRequirement] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [leadRef, setLeadRef] = useState("");
@@ -23,8 +35,8 @@ export function PricingInquiryForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!fullName.trim() || !workEmail.trim() || !phone.trim()) {
-      setError("Please provide your name, email, and phone number.");
+    if (!fullName.trim() || !workEmail.trim()) {
+      setError("Please provide your full name and work email.");
       return;
     }
 
@@ -42,14 +54,14 @@ export function PricingInquiryForm() {
       lead_number: leadNumber,
       name: fullName.trim(),
       email: workEmail.trim(),
-      phone: phone.trim(),
       role: "Pricing Prospect",
-      organization: "Pricing Visitor",
+      organization: organization.trim() || "Independent / Team",
       sports: "General Athletics",
-      requirement: "Pricing Inquiry / Quote Request",
-      message: `Pricing inquiry contact request from ${fullName.trim()} (${phone.trim()}).`,
-      hasPhone: true,
-      hasAdditionalDetails: false,
+      requirement: `Pricing Plan: ${planInterest} (${athletesCount})`,
+      phone: phone.trim() || "Not provided",
+      message: requirement.trim() || "Quick pricing inquiry submitted from Pricing Page.",
+      hasPhone: Boolean(phone.trim()),
+      hasAdditionalDetails: Boolean(requirement.trim()),
       page: "/pricing",
       visitorId: "pricing-visitor",
       sessionId: "pricing-session",
@@ -86,14 +98,16 @@ export function PricingInquiryForm() {
         leadNumber,
         fullName: fullName.trim(),
         workEmail: workEmail.trim(),
-        roleTitle: "Pricing Prospect",
-        organization: "Pricing Visitor",
+        roleTitle: "Pricing Inquiry Prospect",
+        organization: organization.trim() || "Athletic Organization",
         sports: ["Multi-Sport / Platform Tier"],
-        requirement: "Pricing Inquiry / Quote Request",
-        phone: phone.trim(),
-        additionalDetails: `Contact request from Pricing Page: Phone: ${phone.trim()}`,
+        requirement: `Plan Interest: ${planInterest} [Athletes Scope: ${athletesCount}]`,
+        phone: phone.trim() || undefined,
+        additionalDetails: requirement.trim()
+          ? `Selected Plan: ${planInterest}\nAthletes Scope: ${athletesCount}\nNotes: ${requirement.trim()}`
+          : `Selected Plan: ${planInterest}\nAthletes Scope: ${athletesCount}`,
         page: "/pricing",
-        source: "Pricing Page Quick Form",
+        source: "Pricing Page Form",
         utmSource: utm.utmSource || "pricing_page",
         utmMedium: utm.utmMedium || "web_pricing",
         utmCampaign: utm.utmCampaign || "pricing_inquiry",
@@ -120,19 +134,20 @@ export function PricingInquiryForm() {
 
   if (submitted) {
     return (
-      <div className="surface-card p-6 md:p-8 rounded-2xl border border-primary/30 bg-primary/5 text-center">
-        <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-primary/20 text-primary">
+      <div className="surface-card p-8 rounded-2xl border border-primary/30 bg-primary/5 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary">
           <CheckCircle2 className="h-6 w-6" />
         </div>
-        <h3 className="mt-3 text-lg md:text-xl font-bold text-foreground">Inquiry Received!</h3>
-        <p className="mt-1 text-xs text-muted-foreground max-w-sm mx-auto">
-          Thank you, <strong className="text-foreground">{fullName}</strong>! We will reach out to you at{" "}
-          <strong className="text-foreground">{phone}</strong> / <strong className="text-foreground">{workEmail}</strong> shortly.
+        <h3 className="mt-4 text-xl font-bold text-foreground">Inquiry Received!</h3>
+        <p className="mt-2 text-xs text-muted-foreground max-w-md mx-auto">
+          Thank you! Our sports analytics solutions team has received your requirement for{" "}
+          <strong className="text-foreground">{planInterest}</strong>. We will review your squad size and reply
+          with custom onboarding details within 24 hours.
         </p>
-        <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-secondary border border-border px-3 py-1 font-mono text-[11px] text-muted-foreground">
+        <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-secondary border border-border px-3 py-1 font-mono text-[11px] text-muted-foreground">
           Reference ID: <span className="font-bold text-primary">{leadRef}</span>
         </div>
-        <div className="mt-4">
+        <div className="mt-6">
           <Button
             size="sm"
             variant="outline"
@@ -141,6 +156,8 @@ export function PricingInquiryForm() {
               setFullName("");
               setWorkEmail("");
               setPhone("");
+              setOrganization("");
+              setRequirement("");
             }}
           >
             Submit Another Inquiry
@@ -155,18 +172,18 @@ export function PricingInquiryForm() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-5 border-b border-border">
         <div>
           <span className="text-[10px] font-black uppercase tracking-wider text-primary">
-            Instant Quote &amp; Callback
+            Instant Quote &amp; Demo
           </span>
           <h3 className="text-lg md:text-xl font-bold text-foreground mt-0.5">
-            Quick Pricing Inquiry
+            Quick Pricing Inquiry &amp; Custom Scope
           </h3>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Leave your name, email, and phone number and our team will get in touch with you.
+            Have questions about licenses, squad sizes, or enterprise features? Send your details for a quick response.
           </p>
         </div>
         <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1 text-[11px] font-semibold text-primary self-start sm:self-center">
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Quick Connect</span>
+          <span>Priority Response</span>
         </div>
       </div>
 
@@ -177,7 +194,7 @@ export function PricingInquiryForm() {
       )}
 
       <form onSubmit={handleSubmit} className="mt-5 grid gap-4">
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-foreground flex items-center gap-1">
               <User className="h-3 w-3 text-muted-foreground" />
@@ -185,7 +202,7 @@ export function PricingInquiryForm() {
             </label>
             <Input
               required
-              placeholder="e.g., Alex Jordan"
+              placeholder="e.g., Coach Sarah Jenkins"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               className="bg-background text-xs"
@@ -196,14 +213,30 @@ export function PricingInquiryForm() {
           <div className="space-y-1">
             <label className="text-xs font-semibold text-foreground flex items-center gap-1">
               <Mail className="h-3 w-3 text-muted-foreground" />
-              Email Address *
+              Work / Team Email *
             </label>
             <Input
               required
               type="email"
-              placeholder="alex@example.com"
+              placeholder="sarah@athleticsacademy.com"
               value={workEmail}
               onChange={(e) => setWorkEmail(e.target.value)}
+              className="bg-background text-xs"
+              disabled={loading}
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-foreground flex items-center gap-1">
+              <Building2 className="h-3 w-3 text-muted-foreground" />
+              Organization / Club
+            </label>
+            <Input
+              placeholder="e.g., Metro Track Club / University"
+              value={organization}
+              onChange={(e) => setOrganization(e.target.value)}
               className="bg-background text-xs"
               disabled={loading}
             />
@@ -212,12 +245,11 @@ export function PricingInquiryForm() {
           <div className="space-y-1">
             <label className="text-xs font-semibold text-foreground flex items-center gap-1">
               <Phone className="h-3 w-3 text-muted-foreground" />
-              Phone Number *
+              Phone Number (Optional)
             </label>
             <Input
-              required
               type="tel"
-              placeholder="+91 98765 43210"
+              placeholder="+1 (555) 019-2834"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="bg-background text-xs"
@@ -226,9 +258,53 @@ export function PricingInquiryForm() {
           </div>
         </div>
 
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-foreground">Plan of Interest *</label>
+            <select
+              value={planInterest}
+              onChange={(e) => setPlanInterest(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+              disabled={loading}
+            >
+              <option value="Athlete Pro ($19/mo)">Athlete Pro ($19/mo - Individual)</option>
+              <option value="Coach & Squad ($99/mo)">Coach & Squad ($99/mo - Most Popular)</option>
+              <option value="Enterprise / Franchise (Custom)">Enterprise / Franchise (Custom Tier)</option>
+              <option value="Custom Squad Licensing">Custom Squad / Federation Volume</option>
+            </select>
+          </div>
+
+          <div className="space-y-1">
+            <label className="text-xs font-semibold text-foreground">Athletes Scope</label>
+            <select
+              value={athletesCount}
+              onChange={(e) => setAthletesCount(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+              disabled={loading}
+            >
+              <option value="1 - 5 Athletes">1 - 5 Athletes (Individual / Small Group)</option>
+              <option value="10 - 50 Athletes">10 - 50 Athletes (Team / Club)</option>
+              <option value="50 - 200 Athletes">50 - 200 Athletes (Academy / College)</option>
+              <option value="200+ Athletes">200+ Athletes (League / National Federation)</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-foreground">Specific Requirements or Inquiries</label>
+          <Textarea
+            rows={2}
+            placeholder="Tell us about your team's tracking needs (wearable models, video pitch analysis, multi-coach access)..."
+            value={requirement}
+            onChange={(e) => setRequirement(e.target.value)}
+            className="bg-background text-xs"
+            disabled={loading}
+          />
+        </div>
+
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
           <span className="text-[11px] text-muted-foreground">
-            🔒 Automatically saved to Google Sheets, Jira &amp; CRM.
+            🔒 Logged securely into Google Sheets, Jira Cloud &amp; CRM.
           </span>
 
           <Button type="submit" disabled={loading} className="font-bold sm:w-auto w-full">
@@ -240,7 +316,7 @@ export function PricingInquiryForm() {
             ) : (
               <>
                 <Send className="h-4 w-4 mr-1.5" />
-                Get Instant Quote
+                Submit Quick Inquiry
               </>
             )}
           </Button>

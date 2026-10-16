@@ -3,8 +3,10 @@
 // 1. Google Sheets lead recording (via Apps Script VITE_ANALYTICS_URL)
 // 2. Jira Cloud issue creation in project KAN
 // 3. Admin email notification via Resend to ADMIN_NOTIFICATION_EMAIL
+// 4. Visitor acknowledgement email via Resend to the lead submitter
 
 import { sendReportEmail } from "./email-sender";
+import { renderLeadAcknowledgement } from "./email-templates";
 
 export interface ContactLeadInput {
   leadNumber?: string | undefined;
@@ -60,6 +62,12 @@ export interface ContactLeadResult {
   airtable: AirtableLeadResult;
   jira: JiraLeadResult;
   email: {
+    attempted: boolean;
+    sent: boolean;
+    messageId?: string | undefined;
+    error?: string | undefined;
+  };
+  visitorEmail: {
     attempted: boolean;
     sent: boolean;
     messageId?: string | undefined;
@@ -840,6 +848,52 @@ export async function processContactLeadWorkflow(
   // 4. Dispatch Notification Email via Resend to ADMIN_NOTIFICATION_EMAIL
   const emailRes = await sendAdminLeadEmail(leadNumber, input, jiraRes);
 
+  // 5. Send branded acknowledgement email to the visitor / lead submitter
+  let visitorEmailResult: { attempted: boolean; sent: boolean; messageId?: string; error?: string } = {
+    attempted: false,
+    sent: false,
+  };
+  if (input.workEmail) {
+    try {
+      const ackTemplate = renderLeadAcknowledgement({
+        fullName: input.fullName,
+        workEmail: input.workEmail,
+        organization: input.organization,
+        roleTitle: input.roleTitle,
+        sports: input.sports,
+        requirement: input.requirement,
+        leadNumber,
+        ...(input.phone !== undefined ? { phone: input.phone } : {}),
+        ...(input.additionalDetails !== undefined ? { additionalDetails: input.additionalDetails } : {}),
+      });
+      const fromAddr = process.env["RESEND_FROM_EMAIL"];
+      const ackRes = await sendReportEmail({
+        to: input.workEmail,
+        subject: ackTemplate.subject,
+        html: ackTemplate.html,
+        text: ackTemplate.text,
+        ...(fromAddr ? { from: fromAddr } : {}),
+      });
+      const nextResult: { attempted: boolean; sent: boolean; messageId?: string; error?: string } = {
+        attempted: true,
+        sent: ackRes.success,
+      };
+      if (ackRes.messageId !== undefined) nextResult.messageId = ackRes.messageId;
+      if (ackRes.error !== undefined) nextResult.error = ackRes.error;
+      visitorEmailResult = nextResult;
+      if (ackRes.success) {
+        console.info(`[Lead Workflow] Visitor acknowledgement email sent to ${input.workEmail} (Lead ${leadNumber})`);
+      } else {
+        console.warn(`[Lead Workflow] Visitor ack email failed for ${input.workEmail}: ${ackRes.error}`);
+      }
+    } catch (ackErr: unknown) {
+      const errStr = ackErr instanceof Error ? ackErr.message : String(ackErr);
+      console.warn(`[Lead Workflow] Visitor ack email exception for ${input.workEmail}: ${errStr}`);
+      visitorEmailResult = { attempted: true, sent: false, error: errStr };
+    }
+  }
+
+
   const result: ContactLeadResult = {
     success: true, // Lead payload safely accepted & processed
     leadNumber,
@@ -853,6 +907,7 @@ export async function processContactLeadWorkflow(
       messageId: emailRes.messageId,
       error: emailRes.error,
     },
+    visitorEmail: visitorEmailResult,
   };
 
   // Cache in-memory and persist to durable file store
