@@ -801,70 +801,133 @@ export interface LeadAckInput {
 }
 
 export function renderLeadAcknowledgement(input: LeadAckInput): RenderedEmail {
-  const subject = `We've received your enquiry — SportsMax [${input.leadNumber}]`;
-  const sportsFormatted = input.sports.join(", ");
+  const firstName = input.fullName.trim().split(/\s+/)[0] || "Valued Colleague";
+  const subject = `Enquiry Confirmed [${input.leadNumber}] — SportsMax Intelligence`;
+  const sportsFormatted = input.sports && input.sports.length > 0 ? input.sports.join(", ") : "Multi-Sport / Platform";
 
   const infoRows: [string, string][] = [
-    ["Reference ID", `<strong style="color:#38bdf8;">${escHtml(input.leadNumber)}</strong>`],
-    ["Full Name",    escHtml(input.fullName)],
-    ["Organization",escHtml(input.organization)],
+    ["Reference ID", `<strong style="color:#0284c7;font-family:monospace;font-size:14px;letter-spacing:0.04em;">${escHtml(input.leadNumber)}</strong>`],
+    ["Full Name",    `<span style="font-weight:600;color:#0f172a;">${escHtml(input.fullName)}</span>`],
+    ["Organization", `<span style="font-weight:600;color:#0f172a;">${escHtml(input.organization)}</span>`],
     ["Role / Title", escHtml(input.roleTitle)],
-    ["Discipline(s)", `<span style="color:#34d399;font-weight:600;">${escHtml(sportsFormatted)}</span>`],
-    ["Requirement",  escHtml(input.requirement)],
+    ["Discipline(s)", `<span style="display:inline-block;background-color:#eff6ff;color:#1d4ed8;font-weight:700;padding:2px 8px;border-radius:4px;font-size:12px;border:1px solid #dbeafe;">${escHtml(sportsFormatted)}</span>`],
+    ["Requirement",  `<span style="color:#0f172a;font-weight:600;">${escHtml(input.requirement)}</span>`],
     ...(input.phone ? [["Phone", escHtml(input.phone)] as [string, string]] : []),
-    ...(input.additionalDetails ? [["Message", escHtml(input.additionalDetails)] as [string, string]] : []),
+    ...(input.additionalDetails ? [["Notes / Message", `<div style="color:#475569;font-style:italic;background:#f8fafc;padding:8px 10px;border-radius:6px;border-left:3px solid #38bdf8;">${escHtml(input.additionalDetails)}</div>`] as [string, string]] : []),
   ];
 
   const html =
-    emailDocOpen(`SportsMax — Enquiry Received [${input.leadNumber}]`) +
+    emailDocOpen({
+      title: `SportsMax — Enquiry Received [${input.leadNumber}]`,
+      theme: "light",
+      previewText: `Thank you ${firstName}. Your enquiry [${input.leadNumber}] has been received by SportsMax Intelligence.`,
+    }) +
     emailHeader({
-      accent: "blue",
-      eyebrow: "Enquiry Received",
-      headline: `Thank you, ${input.fullName.split(" ")[0]}!`,
-      subline: "Your contact request has been received by the SportsMax team.",
+      accent: "cyan",
+      eyebrow: "Enquiry Confirmed · Reference " + input.leadNumber,
+      headline: `Thank You, ${firstName}`,
+      subline: `Every Performance Has a Story. We're analyzing your requirements.`,
       badge: "Confirmed",
+      showHeroImage: true,
     }) +
     emailBody(`
-      <p style="margin:0 0 20px;font-size:15px;color:#94a3b8;line-height:1.7;">
-        Thank you for reaching out to <strong style="color:#f1f5f9;">SportsMax Intelligence</strong>.
-        Our team will review your requirements and get back to you within <strong style="color:#38bdf8;">1–2 business days</strong>.
+      <!-- Personalized Greeting -->
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Dear ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 18px;font-size:14px;color:#334155;line-height:1.7;">
+        Thank you for connecting with <strong style="color:#0284c7;">SportsMax Intelligence</strong>.
+        We have safely logged your enquiry for <strong style="color:#0f172a;">${escHtml(input.organization)}</strong>.
+        Our sports analytics solutions team has initiated review of your requirements and will reach out with tailored performance metrics within <strong style="color:#0f172a;">1–2 business days</strong>.
       </p>
 
+      <!-- Enquiry Reference Card -->
+      <div style="background-color:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:16px 20px;margin:20px 0 24px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td style="vertical-align:middle;">
+              <div style="font-size:10px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#0284c7;margin-bottom:4px;">
+                ACTIVE ENQUIRY REFERENCE
+              </div>
+              <div style="font-size:20px;font-weight:900;color:#0369a1;font-family:monospace;letter-spacing:0.02em;">
+                ${escHtml(input.leadNumber)}
+              </div>
+            </td>
+            <td align="right" style="vertical-align:middle;">
+              <span style="display:inline-block;background-color:#dcfce7;border:1px solid #86efac;color:#15803d;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;">
+                In Review
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Submission Summary Table -->
+      <div style="margin:24px 0 20px;">
+        <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#0f172a;margin-bottom:10px;">
+          Submission Summary
+        </div>
+        ${emailInfoTable(infoRows)}
+      </div>
+
+      <!-- Next Steps Callout -->
       ${emailCallout(
-        "Your Submission Summary",
-        emailInfoTable(infoRows),
+        "What Happens Next?",
+        `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td style="padding:4px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">1.</td>
+            <td style="padding:4px 0;color:#0c4a6e;line-height:1.5;">Our solutions lead assesses your sport disciplines and analytical needs.</td>
+          </tr>
+          <tr>
+            <td style="padding:4px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">2.</td>
+            <td style="padding:4px 0;color:#0c4a6e;line-height:1.5;">We configure a personalized demonstration showcasing relevant telemetry for <strong>${escHtml(input.organization)}</strong>.</td>
+          </tr>
+          <tr>
+            <td style="padding:4px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">3.</td>
+            <td style="padding:4px 0;color:#0c4a6e;line-height:1.5;">We will email you directly with availability to review insights together.</td>
+          </tr>
+        </table>`,
         "blue"
       )}
 
-      <p style="margin:20px 0 8px;font-size:14px;color:#64748b;line-height:1.6;">
-        While you wait, explore our platform and learn more about how SportsMax can help your organisation.
-      </p>
+      <!-- Primary Action CTA -->
+      ${emailButton("Explore the SportsMax Platform", "https://sports-max-dig.vercel.app/", "blue")}
 
-      ${emailButton("Visit SportsMax Platform", "https://sports-max-dig.vercel.app/", "emerald")}
-
-      <p style="margin:16px 0 0;font-size:12px;color:#475569;line-height:1.6;">
-        If you have any urgent questions, reply directly to this email or contact us at
-        <a href="https://sports-max-dig.vercel.app/#contact" style="color:#38bdf8;text-decoration:none;">our contact page</a>.
+      <!-- Secondary Help Contact -->
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Have an immediate question regarding this enquiry? Reply directly to this email or reach us at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
       </p>
-    `) +
+    `, "#ffffff") +
     emailFooter({ showUnsubscribe: false }) +
     emailDocClose();
 
   const text = `Thank you for contacting SportsMax Intelligence!
 
 Reference ID: ${input.leadNumber}
+Status: In Review
 
-We've received your enquiry from ${input.fullName} (${input.organization}).
-Requirement: ${input.requirement}
-Sport(s): ${sportsFormatted}
+Dear ${firstName},
 
-Our team will be in touch within 1–2 business days.
+We have received your enquiry on behalf of ${input.organization}.
+Our sports analytics team will review your requirements and follow up within 1-2 business days.
 
-Visit us: https://sports-max-dig.vercel.app/
+Submission Summary:
+• Full Name: ${input.fullName}
+• Organization: ${input.organization}
+• Role / Title: ${input.roleTitle}
+• Sport Discipline(s): ${sportsFormatted}
+• Requirement: ${input.requirement}${input.phone ? `\n• Phone: ${input.phone}` : ""}${input.additionalDetails ? `\n• Notes: ${input.additionalDetails}` : ""}
+
+Explore SportsMax: https://sports-max-dig.vercel.app/
+Questions? Email hello@sportsmax.ai
 
 —
-SportsMax Intelligence | Sports Analytics & Intelligence Platform
-© ${new Date().getFullYear()} SportsMax. All rights reserved.`;
+SportsMax Intelligence Hub
+Every Performance Has a Story
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Privacy Policy: https://sports-max-dig.vercel.app/privacy`;
 
   return { subject, html, text };
 }
@@ -883,73 +946,89 @@ export interface PartnerOutreachInput {
 }
 
 export function renderPartnerOutreachEmail(input: PartnerOutreachInput): RenderedEmail {
-  const firstName = input.recipientName.split(" ")[0];
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Colleague";
   const subject = `Partnership Opportunity — SportsMax × ${input.recipientOrganization}`;
-  const industry = input.industry ? ` in the ${escHtml(input.industry)} space` : "";
-  const sender = input.senderName || "The SportsMax Team";
+  const industry = input.industry ? ` in the ${escHtml(input.industry)} sector` : "";
+  const sender = input.senderName || "The SportsMax Solutions Team";
 
   const html =
-    emailDocOpen(subject) +
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Partnership exploration between SportsMax and ${input.recipientOrganization}.`,
+    }) +
     emailHeader({
-      accent: "violet",
-      eyebrow: "Partnership Opportunity",
-      headline: `Explore a Partnership with SportsMax`,
-      subline: `A tailored message for ${escHtml(input.recipientName)} at ${escHtml(input.recipientOrganization)}`,
-      badge: "Partner",
+      accent: "cyan",
+      eyebrow: "Partnership Exploration",
+      headline: `SportsMax &times; ${escHtml(input.recipientOrganization)}`,
+      subline: "Every Performance Has a Story. Empowering sports organisations with data.",
+      badge: "Partnership",
+      showHeroImage: true,
     }) +
     emailBody(`
-      <p style="margin:0 0 18px;font-size:15px;color:#94a3b8;line-height:1.7;">
-        Dear <strong style="color:#f1f5f9;">${escHtml(firstName)}</strong>,
-      </p>
-      <p style="margin:0 0 18px;font-size:14px;color:#94a3b8;line-height:1.7;">
-        I'm reaching out from <strong style="color:#f1f5f9;">SportsMax Intelligence</strong> — a sports analytics and data platform designed to help organisations${industry} make data-driven decisions, improve athlete performance, and grow fan engagement.
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Dear ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        I'm reaching out from <strong style="color:#0284c7;">SportsMax Intelligence</strong> &mdash; a dedicated sports performance and analytics platform designed to empower teams, federations, and sports enterprises${industry}.
       </p>
 
       ${input.customMessage
-        ? `<p style="margin:0 0 18px;font-size:14px;color:#94a3b8;line-height:1.7;">${escHtml(input.customMessage)}</p>`
+        ? `<div style="background-color:#f8fafc;border-left:3px solid #0284c7;padding:12px 16px;margin:16px 0;font-size:14px;color:#1e293b;line-height:1.6;">${escHtml(input.customMessage)}</div>`
         : ""}
 
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        We help athletic organisations convert wearable telemetry, live pitch tracking, and match data into actionable competitive advantage across 24+ sports disciplines.
+      </p>
+
       ${emailCallout(
-        "What SportsMax Offers",
-        `<ul style="margin:0;padding-left:18px;color:#94a3b8;line-height:1.8;font-size:13px;">
-          <li>Real-time sports analytics dashboards</li>
-          <li>Athlete performance tracking &amp; comparison</li>
-          <li>Fan engagement &amp; digital presence tools</li>
-          <li>Custom data integrations and API access</li>
-          <li>White-label reporting for clubs &amp; federations</li>
+        "Why Partner With SportsMax?",
+        `<ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
+          <li><strong>Sub-50ms Telemetry:</strong> Live optical computer vision &amp; biometric ingest.</li>
+          <li><strong>Multi-Sport Ready:</strong> Tailored analytics models for running, football, swimming, athletics, and more.</li>
+          <li><strong>Modular Integrations:</strong> REST/WebSocket APIs, Airtable, Sheets, and custom enterprise feeds.</li>
+          <li><strong>Custom White-Labeling:</strong> Federation-level branded reporting suites.</li>
         </ul>`,
-        "violet"
+        "blue"
       )}
 
-      <p style="margin:18px 0 8px;font-size:14px;color:#64748b;line-height:1.6;">
-        I'd love to schedule a brief 20-minute call to explore how we can create mutual value for ${escHtml(input.recipientOrganization)} and SportsMax.
+      <p style="margin:18px 0 10px;font-size:14px;color:#334155;line-height:1.6;">
+        I would welcome a brief 20-minute exploratory conversation to understand your current performance initiatives at <strong>${escHtml(input.recipientOrganization)}</strong>.
       </p>
 
-      ${emailButton("Schedule a Discovery Call", "https://sports-max-dig.vercel.app/#contact", "blue")}
+      ${emailButton("Schedule a Discovery Call", "https://sports-max-dig.vercel.app/contact", "blue")}
 
-      <p style="margin:16px 0 0;font-size:13px;color:#475569;line-height:1.6;">
-        Looking forward to connecting,<br>
-        <strong style="color:#f1f5f9;">${escHtml(sender)}</strong><br>
-        SportsMax Intelligence
-      </p>
-    `) +
+      <div style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e2e8f0;font-size:13px;color:#475569;line-height:1.6;">
+        Warm regards,<br>
+        <strong style="color:#0f172a;">${escHtml(sender)}</strong><br>
+        SportsMax Intelligence &bull; <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;">hello@sportsmax.ai</a>
+      </div>
+    `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
     emailDocClose();
 
   const text = `Dear ${firstName},
 
-I'm reaching out from SportsMax Intelligence — a sports analytics platform designed to help organisations${input.industry ? ` in the ${input.industry} space` : ""} make data-driven decisions.
+I am reaching out from SportsMax Intelligence — a performance intelligence platform designed for sports organisations${input.industry ? ` in the ${input.industry} space` : ""}.
 
-${input.customMessage || "We offer real-time dashboards, athlete tracking, fan engagement tools, and custom data integrations."}
+${input.customMessage || "We help athletic organisations turn wearable telemetry, tactical tracking, and match data into competitive advantage."}
 
-I'd love to schedule a 20-minute call to explore how we can create value together.
+Why SportsMax:
+• Sub-50ms live telemetry & optical tracking
+• 24+ supported sport disciplines
+• Enterprise APIs & custom federation reporting
 
-Schedule a call: https://sports-max-dig.vercel.app/#contact
+I would welcome a brief 20-minute conversation to explore how SportsMax can create value for ${input.recipientOrganization}.
 
-Best regards,
+Schedule a discovery call: https://sports-max-dig.vercel.app/contact
+
+Warm regards,
 ${sender}
 SportsMax Intelligence
-© ${new Date().getFullYear()} SportsMax. All rights reserved.`;
+Direct: hello@sportsmax.ai
+Website: https://sports-max-dig.vercel.app/
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.`;
 
   return { subject, html, text };
 }
@@ -969,83 +1048,93 @@ export interface DemoInviteInput {
 }
 
 export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
-  const firstName = input.recipientName.split(" ")[0];
-  const subject = `SportsMax Demo Invitation — ${input.recipientOrganization}`;
-  const host = input.hostName || "The SportsMax Team";
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Colleague";
+  const subject = `SportsMax Platform Demo — ${input.recipientOrganization}`;
+  const host = input.hostName || "The SportsMax Engineering Team";
 
   const schedulingBlock = (input.proposedDate || input.proposedTime)
     ? emailCallout(
         "Proposed Meeting Details",
-        `<table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-          ${input.proposedDate ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;width:80px;">Date</td><td style="padding:4px 0;color:#f1f5f9;font-size:13px;font-weight:600;">${escHtml(input.proposedDate)}</td></tr>` : ""}
-          ${input.proposedTime ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;">Time</td><td style="padding:4px 0;color:#f1f5f9;font-size:13px;font-weight:600;">${escHtml(input.proposedTime)}</td></tr>` : ""}
-          ${input.meetingLink  ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;">Link</td><td style="padding:4px 0;font-size:13px;"><a href="${input.meetingLink}" style="color:#38bdf8;text-decoration:underline;">Join Meeting</a></td></tr>` : ""}
+        `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          ${input.proposedDate ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;width:90px;font-weight:700;">Date</td><td style="padding:4px 0;color:#064e3b;font-size:13px;font-weight:700;">${escHtml(input.proposedDate)}</td></tr>` : ""}
+          ${input.proposedTime ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;font-weight:700;">Time</td><td style="padding:4px 0;color:#064e3b;font-size:13px;font-weight:700;">${escHtml(input.proposedTime)}</td></tr>` : ""}
+          ${input.meetingLink  ? `<tr><td style="padding:4px 0;color:#64748b;font-size:13px;font-weight:700;">Meeting Link</td><td style="padding:4px 0;font-size:13px;"><a href="${input.meetingLink}" style="color:#059669;text-decoration:underline;font-weight:700;">Join Video Meeting &rarr;</a></td></tr>` : ""}
         </table>`,
         "emerald"
       )
-    : emailButton("Schedule Your Demo", "https://sports-max-dig.vercel.app/#contact", "emerald");
+    : "";
 
   const html =
-    emailDocOpen(subject) +
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Personalised SportsMax demo invitation for ${input.recipientOrganization}.`,
+    }) +
     emailHeader({
       accent: "emerald",
-      eyebrow: "You're Invited",
+      eyebrow: "You're Invited · Interactive Walkthrough",
       headline: `SportsMax Platform Demo`,
-      subline: `Exclusively for ${escHtml(input.recipientOrganization)}`,
+      subline: `Tailored live session for ${escHtml(input.recipientOrganization)}`,
       badge: "Demo",
+      showHeroImage: true,
     }) +
     emailBody(`
-      <p style="margin:0 0 18px;font-size:15px;color:#94a3b8;line-height:1.7;">
-        Dear <strong style="color:#f1f5f9;">${escHtml(firstName)}</strong>,
-      </p>
-      <p style="margin:0 0 18px;font-size:14px;color:#94a3b8;line-height:1.7;">
-        Thank you for your interest in <strong style="color:#f1f5f9;">SportsMax Intelligence</strong>.
-        We'd like to invite you to a personalised <strong style="color:#34d399;">30-minute product demo</strong> tailored to
-        your requirements at <strong style="color:#f1f5f9;">${escHtml(input.recipientOrganization)}</strong>.
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Dear ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        Thank you for your interest in <strong style="color:#0284c7;">SportsMax Intelligence</strong>.
+        We would be delighted to host you for a private <strong style="color:#059669;">30-minute platform demo</strong> configured specifically around the requirements of <strong style="color:#0f172a;">${escHtml(input.recipientOrganization)}</strong>.
       </p>
 
       ${schedulingBlock}
 
       ${emailCallout(
-        "What You'll See in the Demo",
-        `<ul style="margin:0;padding-left:18px;color:#94a3b8;line-height:1.8;font-size:13px;">
-          <li>Live analytics dashboard walkthrough</li>
-          <li>Athlete performance comparison tools</li>
-          <li>Lead tracking &amp; engagement reports</li>
-          <li>Integration options (API, Sheets, Jira, Airtable)</li>
-          <li>Q&amp;A and custom use-case discussion</li>
+        "What We'll Cover In Your 30-Minute Session",
+        `<ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
+          <li><strong>Live Dashboard Tour:</strong> Real-time athlete telemetry and squad metrics.</li>
+          <li><strong>Computer Vision &amp; Tracking:</strong> Optical tracking feeds for pitch &amp; track sports.</li>
+          <li><strong>Workload &amp; Injury Governance:</strong> ACWR modeling and injury-risk detection.</li>
+          <li><strong>Integration Architecture:</strong> Direct API feeds, Airtable, Sheets, and reporting hooks.</li>
+          <li><strong>Interactive Q&amp;A:</strong> Tailored discussion with our lead sports scientist.</li>
         </ul>`,
         "blue"
       )}
 
-      ${(!input.proposedDate && !input.meetingLink)
-        ? emailButton("Book a Demo Slot", "https://sports-max-dig.vercel.app/#contact", "emerald")
-        : `<p style="margin:20px 0 0;font-size:13px;color:#64748b;line-height:1.6;">Can't make the proposed time? <a href="https://sports-max-dig.vercel.app/#contact" style="color:#38bdf8;text-decoration:none;">Let us know</a> and we'll reschedule.</p>`
+      ${input.meetingLink
+        ? emailButton("Join Video Meeting", input.meetingLink, "emerald")
+        : emailButton("Confirm or Reschedule Demo Slot", "https://sports-max-dig.vercel.app/contact", "emerald")
       }
 
-      <p style="margin:20px 0 0;font-size:13px;color:#475569;line-height:1.6;">
-        Looking forward to meeting you,<br>
-        <strong style="color:#f1f5f9;">${escHtml(host)}</strong><br>
-        SportsMax Intelligence
-      </p>
-      ${input.leadNumber ? `<p style="margin:8px 0 0;font-size:11px;color:#334155;">Reference: ${escHtml(input.leadNumber)}</p>` : ""}
-    `) +
+      <div style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e2e8f0;font-size:13px;color:#475569;line-height:1.6;">
+        Looking forward to speaking with you,<br>
+        <strong style="color:#0f172a;">${escHtml(host)}</strong><br>
+        SportsMax Intelligence &bull; <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;">hello@sportsmax.ai</a>
+      </div>
+      ${input.leadNumber ? `<p style="margin:10px 0 0;font-size:11px;color:#94a3b8;font-family:monospace;">Enquiry Ref: ${escHtml(input.leadNumber)}</p>` : ""}
+    `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
     emailDocClose();
 
   const text = `Dear ${firstName},
 
-You're invited to a personalised SportsMax platform demo for ${input.recipientOrganization}.
+You are invited to a personalised SportsMax platform demo for ${input.recipientOrganization}.
 ${input.proposedDate ? `\nProposed Date: ${input.proposedDate}` : ""}${input.proposedTime ? `\nTime: ${input.proposedTime}` : ""}${input.meetingLink ? `\nMeeting Link: ${input.meetingLink}` : ""}
 
-In the demo, you'll see our live analytics dashboard, athlete performance tools, and integration options.
+What we will cover:
+• Live telemetry dashboards & squad metrics
+• Optical tracking for pitch and track sports
+• ACWR workload & injury governance models
+• Enterprise integrations & automated reporting
 
-Book or confirm your slot: https://sports-max-dig.vercel.app/#contact
+Book or reschedule: https://sports-max-dig.vercel.app/contact
 
 Best regards,
 ${host}
 SportsMax Intelligence
-© ${new Date().getFullYear()} SportsMax. All rights reserved.`;
+Direct: hello@sportsmax.ai
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.`;
 
   return { subject, html, text };
 }
@@ -1067,44 +1156,50 @@ export interface ServicePromoInput {
 }
 
 export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail {
-  const firstName = input.recipientName.split(" ")[0];
-  const subject = `Introducing ${input.serviceName} — SportsMax`;
-  const ctaUrl  = input.ctaUrl || "https://sports-max-dig.vercel.app/#pricing";
-  const ctaLabel = input.ctaLabel || "Explore the Service";
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
+  const subject = `Introducing ${input.serviceName} — SportsMax Intelligence`;
+  const ctaUrl  = input.ctaUrl || "https://sports-max-dig.vercel.app/pricing";
+  const ctaLabel = input.ctaLabel || "Explore Plan & Capabilities";
 
   const promoBadge = input.promoCode
     ? emailCallout(
-        "Exclusive Offer",
-        `Use code <strong style="color:#fbbf24;font-size:15px;letter-spacing:0.08em;">${escHtml(input.promoCode)}</strong> at checkout.
-        ${input.expiryDate ? `<br><span style="font-size:12px;color:#64748b;">Valid until ${escHtml(input.expiryDate)}.</span>` : ""}`,
+        "Limited-Time Promotion",
+        `Use code <strong style="color:#b45309;font-size:16px;letter-spacing:0.06em;font-family:monospace;background:#fef3c7;padding:2px 8px;border-radius:4px;border:1px solid #fde68a;">${escHtml(input.promoCode)}</strong> during onboarding.
+        ${input.expiryDate ? `<br><span style="font-size:12px;color:#78350f;margin-top:4px;display:inline-block;">Offer valid through ${escHtml(input.expiryDate)}.</span>` : ""}`,
         "amber"
       )
     : "";
 
   const benefitsList = input.keyBenefits
-    .map((b) => `<li style="padding:4px 0;color:#94a3b8;font-size:13px;line-height:1.6;">${escHtml(b)}</li>`)
+    .map((b) => `<li style="padding:4px 0;color:#064e3b;font-size:13px;line-height:1.6;">${escHtml(b)}</li>`)
     .join("");
 
   const html =
-    emailDocOpen(subject) +
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Introducing ${input.serviceName} from SportsMax Intelligence.`,
+    }) +
     emailHeader({
-      accent: "blue",
-      eyebrow: "New from SportsMax",
+      accent: "cyan",
+      eyebrow: "Product Announcement · SportsMax",
       headline: input.serviceName,
       subline: input.serviceDescription,
-      badge: "New",
+      badge: "Feature",
+      showHeroImage: true,
     }) +
     emailBody(`
-      <p style="margin:0 0 18px;font-size:15px;color:#94a3b8;line-height:1.7;">
-        Hi <strong style="color:#f1f5f9;">${escHtml(firstName)}</strong>,
-        ${input.recipientOrganization ? ` on behalf of <strong style="color:#f1f5f9;">${escHtml(input.recipientOrganization)}</strong>,` : ""}
-      </p>
-      <p style="margin:0 0 20px;font-size:14px;color:#94a3b8;line-height:1.7;">
-        We're excited to share something new with you from the SportsMax team.
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Hello ${escHtml(firstName)},
+        ${input.recipientOrganization ? ` on behalf of <strong style="color:#0f172a;">${escHtml(input.recipientOrganization)}</strong>,` : ""}
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        We are thrilled to unveil <strong style="color:#0284c7;">${escHtml(input.serviceName)}</strong>, engineered to give athletic departments and performance analysts an unfair competitive edge.
       </p>
 
       ${emailCallout(
-        "Key Benefits",
+        "Key Capabilities & Highlights",
         `<ul style="margin:0;padding-left:18px;">${benefitsList}</ul>`,
         "emerald"
       )}
@@ -1113,28 +1208,502 @@ export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail
 
       ${emailButton(ctaLabel, ctaUrl, "blue")}
 
-      <p style="margin:16px 0 0;font-size:12px;color:#475569;line-height:1.6;">
-        Have questions? <a href="https://sports-max-dig.vercel.app/#contact" style="color:#38bdf8;text-decoration:none;">Contact our team</a> anytime.
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Questions about plan tiers or team licenses? Consult our solutions desk at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>
+        or visit our <a href="https://sports-max-dig.vercel.app/pricing" style="color:#0284c7;text-decoration:none;font-weight:600;">Pricing Hub</a>.
       </p>
-    `) +
+    `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
     emailDocClose();
 
-  const text = `Hi ${firstName},
+  const text = `Hello ${firstName},
 
-We're excited to introduce: ${input.serviceName}
+We're excited to introduce ${input.serviceName} from SportsMax Intelligence!
 
 ${input.serviceDescription}
 
-Key Benefits:
+Key Capabilities:
 ${input.keyBenefits.map((b) => `• ${b}`).join("\n")}
-${input.promoCode ? `\nPromo Code: ${input.promoCode}${input.expiryDate ? ` (valid until ${input.expiryDate})` : ""}` : ""}
+${input.promoCode ? `\nPromo Code: ${input.promoCode}${input.expiryDate ? ` (Valid until ${input.expiryDate})` : ""}` : ""}
 
-Learn more: ${ctaUrl}
+Explore full capabilities: ${ctaUrl}
+
+Questions? Email hello@sportsmax.ai
 
 —
-SportsMax Intelligence
-© ${new Date().getFullYear()} SportsMax. All rights reserved.`;
+SportsMax Intelligence Hub
+Every Performance Has a Story
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe / Preferences: https://sports-max-dig.vercel.app/contact`;
 
   return { subject, html, text };
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8. THE 6 DEDICATED EMAIL CAMPAIGN TEMPLATES (TASK REQUIREMENT)
+// 1. Welcome
+// 2. Re-engagement
+// 3. Advertisement
+// 4. Business Value
+// 5. Lead Generation
+// 6. Product
+// ─────────────────────────────────────────────────────────────────────────────
+
+// 8.1 WELCOME EMAIL
+export interface WelcomeEmailInput {
+  recipientName: string;
+  organization?: string;
+  dashboardUrl?: string;
+}
+
+export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
+  const subject = `Welcome to SportsMax Intelligence — Every Performance Has a Story`;
+  const dashboardUrl = input.dashboardUrl || "https://sports-max-dig.vercel.app/dashboard";
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Welcome to SportsMax ${firstName}. Your access to athletic intelligence is ready.`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: "Welcome to SportsMax",
+      headline: `Welcome Aboard, ${escHtml(firstName)}!`,
+      subline: "Every Performance Has a Story. Let's turn your athletic data into intelligence.",
+      badge: "Welcome",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Welcome to the SportsMax Intelligence Community, ${escHtml(firstName)}!
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        Whether you are analyzing split-second sprint mechanics, tracking squad workload ratios, or breaking down match footage, SportsMax brings the precision of elite sports science directly to your fingertips.
+      </p>
+
+      ${emailCallout(
+        "3 Steps to Get Started",
+        `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td style="padding:6px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">1.</td>
+            <td style="padding:6px 0;color:#0c4a6e;line-height:1.5;"><strong>Explore the 24+ Sports Hub:</strong> From running and swimming to high jump and football, inspect dedicated tracking metrics.</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">2.</td>
+            <td style="padding:6px 0;color:#0c4a6e;line-height:1.5;"><strong>Connect Wearables &amp; Video:</strong> Sync GPS traces, cadence, and optical tracking telemetry.</td>
+          </tr>
+          <tr>
+            <td style="padding:6px 0;vertical-align:top;width:24px;color:#0284c7;font-weight:bold;">3.</td>
+            <td style="padding:6px 0;color:#0c4a6e;line-height:1.5;"><strong>Follow Our Technical Deep Dives:</strong> Watch tutorials on YouTube and join our discussions on LinkedIn.</td>
+          </tr>
+        </table>`,
+        "blue"
+      )}
+
+      ${emailButton("Launch SportsMax Dashboard", dashboardUrl, "blue")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Need onboarding assistance? Reply directly to this email or reach our engineers at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `Welcome to SportsMax Intelligence, ${firstName}!
+
+Every Performance Has a Story. Let's turn your athletic data into intelligence.
+
+3 Steps to Get Started:
+1. Explore the 24+ Sports Directory
+2. Connect your wearable telemetry and match footage
+3. Join our channels on YouTube and LinkedIn
+
+Launch your dashboard: ${dashboardUrl}
+
+Questions? Email hello@sportsmax.ai
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+// 8.2 RE-ENGAGEMENT EMAIL
+export interface ReengagementEmailInput {
+  recipientName: string;
+  organization?: string;
+  daysInactive?: number;
+  featuredUpdate?: string;
+}
+
+export function renderReengagementEmail(input: ReengagementEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
+  const subject = `We Miss You on the Field — New SportsMax Updates Inside`;
+  const updateText = input.featuredUpdate || "We've rolled out optical video tracking, ACWR injury-risk flags, and updated multi-sport telemetry dashboards.";
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Check out what's new on SportsMax Intelligence, ${firstName}.`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: "We Miss You · Platform Updates",
+      headline: `Ready to Elevate Your Analytics?`,
+      subline: "Every Performance Has a Story. Discover the new features waiting for you.",
+      badge: "Updates",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Hello ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        It has been a little while since your last session on <strong style="color:#0284c7;">SportsMax Intelligence</strong>. Our engineering and sports science team has been busy shipping major enhancements designed to save your staff hours of manual analysis.
+      </p>
+
+      ${emailCallout(
+        "What's New on SportsMax",
+        `<p style="margin:0 0 10px;font-size:13px;color:#0c4a6e;line-height:1.6;">${escHtml(updateText)}</p>
+        <ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
+          <li><strong>Sub-50ms Telemetry:</strong> Instant speed &amp; cardiac drift analytics.</li>
+          <li><strong>Institution &amp; Squad Tiers:</strong> Multi-coach role controls and squad comparison radars.</li>
+          <li><strong>Automated Reports:</strong> Export clean daily &amp; weekly performance digests.</li>
+        </ul>`,
+        "blue"
+      )}
+
+      ${emailButton("Reactivate Your Session", "https://sports-max-dig.vercel.app/dashboard", "blue")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Want a personal refresher tour? Connect with our desk at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `Hello ${firstName},
+
+We miss you on the SportsMax Intelligence platform!
+
+${updateText}
+
+What's New:
+• Sub-50ms live telemetry
+• Institution & squad hierarchy
+• Automated reporting digests
+
+Reactivate your session: https://sports-max-dig.vercel.app/dashboard
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+// 8.3 ADVERTISEMENT EMAIL
+export interface AdvertisementEmailInput {
+  recipientName: string;
+  campaignHeadline: string;
+  offerDetails: string;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+export function renderAdvertisementEmail(input: AdvertisementEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Coach";
+  const subject = `${input.campaignHeadline} — SportsMax Intelligence`;
+  const ctaUrl = input.ctaUrl || "https://sports-max-dig.vercel.app/pricing";
+  const ctaText = input.ctaText || "Claim Exclusive Access";
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `${input.campaignHeadline} — Exclusive offer from SportsMax Intelligence.`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: "Special Announcement · SportsMax",
+      headline: input.campaignHeadline,
+      subline: "Every Performance Has a Story. Empower your roster with high-precision telemetry.",
+      badge: "Featured",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Special Opportunity for ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        ${escHtml(input.offerDetails)}
+      </p>
+
+      ${emailCallout(
+        "Why Coaching Staffs Choose SportsMax",
+        `<ul style="margin:0;padding-left:18px;color:#064e3b;line-height:1.8;font-size:13px;">
+          <li><strong>24+ Supported Disciplines:</strong> Dedicated sport models for football, swimming, track, and more.</li>
+          <li><strong>Workload Governance:</strong> Acute-to-Chronic Workload Ratio (ACWR) tracking to manage training intensity.</li>
+          <li><strong>Modular Integrations:</strong> API feeds, Airtable sync, and automated stakeholder reports.</li>
+        </ul>`,
+        "emerald"
+      )}
+
+      ${emailButton(ctaText, ctaUrl, "emerald")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Questions about our team packages? Inquire with our solutions team at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `${input.campaignHeadline}
+
+Special opportunity for ${firstName}:
+${input.offerDetails}
+
+Why SportsMax:
+• 24+ sports disciplines supported
+• ACWR workload governance & tracking
+• Enterprise APIs & automated reporting
+
+Claim offer: ${ctaUrl}
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+// 8.4 BUSINESS VALUE EMAIL
+export interface BusinessValueEmailInput {
+  recipientName: string;
+  recipientOrganization: string;
+  targetMetric?: string;
+  caseStudyHighlight?: string;
+}
+
+export function renderBusinessValueEmail(input: BusinessValueEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Executive";
+  const subject = `Quantifying Athletic Value & Workload Management — SportsMax × ${input.recipientOrganization}`;
+  const metric = input.targetMetric || "Centralized load management, sub-50ms pitch telemetry, and streamlined video analysis workflows";
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `How SportsMax delivers measurable athletic value for ${input.recipientOrganization}.`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: "Executive Briefing · Performance Intelligence",
+      headline: `The Value of Objective Sports Intelligence`,
+      subline: `Demonstrated capabilities for ${escHtml(input.recipientOrganization)}`,
+      badge: "Value Brief",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Dear ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        In modern sports operations, athletic data is only as valuable as the decisions it empowers. For leadership at <strong style="color:#0f172a;">${escHtml(input.recipientOrganization)}</strong>, protecting player investments and maximizing competitive matchday output are core priorities.
+      </p>
+
+      ${emailCallout(
+        "Platform Performance Focus",
+        `<p style="margin:0 0 8px;font-size:14px;font-weight:700;color:#0c4a6e;">
+          SportsMax enables athletic organizations to achieve:
+        </p>
+        <p style="margin:0;font-size:13px;color:#0c4a6e;line-height:1.6;font-style:italic;">
+          &ldquo;${escHtml(metric)}&rdquo;
+        </p>`,
+        "blue"
+      )}
+
+      <p style="margin:16px 0;font-size:14px;color:#334155;line-height:1.7;">
+        ${input.caseStudyHighlight || "By linking wearable load metrics with real-time video tracking, coaches eliminate guesswork, streamline tactical briefings, and support athlete longevity on matchday."}
+      </p>
+
+      ${emailButton("Schedule an Executive Briefing", "https://sports-max-dig.vercel.app/contact", "blue")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Consult our sports science leadership at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `The Business Value of Sports Intelligence for ${input.recipientOrganization}
+
+Dear ${firstName},
+
+Modern athletic operations require quantified outcomes. SportsMax delivers:
+"${metric}"
+
+${input.caseStudyHighlight || "Unify wearable load metrics with tactical video tracking to keep star athletes healthy."}
+
+Schedule an executive briefing: https://sports-max-dig.vercel.app/contact
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+// 8.5 LEAD GENERATION EMAIL
+export interface LeadGenerationEmailInput {
+  recipientName: string;
+  sportFocus?: string;
+  leadMagnetTitle?: string;
+}
+
+export function renderLeadGenerationEmail(input: LeadGenerationEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Coach";
+  const title = input.leadMagnetTitle || "The 2026 Sports Performance Telemetry & Injury Prevention Blueprint";
+  const subject = `Complimentary Resource: ${title}`;
+  const sport = input.sportFocus || "Multi-Sport Athletics";
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Complimentary intelligence blueprint: ${title}`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: `Complimentary Guide · ${escHtml(sport)}`,
+      headline: `The 2026 Sports Intelligence Blueprint`,
+      subline: "Every Performance Has a Story. Practical frameworks for coaches and analysts.",
+      badge: "Free Guide",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Hi ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        We've synthesized telemetry data from over 24+ sports disciplines into an actionable, comprehensive guide for athletic directors, performance analysts, and team coaches.
+      </p>
+
+      ${emailCallout(
+        "Inside the Blueprint",
+        `<ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
+          <li><strong>Acute-to-Chronic Workload Ratio (ACWR):</strong> Practical thresholds for preventing soft-tissue injury.</li>
+          <li><strong>Optical Computer Vision Setup:</strong> How to extract player trajectories without expensive stadium rigs.</li>
+          <li><strong>Biomechanical Baseline Calibration:</strong> Establishing personal-best reference models.</li>
+          <li><strong>Integration Frameworks:</strong> Connecting GPS wearables to reporting dashboards.</li>
+        </ul>`,
+        "blue"
+      )}
+
+      ${emailButton("Download Your Complimentary Guide", "https://sports-max-dig.vercel.app/platform", "blue")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Want to discuss applying these models to your roster? Email our analysts at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `Complimentary Resource: ${title}
+
+Hi ${firstName},
+
+We've compiled actionable insights across 24+ sports disciplines into our 2026 Blueprint:
+• ACWR injury prevention models
+• Optical computer vision setups
+• Biomechanical baseline calibration
+• Wearable GPS integration
+
+Download the blueprint: https://sports-max-dig.vercel.app/platform
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+// 8.6 PRODUCT HIGHLIGHT EMAIL
+export interface ProductHighlightEmailInput {
+  recipientName: string;
+  featureName: string;
+  featureSummary: string;
+  capabilities: string[];
+  ctaUrl?: string;
+}
+
+export function renderProductHighlightEmail(input: ProductHighlightEmailInput): RenderedEmail {
+  const firstName = input.recipientName.trim().split(/\s+/)[0] || "Performance Analyst";
+  const subject = `Deep Dive: ${input.featureName} on SportsMax Intelligence`;
+  const ctaUrl = input.ctaUrl || "https://sports-max-dig.vercel.app/platform";
+
+  const capabilitiesHtml = input.capabilities
+    .map((c) => `<li style="padding:4px 0;color:#064e3b;font-size:13px;line-height:1.6;">${escHtml(c)}</li>`)
+    .join("");
+
+  const html =
+    emailDocOpen({
+      title: subject,
+      theme: "light",
+      previewText: `Deep dive into ${input.featureName} on SportsMax Intelligence.`,
+    }) +
+    emailHeader({
+      accent: "cyan",
+      eyebrow: "Product Deep Dive · SportsMax Platform",
+      headline: input.featureName,
+      subline: input.featureSummary,
+      badge: "Spotlight",
+      showHeroImage: true,
+    }) +
+    emailBody(`
+      <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
+        Hello ${escHtml(firstName)},
+      </div>
+
+      <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
+        Discover how <strong style="color:#0284c7;">${escHtml(input.featureName)}</strong> works under the hood to deliver immediate tactical and physical insights.
+      </p>
+
+      ${emailCallout(
+        "Core Capabilities",
+        `<ul style="margin:0;padding-left:18px;">${capabilitiesHtml}</ul>`,
+        "emerald"
+      )}
+
+      ${emailButton("See Feature Walkthrough", ctaUrl, "emerald")}
+
+      <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
+        Want a live demonstration tailored to your athletes? Email us at
+        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+      </p>
+    `, "#ffffff") +
+    emailFooter({ showUnsubscribe: true }) +
+    emailDocClose();
+
+  const text = `Deep Dive: ${input.featureName} on SportsMax Intelligence
+
+Hello ${firstName},
+
+${input.featureSummary}
+
+Core Capabilities:
+${input.capabilities.map((c) => `• ${c}`).join("\n")}
+
+Explore feature: ${ctaUrl}
+© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+
+  return { subject, html, text };
+}
+
+
