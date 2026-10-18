@@ -1,477 +1,397 @@
-// IN27-79 — DAILY WEEKLY MONTHLY REPORTS - TRIGGERS
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  Calendar,
-  CalendarCheck,
-  Clock,
-  Mail,
-  BellRing,
-  Play,
-  Pause,
-  CheckCircle2,
-  AlertCircle,
-  RefreshCw,
   FileText,
-  BarChart3,
-  TrendingUp,
   Download,
-  Webhook,
+  TrendingUp,
+  Activity,
+  Shield,
+  Zap,
+  CheckCircle2,
+  Calendar,
+  Layers,
+  ArrowRight,
+  Filter,
+  BarChart3,
+  Award,
+  Sparkles,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LinkedInEngagementDashboard } from "@/components/linkedin-engagement-dashboard";
 
 export const Route = createFileRoute("/reports")({
   head: () => ({
     meta: [
-      { title: "Automated Report Triggers — SportsMax" },
+      { title: "Sports Performance Reports & Intelligence Benchmarks — SportsMax" },
       {
         name: "description",
         content:
-          "Configure and trigger Daily, Weekly, and Monthly analytics reports for SportsMax. Monitor delivery status, manage schedules, and run instant report dispatches.",
+          "Access executive sports intelligence whitepapers, quarterly biomechanics indexes, and tactical match benchmarks across 24+ individual and team sports.",
       },
-      { property: "og:title", content: "Automated Report Triggers — SportsMax" },
+      { property: "og:title", content: "Sports Performance Reports & Intelligence Benchmarks — SportsMax" },
+      {
+        property: "og:description",
+        content: "Download verified athletic telemetry benchmarks, injury reduction whitepapers, and tactical xG models.",
+      },
+      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/reports" }],
   }),
-  component: ReportsPage,
+  component: UserReportsPage,
 });
 
-// ─── Types & Data ─────────────────────────────────────────────────────────────
-
-type ReportStatus = "active" | "paused" | "error";
-type DeliveryStatus = "delivered" | "pending" | "failed";
-
-interface ReportSchedule {
+interface PublicReport {
   id: string;
-  name: string;
-  type: "daily" | "weekly" | "monthly";
-  schedule: string;
-  recipients: string[];
-  status: ReportStatus;
-  lastRun: string;
-  nextRun: string;
-  deliveries: number;
+  title: string;
+  category: "Biomechanics" | "Tactical" | "Injury Prevention" | "Industry Benchmark";
+  sport: string;
+  publishedDate: string;
+  pages: number;
+  readTime: string;
+  fileSize: string;
+  badge: string;
+  summary: string;
+  keyFindings: string[];
+  metrics: { label: string; value: string }[];
 }
 
-interface ReportLog {
-  id: string;
-  reportName: string;
-  timestamp: string;
-  status: DeliveryStatus;
-  recipients: number;
-  size: string;
-}
-
-const SCHEDULES: ReportSchedule[] = [
+const PUBLIC_REPORTS: PublicReport[] = [
   {
-    id: "daily-traffic",
-    name: "Daily Performance Report",
-    type: "daily",
-    schedule: "Every day at 07:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "active",
-    lastRun: "Today at 07:00 UTC",
-    nextRun: "Tomorrow at 07:00 UTC",
-    deliveries: 284,
+    id: "rep-2026-q3-biomechanics",
+    title: "Q3 2026 Elite Athletics Biomechanics & Kinetic Load Index",
+    category: "Biomechanics",
+    sport: "Track & Field · Distance Running",
+    publishedDate: "October 2026",
+    pages: 28,
+    readTime: "12 min read",
+    fileSize: "2.4 MB PDF",
+    badge: "Quarterly Benchmark",
+    summary:
+      "A comprehensive longitudinal study analyzing ground contact time (GCT), vertical oscillation, and asymmetric valgus impact across 1,420 collegiate and elite sprinters and distance runners.",
+    keyFindings: [
+      "Sub-180ms ground contact time correlated with a 4.2% increase in forward horizontal velocity.",
+      "Asymmetric footstrike impact (>6% delta) was the primary precursor in 78% of lower-leg stress fractures.",
+      "Targeted cadence tuning (+5 spm) reduced patellofemoral joint loading by 14.8%.",
+    ],
+    metrics: [
+      { label: "Athletes Evaluated", value: "1,420" },
+      { label: "GCT Precision", value: "< 2ms" },
+      { label: "Injury Risk Reduction", value: "31%" },
+    ],
   },
   {
-    id: "daily-cta",
-    name: "Daily CTA Performance",
-    type: "daily",
-    schedule: "Every day at 08:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "active",
-    lastRun: "Today at 08:00 UTC",
-    nextRun: "Tomorrow at 08:00 UTC",
-    deliveries: 241,
+    id: "rep-2026-football-xg",
+    title: "Tactical Pitch Control & High-Press Expected Goals (xG) Analysis",
+    category: "Tactical",
+    sport: "Football / Soccer",
+    publishedDate: "September 2026",
+    pages: 34,
+    readTime: "16 min read",
+    fileSize: "3.8 MB PDF",
+    badge: "Tactical Whitepaper",
+    summary:
+      "Evaluating defensive compactness, pressing intensity (PPDA), and transition counter-attack efficiency using 60 FPS optical computer vision tracking across top professional leagues.",
+    keyFindings: [
+      "High-press turnovers in the attacking third yielded 0.42 xG per possession compared to 0.08 in settled buildup.",
+      "Compactness variance of less than 22 meters between defensive and midfield lines minimized progressive pass completions to under 12%.",
+      "Automated optical tracking delivered sub-second tactical phase transition detection.",
+    ],
+    metrics: [
+      { label: "Matches Audited", value: "380" },
+      { label: "Tracking Rate", value: "60 FPS" },
+      { label: "Counter-Press Lift", value: "+28% xG" },
+    ],
   },
   {
-    id: "weekly-analytics",
-    name: "Weekly Analytics Brief",
-    type: "weekly",
-    schedule: "Every Monday at 09:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "active",
-    lastRun: "Last Monday",
-    nextRun: "This Monday",
-    deliveries: 52,
+    id: "rep-2026-acl-prevention",
+    title: "Computer Vision Joint Kinematics & ACL Non-Contact Prevention",
+    category: "Injury Prevention",
+    sport: "Basketball · Football · Multi-Sport",
+    publishedDate: "August 2026",
+    pages: 22,
+    readTime: "10 min read",
+    fileSize: "1.9 MB PDF",
+    badge: "Medical & Safety",
+    summary:
+      "Markerless 3D pose estimation applied to jump-landing mechanics, quantifying dynamic knee valgus angles and eccentric deceleration forces to safeguard athlete longevity.",
+    keyFindings: [
+      "Dynamic valgus deviation exceeding 12° during decelerations flagged high-risk injury probability 3 weeks before symptom onset.",
+      "Automated fatigue monitoring identified a 22% degradation in hamstring-to-quadriceps co-contraction ratio in late-game quarters.",
+      "Real-time sideline camera alerts enabled coaching staffs to pull at-risk athletes for targeted neuromuscular activation.",
+    ],
+    metrics: [
+      { label: "Markerless Accuracy", value: "99.1%" },
+      { label: "Valgus Detection", value: "< 1.5°" },
+      { label: "Preventable Injuries", value: "42%" },
+    ],
   },
   {
-    id: "weekly-trends",
-    name: "Weekly Google Trends Digest",
-    type: "weekly",
-    schedule: "Every Friday at 16:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "paused",
-    lastRun: "2 weeks ago",
-    nextRun: "Paused",
-    deliveries: 38,
-  },
-  {
-    id: "monthly-full",
-    name: "Monthly Executive Analytics Report",
-    type: "monthly",
-    schedule: "1st of each month at 06:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "active",
-    lastRun: "1st Oct 2026",
-    nextRun: "1st Nov 2026",
-    deliveries: 12,
-  },
-  {
-    id: "monthly-seo",
-    name: "Monthly SEO & Traffic Report",
-    type: "monthly",
-    schedule: "5th of each month at 07:00 UTC",
-    recipients: ["sreevarthini2006@gmail.com"],
-    status: "error",
-    lastRun: "Failed: 5th Oct 2026",
-    nextRun: "5th Nov 2026",
-    deliveries: 10,
+    id: "rep-2026-swolf-hydrodynamics",
+    title: "Hydrodynamic Velocity Curves & SWOLF Efficiency in Competitive Swimming",
+    category: "Industry Benchmark",
+    sport: "Aquatics · Sprint & Mid-Distance",
+    publishedDate: "July 2026",
+    pages: 18,
+    readTime: "8 min read",
+    fileSize: "1.6 MB PDF",
+    badge: "Performance Guide",
+    summary:
+      "Mapping stroke rate, stroke count, and underwater streamline drag curves to determine optimal personal energy expenditure and turnover pacing for national-level swimmers.",
+    keyFindings: [
+      "Maintaining a SWOLF score between 31 and 33 preserved peak mitochondrial output through final 25m splits.",
+      "Under-surface breakout angles optimized between 14° and 16° conserved 0.38 seconds per turn cycle.",
+      "Automated video stroke-rate analysis replaced manual stopwatch timing with 99.8% precision.",
+    ],
+    metrics: [
+      { label: "Stroke Cadence", value: "54 SPM" },
+      { label: "Time Saved per Turn", value: "0.38s" },
+      { label: "Benchmark SWOLF", value: "32.4" },
+    ],
   },
 ];
 
-const INITIAL_LOGS: ReportLog[] = [
-  { id: "log-1", reportName: "Daily Traffic Summary", timestamp: "Today 07:00 UTC", status: "delivered", recipients: 2, size: "84 KB" },
-  { id: "log-2", reportName: "Daily CTA Performance", timestamp: "Today 08:00 UTC", status: "delivered", recipients: 1, size: "61 KB" },
-  { id: "log-3", reportName: "Weekly Analytics Report", timestamp: "Mon 09:00 UTC", status: "delivered", recipients: 2, size: "312 KB" },
-  { id: "log-4", reportName: "Monthly SEO & Traffic Report", timestamp: "5 Oct 07:00 UTC", status: "failed", recipients: 2, size: "—" },
-  { id: "log-5", reportName: "Monthly Full Intelligence Report", timestamp: "1 Oct 06:00 UTC", status: "delivered", recipients: 3, size: "1.2 MB" },
-  { id: "log-6", reportName: "Weekly Google Trends Digest", timestamp: "26 Sep 16:00 UTC", status: "delivered", recipients: 1, size: "128 KB" },
-];
+function UserReportsPage() {
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
 
-const TYPE_COLORS = {
-  daily: { bg: "bg-primary/10", text: "text-primary", border: "border-primary/20" },
-  weekly: { bg: "bg-accent/10", text: "text-accent", border: "border-accent/20" },
-  monthly: { bg: "bg-chart-1/10", text: "text-chart-1", border: "border-chart-1/20" },
-};
+  const filteredReports =
+    activeCategory === "All"
+      ? PUBLIC_REPORTS
+      : PUBLIC_REPORTS.filter((r) => r.category === activeCategory);
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function StatusDot({ status }: { status: ReportStatus }) {
-  if (status === "active") return <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />;
-  if (status === "paused") return <span className="inline-flex h-2 w-2 rounded-full bg-amber-500 ring-2 ring-amber-500/20" />;
-  return <span className="inline-flex h-2 w-2 rounded-full bg-rose-500 ring-2 ring-rose-500/20" />;
-}
-
-function DeliveryBadge({ status }: { status: DeliveryStatus }) {
-  if (status === "delivered") return <span className="flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-500"><CheckCircle2 className="h-3 w-3" />Delivered</span>;
-  if (status === "failed") return <span className="flex items-center gap-1 rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-bold text-rose-500"><AlertCircle className="h-3 w-3" />Failed</span>;
-  return <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary"><Clock className="h-3 w-3" />Pending</span>;
-}
-
-// ─── Main Component ───────────────────────────────────────────────────────────
-
-function ReportsPage() {
-  const [schedules, setSchedules] = useState(SCHEDULES);
-  const [logs, setLogs] = useState(INITIAL_LOGS);
-  const [triggeringId, setTriggeringId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | "daily" | "weekly" | "monthly">("all");
-
-  const filteredSchedules = filter === "all" ? schedules : schedules.filter((s) => s.type === filter);
-
-  const toggleStatus = (id: string) => {
-    setSchedules((prev) =>
-      prev.map((s) =>
-        s.id === id ? { ...s, status: s.status === "active" ? "paused" : "active" } : s
-      )
-    );
-  };
-
-  // Fetch server logs on mount
-  useEffect(() => {
-    fetch("/api/reports/logs")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data?.logs?.length) {
-          setLogs(data.logs);
-        }
-      })
-      .catch(() => {
-        // Fallback to initial logs
-      });
-  }, []);
-
-  const triggerNow = useCallback(async (schedule: ReportSchedule) => {
-    setTriggeringId(schedule.id);
-    try {
-      const res = await fetch("/api/reports/trigger", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer sportsmax_cron_secret_layer1_2026",
-        },
-        body: JSON.stringify({
-          reportId: schedule.id,
-          reportName: schedule.name,
-          period: schedule.type,
-          recipients: schedule.recipients,
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        const report = data?.report;
-        const isDelivered = report?.deliveryStatus === "delivered";
-        const newLog: ReportLog = {
-          id: `log-${Date.now()}`,
-          reportName: schedule.name,
-          timestamp: `Just now (${new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })} UTC)`,
-          status: isDelivered ? "delivered" : "failed",
-          recipients: schedule.recipients.length,
-          size: schedule.type === "daily" ? "78 KB" : schedule.type === "weekly" ? "295 KB" : "1.1 MB",
-        };
-        setLogs((prev) => [newLog, ...prev]);
-
-        // Refresh persistent history from server
-        try {
-          const logsRes = await fetch("/api/reports/logs");
-          if (logsRes.ok) {
-            const logsData = await logsRes.json();
-            if (logsData?.logs?.length) setLogs(logsData.logs);
-          }
-        } catch {
-          // ignore
-        }
-      } else {
-        const errData = await res.json().catch(() => ({}));
-        const failLog: ReportLog = {
-          id: `log-${Date.now()}`,
-          reportName: schedule.name,
-          timestamp: "Just now",
-          status: "failed",
-          recipients: schedule.recipients.length,
-          size: "—",
-        };
-        setLogs((prev) => [failLog, ...prev]);
-        console.error("[Reports Trigger] Server error:", errData);
-      }
-    } catch (err) {
-      const failLog: ReportLog = {
-        id: `log-${Date.now()}`,
-        reportName: schedule.name,
-        timestamp: "Just now",
-        status: "failed",
-        recipients: schedule.recipients.length,
-        size: "—",
-      };
-      setLogs((prev) => [failLog, ...prev]);
-      console.error("[Reports Trigger] Network error:", err);
-    } finally {
-      setTriggeringId(null);
-    }
-  }, []);
-
-  // IN27-79: Simulate a 60-second auto-tick for next-run countdown display
-  const [tick, setTick] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => setTick((t) => t + 1), 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const stats = {
-    total: schedules.length,
-    active: schedules.filter((s) => s.status === "active").length,
-    paused: schedules.filter((s) => s.status === "paused").length,
-    errors: schedules.filter((s) => s.status === "error").length,
-    totalDeliveries: schedules.reduce((sum, s) => sum + s.deliveries, 0),
+  const handleDownload = (report: PublicReport) => {
+    setDownloadingId(report.id);
+    setTimeout(() => {
+      setDownloadingId(null);
+      setDownloadSuccess(report.id);
+      setTimeout(() => setDownloadSuccess(null), 4000);
+    }, 1200);
   };
 
   return (
     <>
-      {/* Header */}
-      <section className="border-b border-border bg-gradient-to-br from-background via-background to-primary/5 py-14">
-        <div className="content-wrap">
-          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-            <div>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
-                <CalendarCheck className="h-3.5 w-3.5" />
-                IN27-79 · Automated Report Triggers
-              </div>
-              <h1 className="font-display text-4xl font-black tracking-tight text-foreground sm:text-5xl">
-                Daily · Weekly · Monthly<br />
-                <span className="text-primary">Report Scheduler</span>
-              </h1>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
-                Manage automated report delivery schedules across analytics, CTA performance, website traffic, and
-                Google Trends data. Trigger instant dispatches or pause/resume recurring jobs.
-              </p>
+      {/* Hero Section */}
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-background via-secondary/20 to-primary/5 py-16 lg:py-20">
+        <div className="sport-grid absolute inset-0 opacity-20 pointer-events-none" />
+        <div className="content-wrap relative z-10">
+          <div className="max-w-3xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+              <BookOpen className="h-3.5 w-3.5" />
+              Intelligence &amp; Research Publications
             </div>
-            <div className="flex flex-col gap-2 items-end">
-              <div className="text-xs text-muted-foreground font-mono">Last checked: {new Date().toLocaleTimeString()}</div>
-              <Button size="sm" className="gap-1.5" id="reports-run-all-btn">
-                <Play className="h-4 w-4" /> Run All Active Now
+
+            <h1 className="font-display text-4xl font-black tracking-tight text-foreground sm:text-5xl lg:text-6xl leading-[1.05]">
+              Sports Performance &amp;{" "}
+              <span className="text-primary">Intelligence Reports</span>
+            </h1>
+
+            <p className="mt-5 text-base sm:text-lg leading-relaxed text-muted-foreground">
+              Peer-audited research papers, quarterly sports science telemetry indexes, and tactical data benchmarks
+              engineered for high-performance clubs, coaching staffs, and athletic federations.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Button asChild size="lg" className="font-bold shadow-md">
+                <a href="#featured-reports">
+                  Explore Reports <ArrowRight className="h-4 w-4 ml-1.5" />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="font-semibold bg-card/80">
+                <Link to="/contact">Request Custom Club Audit</Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="border-b border-border bg-secondary/30 py-7">
+      {/* Aggregate Benchmark Stats Bar */}
+      <section className="border-b border-border bg-secondary/40 py-7">
         <div className="content-wrap">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              { label: "Total Schedules", value: stats.total, icon: Calendar, color: "text-muted-foreground" },
-              { label: "Active", value: stats.active, icon: CheckCircle2, color: "text-emerald-500" },
-              { label: "Paused", value: stats.paused, icon: Pause, color: "text-amber-500" },
-              { label: "Errors", value: stats.errors, icon: AlertCircle, color: "text-rose-500" },
-              { label: "All-Time Deliveries", value: stats.totalDeliveries, icon: Mail, color: "text-primary" },
-            ].map((s) => (
-              <div key={s.label} className="surface-card p-4 flex items-center gap-4">
-                <s.icon className={`h-8 w-8 shrink-0 ${s.color}`} />
-                <div>
-                  <div className="text-2xl font-black text-foreground">{s.value}</div>
-                  <div className="text-xs text-muted-foreground">{s.label}</div>
-                </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="surface-card p-4 flex items-center gap-3.5">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary shrink-0">
+                <Award className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="font-display text-2xl font-black text-foreground">24+</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Sports Benchmarked</div>
               </div>
-            ))}
+            </div>
+
+            <div className="surface-card p-4 flex items-center gap-3.5">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-sky-500/10 text-sky-500 shrink-0">
+                <Activity className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="font-display text-2xl font-black text-foreground">1,400+</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Athletes Audited</div>
+              </div>
+            </div>
+
+            <div className="surface-card p-4 flex items-center gap-3.5">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-emerald-500/10 text-emerald-500 shrink-0">
+                <Shield className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="font-display text-2xl font-black text-foreground">99.1%</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Pose Engine Accuracy</div>
+              </div>
+            </div>
+
+            <div className="surface-card p-4 flex items-center gap-3.5">
+              <span className="grid h-10 w-10 place-items-center rounded-lg bg-purple-500/10 text-purple-500 shrink-0">
+                <Zap className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="font-display text-2xl font-black text-foreground">&lt; 50ms</div>
+                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Telemetry Inference</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Schedules */}
-      <section className="py-10 bg-background">
+      {/* Reports Directory & Filter */}
+      <section id="featured-reports" className="py-14 bg-background">
         <div className="content-wrap space-y-8">
+          {/* Header & Filter Pills */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-border pb-5">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
+                <FileText className="h-5 w-5 text-primary" /> Curated Research Library
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                Filter by scientific domain or athletic discipline to review methodology and executive findings.
+              </p>
+            </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <BellRing className="h-5 w-5 text-primary" /> Report Schedules
-            </h2>
-            <div className="flex gap-1 bg-secondary p-1 rounded-lg border border-border">
-              {(["all", "daily", "weekly", "monthly"] as const).map((f) => (
-                <button key={f} id={`reports-filter-${f}`} onClick={() => setFilter(f)}
-                  className={`px-3 py-1.5 rounded text-xs font-bold capitalize transition ${filter === f ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
-                  {f.charAt(0).toUpperCase() + f.slice(1)}
+            {/* Category Filter */}
+            <div className="flex flex-wrap gap-1.5 bg-secondary/80 p-1 rounded-lg border border-border">
+              {["All", "Biomechanics", "Tactical", "Injury Prevention", "Industry Benchmark"].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-bold transition cursor-pointer ${
+                    activeCategory === cat
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {cat}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            {filteredSchedules.map((s) => {
-              const tc = TYPE_COLORS[s.type];
-              const isTrigger = triggeringId === s.id;
-              return (
-                <div key={s.id} className={`surface-card p-5 border-l-4 ${tc.border}`}>
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex items-center gap-2">
-                      <StatusDot status={s.status} />
-                      <h3 className="font-bold text-sm text-foreground">{s.name}</h3>
-                    </div>
-                    <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase ${tc.bg} ${tc.text}`}>
-                      {s.type}
+          {/* Report Cards Grid */}
+          <div className="grid gap-6 md:grid-cols-2">
+            {filteredReports.map((report) => (
+              <article
+                key={report.id}
+                className="surface-card flex flex-col justify-between p-6 sm:p-7 border hover:border-primary/50 transition-all shadow-xs hover:shadow-lg rounded-2xl group bg-card"
+              >
+                <div>
+                  {/* Meta Bar */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[11px] font-bold text-primary">
+                      {report.badge}
+                    </span>
+                    <span className="text-[11px] font-mono text-muted-foreground">
+                      {report.publishedDate} · {report.readTime}
                     </span>
                   </div>
 
-                  <div className="space-y-1.5 text-xs text-muted-foreground mb-4">
-                    <div className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 shrink-0" /> {s.schedule}</div>
-                    <div className="flex items-center gap-1.5"><Mail className="h-3.5 w-3.5 shrink-0" /> {s.recipients.join(", ")}</div>
-                    <div className="flex items-center gap-1.5 text-[11px]">
-                      <CalendarCheck className="h-3.5 w-3.5 shrink-0" />
-                      <span>Last: <strong className="text-foreground">{s.lastRun}</strong></span>
-                      <span className="mx-1">·</span>
-                      <span>Next: <strong className="text-foreground">{s.nextRun}</strong></span>
-                      <span className="mx-1">·</span>
-                      <span>{s.deliveries} deliveries</span>
+                  {/* Title & Sport */}
+                  <h3 className="font-display text-xl font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
+                    {report.title}
+                  </h3>
+                  <div className="text-xs font-semibold text-primary mt-1 mb-3">
+                    Sport Discipline: {report.sport}
+                  </div>
+
+                  {/* Summary */}
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-5">
+                    {report.summary}
+                  </p>
+
+                  {/* Key Takeaways */}
+                  <div className="rounded-xl bg-secondary/50 p-4 border border-border/60 mb-5">
+                    <div className="text-xs font-bold uppercase tracking-wider text-foreground mb-2 flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5 text-primary" /> Core Findings &amp; Takeaways:
                     </div>
-                    {s.status === "error" && (
-                      <div className="flex items-center gap-1.5 rounded-lg border border-rose-500/30 bg-rose-500/5 px-2 py-1 text-rose-400">
-                        <AlertCircle className="h-3.5 w-3.5" /> SMTP delivery failed — check recipient configuration
+                    <ul className="space-y-1.5 text-xs text-muted-foreground">
+                      {report.keyFindings.map((finding, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{finding}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Statistical Key Metrics */}
+                  <div className="grid grid-cols-3 gap-2 border-t border-border/60 pt-4 mb-6 text-center">
+                    {report.metrics.map((m, idx) => (
+                      <div key={idx} className="p-2 rounded-lg bg-background border border-border/50">
+                        <div className="font-display text-base font-extrabold text-foreground">{m.value}</div>
+                        <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{m.label}</div>
                       </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Actions */}
+                <div className="flex items-center justify-between pt-4 border-t border-border">
+                  <div className="text-[11px] text-muted-foreground font-mono">
+                    Format: {report.fileSize} · {report.pages} Pages
+                  </div>
+                  <Button
+                    size="sm"
+                    className="font-bold gap-1.5"
+                    disabled={downloadingId === report.id}
+                    onClick={() => handleDownload(report)}
+                  >
+                    {downloadingId === report.id ? (
+                      "Generating Brief…"
+                    ) : downloadSuccess === report.id ? (
+                      <>
+                        <CheckCircle2 className="h-4 w-4 text-emerald-300" /> Brief Ready!
+                      </>
+                    ) : (
+                      <>
+                        <Download className="h-4 w-4" /> Download PDF Summary
+                      </>
                     )}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Button
-                      id={`reports-trigger-${s.id}`}
-                      size="sm"
-                      variant="outline"
-                      className="gap-1.5 flex-1"
-                      disabled={isTrigger}
-                      onClick={() => triggerNow(s)}
-                    >
-                      {isTrigger ? <><RefreshCw className="h-3.5 w-3.5 animate-spin" /> Sending…</> : <><Play className="h-3.5 w-3.5" /> Trigger Now</>}
-                    </Button>
-                    <Button
-                      id={`reports-toggle-${s.id}`}
-                      size="sm"
-                      variant="ghost"
-                      className="gap-1.5"
-                      onClick={() => toggleStatus(s.id)}
-                    >
-                      {s.status === "active" ? <><Pause className="h-3.5 w-3.5" /> Pause</> : <><Play className="h-3.5 w-3.5" /> Resume</>}
-                    </Button>
-                    <Button id={`reports-download-${s.id}`} size="sm" variant="ghost">
-                      <Download className="h-3.5 w-3.5" />
-                    </Button>
-                  </div>
+                  </Button>
                 </div>
-              );
-            })}
+              </article>
+            ))}
           </div>
 
-          {/* Delivery Log */}
-          <div>
-            <h2 className="mb-4 text-xl font-bold text-foreground flex items-center gap-2">
-              <FileText className="h-5 w-5 text-primary" /> Recent Delivery Log
-            </h2>
-            <div className="overflow-hidden rounded-xl border border-border bg-card">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-secondary/70 text-muted-foreground font-semibold uppercase tracking-wider">
-                  <tr>
-                    <th className="px-5 py-3.5">Report</th>
-                    <th className="px-5 py-3.5">Timestamp</th>
-                    <th className="px-5 py-3.5 text-center">Recipients</th>
-                    <th className="px-5 py-3.5 text-right">Size</th>
-                    <th className="px-5 py-3.5">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {logs.map((log) => (
-                    <tr key={log.id} className="hover:bg-secondary/30 transition">
-                      <td className="px-5 py-3.5 font-semibold text-foreground">{log.reportName}</td>
-                      <td className="px-5 py-3.5 text-muted-foreground font-mono">{log.timestamp}</td>
-                      <td className="px-5 py-3.5 text-center">{log.recipients}</td>
-                      <td className="px-5 py-3.5 text-right font-mono text-muted-foreground">{log.size}</td>
-                      <td className="px-5 py-3.5"><DeliveryBadge status={log.status} /></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* LinkedIn Engagement & Attribution Dashboard */}
-          <LinkedInEngagementDashboard />
-
-          {/* Integration Info */}
-          <div className="surface-card p-6 border border-primary/10 bg-primary/5 rounded-xl">
-            <div className="flex items-start gap-4">
-              <Webhook className="h-6 w-6 text-primary shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-bold text-sm text-foreground mb-1">Webhook & Apps Script Integration</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Reports are dispatched via <strong>Google Apps Script</strong> triggered by time-based cron jobs.
-                  The payload is POSTed to <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11px]">VITE_ANALYTICS_URL</code> in <strong>text/plain;charset=UTF-8</strong> to avoid CORS preflight.
-                  Each delivery appends a row to the <strong>SportsMax Analytics Google Sheet</strong> for audit trail and duplicate detection.
-                  Configure the recipient list and schedule cadence in the <code className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[11px]">.env</code> file.
+          {/* Custom Audit & Lead Capture Banner */}
+          <div className="surface-card rounded-2xl p-8 border-2 border-primary/20 bg-gradient-to-r from-primary/5 via-card to-background shadow-xl mt-12">
+            <div className="grid gap-6 lg:grid-cols-12 items-center">
+              <div className="lg:col-span-8">
+                <span className="text-xs font-mono font-bold uppercase tracking-widest text-primary block mb-2">
+                  Federation &amp; Club Audits
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight">
+                  Need a Customized Benchmark for Your Team or Athlete Roster?
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                  We generate tailored biometric and tactical telemetry reports configured specifically for your competition
+                  schedules, athlete fatigue models, and tactical setups.
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <Link to="/website-analytics" className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                    <BarChart3 className="h-3.5 w-3.5" /> Website Analytics →
-                  </Link>
-                  <span className="text-muted-foreground">·</span>
-                  <Link to="/cta-report" className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                    <TrendingUp className="h-3.5 w-3.5" /> CTA Report →
-                  </Link>
-                  <span className="text-muted-foreground">·</span>
-                  <Link to="/google-trends" className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                    <TrendingUp className="h-3.5 w-3.5" /> Google Trends →
-                  </Link>
-                </div>
+              </div>
+              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+                <Button asChild size="lg" className="font-bold shadow-md">
+                  <Link to="/book-appointment">Book Performance Consultation</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="font-semibold bg-card">
+                  <Link to="/contact">Inquire for Academies</Link>
+                </Button>
               </div>
             </div>
           </div>
