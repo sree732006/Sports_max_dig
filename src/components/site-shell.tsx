@@ -5,7 +5,8 @@ import {
   ArrowRight,
   BarChart3,
   Bot,
-  BrainCircuit,
+  BookOpen,
+  Calendar,
   CalendarRange,
   CheckCircle2,
   ChevronDown,
@@ -13,6 +14,7 @@ import {
   ClipboardList,
   Database,
   FileBarChart2,
+  FileText,
   Flame,
   Gauge,
   Globe,
@@ -31,6 +33,7 @@ import {
   Trophy,
   User,
   Users,
+  Video,
   Waves,
   X,
   Zap,
@@ -285,18 +288,150 @@ export function AuthDialog({
 export function SiteHeader() {
   const { user, isAuthenticated, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [sportsHover, setSportsHover] = useState(false);
   const [platformHover, setPlatformHover] = useState(false);
-  const [analyticsHover, setAnalyticsHover] = useState(false);
+  const [solutionsHover, setSolutionsHover] = useState(false);
+  const [sportsHover, setSportsHover] = useState(false);
+  const [segmentsHover, setSegmentsHover] = useState(false);
+  const [casesHover, setCasesHover] = useState(false);
+  const [resourcesHover, setResourcesHover] = useState(false);
+  const [aboutHover, setAboutHover] = useState(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/80 bg-background/95 backdrop-blur-md shadow-xs">
-      <div className="content-wrap flex h-18 items-center justify-between gap-4">
+      <div className="content-wrap flex h-18 items-center justify-between gap-2 lg:gap-3">
         <Brand />
 
         {/* Desktop Navigation */}
-        <nav className="hidden xl:flex items-center gap-1" aria-label="Main navigation">
-          {/* Sports Dropdown (NEW PRIMARY SECTION) */}
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5" aria-label="Main navigation">
+
+
+          {/* 1. Platform */}
+          <div
+            className="relative"
+            onMouseEnter={() => setPlatformHover(true)}
+            onMouseLeave={() => setPlatformHover(false)}
+          >
+            <Link
+              to="/platform"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+            >
+              Platform
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
+
+            {platformHover && (
+              <div className="absolute left-0 top-full mt-1 w-72 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  Core Technology &amp; Architecture
+                </div>
+                <Link
+                  to="/platform"
+                  onClick={() => setPlatformHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Gauge className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">How It Works</div>
+                    <div className="text-[11px] text-muted-foreground">Data capture, optical telemetry &amp; live AI models</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/platform"
+                  onClick={() => setPlatformHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Zap className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Technology</div>
+                    <div className="text-[11px] text-muted-foreground">Biomechanics, kinematics &amp; automated ML pipelines</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/platform"
+                  onClick={() => setPlatformHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Database className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Integrations</div>
+                    <div className="text-[11px] text-muted-foreground">Garmin, Polar, Catapult, VICON, IMUs &amp; REST APIs</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/platform"
+                  onClick={() => setPlatformHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Shield className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Security</div>
+                    <div className="text-[11px] text-muted-foreground">WADA compliance, encrypted telemetry &amp; RBAC safeguards</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* 2. Solutions */}
+          <div
+            className="relative"
+            onMouseEnter={() => setSolutionsHover(true)}
+            onMouseLeave={() => setSolutionsHover(false)}
+          >
+            <Link
+              to="/analytics"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+            >
+              Solutions
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
+
+            {solutionsHover && (
+              <div className="absolute left-0 top-full mt-1 w-76 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  High-Level Service Offerings
+                </div>
+                <Link
+                  to="/analytics"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <BarChart3 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Analytics Services</div>
+                    <div className="text-[11px] text-muted-foreground">Session deep-dives, load ratios &amp; AI automated cues</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/coaches"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Bot className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Coaching Services</div>
+                    <div className="text-[11px] text-muted-foreground">Tactical whiteboards, drill assignments &amp; athlete feedback</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/ecosystem"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Trophy className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
+                      Olympic &amp; Elite Programs
+                      <span className="rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[9px] font-bold px-1.5 py-0.2">Gold</span>
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">Podium tracking, quadrennial macrocycles &amp; peak timing</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* 3. Sports */}
           <div
             className="relative"
             onMouseEnter={() => setSportsHover(true)}
@@ -304,113 +439,57 @@ export function SiteHeader() {
           >
             <Link
               to="/sports"
-              className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-xs font-bold uppercase tracking-wider text-foreground hover:bg-secondary transition"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
             >
-              <span className="flex items-center gap-1 text-primary">
-                <Flame className="h-4 w-4 fill-primary/20 text-primary" />
+              <span className="flex items-center gap-1">
+                <Flame className="h-3.5 w-3.5 fill-primary/20 text-primary" />
                 Sports
               </span>
-              <span className="rounded bg-primary/15 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-primary">
+              <span className="rounded bg-primary/15 px-1 py-0.2 text-[9px] font-black uppercase text-primary">
                 New
               </span>
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
             {sportsHover && (
-              <div className="absolute left-0 top-full mt-1 w-[780px] rounded-xl border border-border bg-card p-6 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
-                <div className="grid grid-cols-3 gap-6">
+              <div className="absolute left-0 top-full mt-1 w-[720px] rounded-xl border border-border bg-card p-5 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="grid grid-cols-3 gap-5">
                   {/* Individual Sports Column */}
                   <div>
-                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-3">
+                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-2.5">
                       <span className="text-xs font-bold uppercase tracking-wider text-foreground">
                         Individual Sports
                       </span>
-                      <Link
-                        to="/sports"
-                        className="text-[11px] font-semibold text-primary hover:underline"
-                        onClick={() => setSportsHover(false)}
-                      >
-                        All
-                      </Link>
                     </div>
-                    <ul className="grid gap-1 text-xs">
+                    <ul className="grid gap-2 text-xs">
                       <li>
                         <Link
                           to="/sports/running"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="h-2 w-2 rounded-full bg-primary" />
-                            <span className="font-semibold group-hover:text-primary">Running</span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">GPS & Pace</span>
+                          <span>🏃 Running</span>
+                          <span className="text-[10px] text-muted-foreground">GPS &amp; Pace</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/sports/swimming"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <Waves className="h-3.5 w-3.5 text-accent" />
-                            <span className="font-semibold group-hover:text-primary">Swimming</span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">SWOLF & Turns</span>
+                          <span>🏊 Swimming</span>
+                          <span className="text-[10px] text-muted-foreground">SWOLF &amp; Splits</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/sports/athletics/high-jump"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <Activity className="h-3.5 w-3.5 text-chart-3" />
-                            <span className="font-semibold group-hover:text-primary">High Jump</span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">Takeoff & Angle</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/athletics/high-jump"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Sprints (100m–400m)</span>
-                          <span className="text-[10px]">Acceleration</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/running"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Distance & Marathon</span>
-                          <span className="text-[10px]">Endurance</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/running"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Cycling</span>
-                          <span className="text-[10px]">Watts / FTP</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Tennis, Golf & Combat</span>
-                          <span className="text-[10px]">More &rarr;</span>
+                          <span>👟 High Jump</span>
+                          <span className="text-[10px] text-muted-foreground">Kinematics</span>
                         </Link>
                       </li>
                     </ul>
@@ -418,149 +497,70 @@ export function SiteHeader() {
 
                   {/* Team Sports Column */}
                   <div>
-                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-3">
+                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-2.5">
                       <span className="text-xs font-bold uppercase tracking-wider text-foreground">
                         Team Sports
                       </span>
-                      <Link
-                        to="/sports"
-                        className="text-[11px] font-semibold text-primary hover:underline"
-                        onClick={() => setSportsHover(false)}
-                      >
-                        All
-                      </Link>
                     </div>
-                    <ul className="grid gap-1 text-xs">
+                    <ul className="grid gap-2 text-xs">
                       <li>
                         <Link
                           to="/sports/football"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <Goal className="h-3.5 w-3.5 text-primary" />
-                            <span className="font-semibold group-hover:text-primary">
-                              Football / Soccer
-                            </span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">xG & Press</span>
+                          <span>⚽ Football / Soccer</span>
+                          <span className="text-[10px] text-muted-foreground">xG &amp; Passing</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/sports/hockey"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <ShieldAlert className="h-3.5 w-3.5 text-chart-4" />
-                            <span className="font-semibold group-hover:text-primary">Hockey</span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">Shifts & Corsi</span>
+                          <span>🏒 Hockey</span>
+                          <span className="text-[10px] text-muted-foreground">Zone Control</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/sports/relay"
                           onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-foreground group"
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
                         >
-                          <div className="flex items-center gap-2">
-                            <Milestone className="h-3.5 w-3.5 text-accent" />
-                            <span className="font-semibold group-hover:text-primary">
-                              Relay & Combined
-                            </span>
-                          </div>
-                          <span className="text-[10px] text-muted-foreground">Transfer Box</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/football"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Basketball</span>
-                          <span className="text-[10px]">True Shooting</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/relay"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Volleyball</span>
-                          <span className="text-[10px]">Spike Reach</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/football"
-                          onClick={() => setSportsHover(false)}
-                          className="flex items-center justify-between rounded-md p-2 hover:bg-secondary text-muted-foreground hover:text-foreground"
-                        >
-                          <span>Cricket & Rugby</span>
-                          <span className="text-[10px]">Telemetry</span>
+                          <span>🔄 Relay Events</span>
+                          <span className="text-[10px] text-muted-foreground">Handover Speed</span>
                         </Link>
                       </li>
                     </ul>
                   </div>
 
-                  {/* Game Analysis Column */}
-                  <div className="bg-secondary/40 rounded-lg p-3.5 border border-border/60">
-                    <span className="text-xs font-bold uppercase tracking-wider text-foreground block mb-2">
-                      Game Analysis
-                    </span>
-                    <ul className="grid gap-1.5 text-xs">
-                      <li>
-                        <Link
-                          to="/sports/game-analysis"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary block"
-                        >
-                          Match Dashboard
-                        </Link>
-                        <span className="text-[10px] text-muted-foreground">Live telemetry</span>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/game-analysis"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary block"
-                        >
-                          Tactical Insights
-                        </Link>
-                        <span className="text-[10px] text-muted-foreground">AI formation detection</span>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/game-analysis"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary block"
-                        >
-                          Player & Team Comparison
-                        </Link>
-                        <span className="text-[10px] text-muted-foreground">Radar matrices</span>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/game-analysis"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary block"
-                        >
-                          Event Detection & Reports
-                        </Link>
-                        <span className="text-[10px] text-muted-foreground">Automated tags</span>
-                      </li>
-                    </ul>
-                    <div className="mt-4 pt-3 border-t border-border">
+                  {/* Game Analysis Suite & All Sports */}
+                  <div className="bg-secondary/40 rounded-lg p-3 flex flex-col justify-between">
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-foreground block mb-2">
+                        Game Analysis Suite
+                      </span>
+                      <p className="text-[11px] text-muted-foreground mb-3">
+                        Real-time match telemetry, formation detection &amp; tactical event reports.
+                      </p>
+                      <Link
+                        to="/sports/game-analysis"
+                        onClick={() => setSportsHover(false)}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                      >
+                        Launch Match Suite &rarr;
+                      </Link>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t border-border/80">
                       <Link
                         to="/sports"
                         onClick={() => setSportsHover(false)}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-foreground hover:text-primary"
                       >
-                        All Sports Directory <ArrowRight className="h-3.5 w-3.5" />
+                        All Sports Directory <ArrowRight className="h-3.5 w-3.5 text-primary" />
                       </Link>
                     </div>
                   </div>
@@ -569,213 +569,292 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* Platform Dropdown */}
+          {/* 4. ICP */}
           <div
             className="relative"
-            onMouseEnter={() => setPlatformHover(true)}
-            onMouseLeave={() => setPlatformHover(false)}
+            onMouseEnter={() => setSegmentsHover(true)}
+            onMouseLeave={() => setSegmentsHover(false)}
           >
-            <Link
-              to="/platform"
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
             >
-              Platform
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-            </Link>
+              ICP
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </button>
 
-            {platformHover && (
-              <div className="absolute left-0 top-full mt-1 w-64 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+            {segmentsHover && (
+              <div className="absolute left-0 top-full mt-1 w-76 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  Tailored by User Type
+                </div>
                 <Link
-                  to="/platform"
-                  onClick={() => setPlatformHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
+                  to="/athletes"
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <div className="font-semibold text-xs text-foreground">Overview</div>
-                  <div className="text-[11px] text-muted-foreground">The architecture of SportsMax</div>
-                </Link>
-                <Link
-                  to="/platform"
-                  onClick={() => setPlatformHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">How It Works</div>
-                  <div className="text-[11px] text-muted-foreground">Data capture, AI models & feedback</div>
-                </Link>
-                <Link
-                  to="/platform"
-                  onClick={() => setPlatformHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Technology</div>
-                  <div className="text-[11px] text-muted-foreground">Kinematics, computer vision & ML</div>
-                </Link>
-                <Link
-                  to="/platform"
-                  onClick={() => setPlatformHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Integrations</div>
-                  <div className="text-[11px] text-muted-foreground">Garmin, Polar, Catapult & APIs</div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Analytics Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setAnalyticsHover(true)}
-            onMouseLeave={() => setAnalyticsHover(false)}
-          >
-            <Link
-              to="/analytics"
-              className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-            >
-              Analytics
-              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-            </Link>
-
-            {analyticsHover && (
-              <div className="absolute left-0 top-full mt-1 w-68 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
-                <Link
-                  to="/analytics"
-                  onClick={() => setAnalyticsHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Performance Insights</div>
-                  <div className="text-[11px] text-muted-foreground">Session deep-dives & telemetry</div>
-                </Link>
-                <Link
-                  to="/analytics"
-                  onClick={() => setAnalyticsHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Training Load & Recovery</div>
-                  <div className="text-[11px] text-muted-foreground">Acute vs. Chronic load ratios</div>
-                </Link>
-                <Link
-                  to="/analytics"
-                  onClick={() => setAnalyticsHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Comparative Analytics</div>
-                  <div className="text-[11px] text-muted-foreground">Benchmark against cohorts</div>
-                </Link>
-                <Link
-                  to="/analytics"
-                  onClick={() => setAnalyticsHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-foreground">Trend & Pattern Detection</div>
-                  <div className="text-[11px] text-muted-foreground">Macrocycle tracking</div>
-                </Link>
-                <Link
-                  to="/analytics"
-                  onClick={() => setAnalyticsHover(false)}
-                  className="block rounded-md p-2.5 hover:bg-secondary transition"
-                >
-                  <div className="font-semibold text-xs text-primary flex items-center gap-1">
-                    <Sparkles className="h-3.5 w-3.5" /> AI Recommendations
+                  <User className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Athletes</div>
+                    <div className="text-[11px] text-muted-foreground">Self-tracking, PR archives &amp; biomechanics feedback</div>
                   </div>
-                  <div className="text-[11px] text-muted-foreground">Automated coaching cues</div>
+                </Link>
+                <Link
+                  to="/coaches"
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Users className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Coaches &amp; Teams</div>
+                    <div className="text-[11px] text-muted-foreground">Roster management, workload monitoring &amp; game strategy</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/institution"
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Milestone className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground flex items-center gap-1">
+                      Institutions / NOCs
+                      <span className="rounded bg-primary/20 text-primary text-[9px] font-bold px-1.5 py-0.2">Elite</span>
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">Universities, academies &amp; National Olympic Committees</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/ecosystem"
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Globe className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Federations</div>
+                    <div className="text-[11px] text-muted-foreground">National governing bodies, benchmarking &amp; talent IDs</div>
+                  </div>
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Athletes */}
-          <Link
-            to="/athletes"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+          {/* 5. Case Studies & Guides (Replaces Pricing) */}
+          <div
+            className="relative"
+            onMouseEnter={() => setCasesHover(true)}
+            onMouseLeave={() => setCasesHover(false)}
           >
-            Athletes
-          </Link>
+            <Link
+              to="/resources"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
+            >
+              Case Studies &amp; Guides
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
 
-          {/* Coaches & Teams */}
-          <Link
-            to="/coaches"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+            {casesHover && (
+              <div className="absolute left-0 top-full mt-1 w-84 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  Proof &amp; Education
+                </div>
+                <Link
+                  to="/resources"
+                  onClick={() => setCasesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <FileText className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Case Studies</div>
+                    <div className="text-[11px] text-muted-foreground">National federation implementations &amp; high-performance deployments</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/resources"
+                  onClick={() => setCasesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Trophy className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Success Stories</div>
+                    <div className="text-[11px] text-muted-foreground">Athlete, team and coach outcome highlights with verified metrics</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/resources"
+                  onClick={() => setCasesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Video className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Video Guides</div>
+                    <div className="text-[11px] text-muted-foreground">How-to walkthroughs, coaching cue demos &amp; analytics tutorials</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* 6. Resources */}
+          <div
+            className="relative"
+            onMouseEnter={() => setResourcesHover(true)}
+            onMouseLeave={() => setResourcesHover(false)}
           >
-            Coaches & Teams
-          </Link>
+            <Link
+              to="/resources"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+            >
+              Resources
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
 
-          {/* Ecosystem */}
-          <Link
-            to="/ecosystem"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
+            {resourcesHover && (
+              <div className="absolute left-0 top-full mt-1 w-76 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  Knowledge &amp; Intelligence Reports
+                </div>
+                <Link
+                  to="/resources"
+                  onClick={() => setResourcesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Sparkles className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Insights</div>
+                    <div className="text-[11px] text-muted-foreground">Research whitepapers &amp; sports science discoveries</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/reports"
+                  id="nav-site-reports"
+                  onClick={() => setResourcesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <CalendarRange className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Reports</div>
+                    <div className="text-[11px] text-muted-foreground">Quarterly benchmark indexes &amp; athletic telemetry</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/resources"
+                  onClick={() => setResourcesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <BookOpen className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Blog</div>
+                    <div className="text-[11px] text-muted-foreground">Expert articles from elite trainers and physiologists</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/resources"
+                  onClick={() => setResourcesHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <FileBarChart2 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Documentation</div>
+                    <div className="text-[11px] text-muted-foreground">SDK guides, sensor protocols &amp; telemetry API specs</div>
+                  </div>
+                </Link>
+
+                {/* Additional Preserved Tools */}
+                <div className="mt-2 pt-2 border-t border-border grid grid-cols-2 gap-1.5">
+                  <Link
+                    to="/google-trends"
+                    id="nav-google-trends"
+                    onClick={() => setResourcesHover(false)}
+                    className="flex items-center gap-1.5 rounded-md p-1.5 hover:bg-secondary text-[11px] font-medium text-foreground hover:text-primary transition"
+                  >
+                    <TrendingUp className="h-3.5 w-3.5 text-primary" />
+                    <span>Google Trends</span>
+                  </Link>
+                  <Link
+                    to="/cta-report"
+                    id="nav-cta-reports"
+                    onClick={() => setResourcesHover(false)}
+                    className="flex items-center gap-1.5 rounded-md p-1.5 hover:bg-secondary text-[11px] font-medium text-foreground hover:text-primary transition"
+                  >
+                    <ClipboardList className="h-3.5 w-3.5 text-primary" />
+                    <span>CTA Reports</span>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 7. About */}
+          <div
+            className="relative"
+            onMouseEnter={() => setAboutHover(true)}
+            onMouseLeave={() => setAboutHover(false)}
           >
-            Ecosystem
-          </Link>
+            <Link
+              to="/about"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+            >
+              About
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
 
-          {/* Institution (School & College) */}
-          <Link
-            to="/institution"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition flex items-center gap-1"
-          >
-            <span className="rounded bg-primary/10 text-primary text-[10px] font-bold px-1 py-0.2">New</span>
-            Institution
-          </Link>
-
-          {/* Pricing */}
-          <Link
-            to="/pricing"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            Pricing
-          </Link>
-
-          {/* About */}
-          <Link
-            to="/about"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            About
-          </Link>
-
-          {/* Resources */}
-          <Link
-            to="/resources"
-            className="rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            Resources
-          </Link>
-
-          {/* ── Report Pages divider ── */}
-          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
-
-          {/* Site Reports */}
-          <Link
-            to="/reports"
-            id="nav-site-reports"
-            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            <CalendarRange className="h-3.5 w-3.5 text-primary" />
-            Reports
-          </Link>
-
-          {/* Google Trends */}
-          <Link
-            to="/google-trends"
-            id="nav-google-trends"
-            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            <TrendingUp className="h-3.5 w-3.5 text-primary" />
-            Trends
-          </Link>
-
-          {/* CTA Reports */}
-          <Link
-            to="/cta-report"
-            id="nav-cta-reports"
-            className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold text-foreground hover:bg-secondary transition"
-          >
-            <ClipboardList className="h-3.5 w-3.5 text-primary" />
-            CTA Reports
-          </Link>
+            {aboutHover && (
+              <div className="absolute left-0 top-full mt-1 w-64 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  Company &amp; Credibility
+                </div>
+                <Link
+                  to="/about"
+                  onClick={() => setAboutHover(false)}
+                  className="block rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <div className="font-semibold text-xs text-foreground">Mission</div>
+                  <div className="text-[11px] text-muted-foreground">Democratizing Olympic-level intelligence</div>
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setAboutHover(false)}
+                  className="block rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <div className="font-semibold text-xs text-foreground">Team</div>
+                  <div className="text-[11px] text-muted-foreground">World-class sports scientists &amp; engineers</div>
+                </Link>
+                <Link
+                  to="/ecosystem"
+                  onClick={() => setAboutHover(false)}
+                  className="block rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <div className="font-semibold text-xs text-foreground">Partners</div>
+                  <div className="text-[11px] text-muted-foreground">Federations, hardware brands &amp; universities</div>
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={() => setAboutHover(false)}
+                  className="block rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <div className="font-semibold text-xs text-foreground">Contact</div>
+                  <div className="text-[11px] text-muted-foreground">High-performance consultation &amp; support</div>
+                </Link>
+              </div>
+            )}
+          </div>
         </nav>
 
         {/* Action Controls */}
-        <div className="hidden xl:flex items-center gap-2.5">
+        <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
+          {/* Highlighted Book Appointment Button */}
+          <Button
+            asChild
+            size="sm"
+            className="font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md shadow-emerald-900/20 border border-emerald-400/30 px-3 transition-transform hover:scale-[1.02]"
+          >
+            <Link to="/book-appointment">
+              <Calendar className="h-3.5 w-3.5 mr-1" />
+              Book Appointment
+            </Link>
+          </Button>
+
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
               <Link
@@ -813,9 +892,9 @@ export function SiteHeader() {
             </div>
           )}
 
-          <Button asChild size="sm" className="font-semibold text-xs shadow-sm">
+          <Button asChild size="sm" className="font-semibold text-xs shadow-sm px-3">
             <Link to="/sports">
-              Explore Sports <ArrowRight className="h-3.5 w-3.5 ml-1" />
+              Get Started <ArrowRight className="h-3.5 w-3.5 ml-1" />
             </Link>
           </Button>
         </div>
@@ -825,21 +904,22 @@ export function SiteHeader() {
           aria-label="Open mobile menu"
           variant="outline"
           size="icon"
-          className="xl:hidden bg-background"
+          className="lg:hidden bg-background"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Clean 7 Sections + Preserved Tools) */}
       {mobileOpen && (
-        <div className="border-t border-border bg-card/98 backdrop-blur-xl p-5 xl:hidden max-h-[85vh] overflow-y-auto">
+        <div className="border-t border-border bg-card/98 backdrop-blur-xl p-5 lg:hidden max-h-[85vh] overflow-y-auto">
           <div className="grid gap-4">
+            {/* Primary Sports Hub Quick Access */}
             <div className="rounded-lg bg-primary/10 p-3 border border-primary/20">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                  Primary Sports Hub
+                <span className="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-1">
+                  <Flame className="h-3.5 w-3.5 fill-primary/20" /> Sports Hub
                 </span>
                 <span className="rounded bg-primary text-primary-foreground px-1.5 py-0.5 text-[9px] font-black uppercase">
                   New
@@ -908,111 +988,121 @@ export function SiteHeader() {
               </div>
             </div>
 
+            {/* 7 Core Structured Sections */}
             <div className="grid gap-1 border-t border-border pt-3">
               <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-2">
-                Main Sections
+                Navigation Menu
               </span>
-              <Link
-                to="/platform"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Platform Architecture
-              </Link>
-              <Link
-                to="/analytics"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Analytics & Insights
-              </Link>
-              <Link
-                to="/athletes"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Athlete Profiles & Bests
-              </Link>
-              <Link
-                to="/coaches"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Coaches & Teams
-              </Link>
-              <Link
-                to="/institution"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center justify-between"
-              >
-                <span>Institution (School & College)</span>
-                <span className="rounded bg-primary/20 text-primary text-[10px] font-bold px-1.5 py-0.5">Hierarchy</span>
-              </Link>
-              <Link
-                to="/ecosystem"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Sports Ecosystem
-              </Link>
-              <Link
-                to="/pricing"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Pricing Plans
-              </Link>
-              <Link
-                to="/resources"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                Resources & Documentation
-              </Link>
-              <Link
-                to="/about"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary"
-              >
-                About Company & Mission
-              </Link>
+
+              {/* 1. Platform */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/platform"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  Platform
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• How it Works</Link>
+                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Technology</Link>
+                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Integrations</Link>
+                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Security</Link>
+                </div>
+              </div>
+
+              {/* 2. Solutions */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/analytics"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  Solutions
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
+                  <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Analytics Services</Link>
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Coaching Services</Link>
+                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Olympic &amp; Elite Programs</Link>
+                </div>
+              </div>
+
+              {/* 3. ICP */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <div className="rounded-md px-3 py-1.5 text-sm font-semibold text-foreground">
+                  ICP
+                </div>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/athletes" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Athletes</Link>
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Coaches &amp; Teams</Link>
+                  <Link to="/institution" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Institutions / NOCs</Link>
+                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Federations</Link>
+                </div>
+              </div>
+
+              {/* 4. Case Studies & Guides */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/resources"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  Case Studies &amp; Guides
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Case Studies (National Federations)</Link>
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Success Stories (Athlete Outcomes)</Link>
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Video Guides (Tutorials &amp; Demos)</Link>
+                </div>
+              </div>
+
+              {/* 5. Resources */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/resources"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  Resources &amp; Intelligence
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Insights</Link>
+                  <Link to="/reports" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 font-medium text-foreground">• Reports</Link>
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Blog</Link>
+                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Documentation</Link>
+                  <Link to="/google-trends" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Google Trends</Link>
+                  <Link to="/cta-report" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• CTA Reports</Link>
+                </div>
+              </div>
+
+              {/* 6. About */}
+              <div className="pb-2 pt-1">
+                <Link
+                  to="/about"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  About SportsMax
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/about" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Mission</Link>
+                  <Link to="/about" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Team</Link>
+                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Partners</Link>
+                  <Link to="/contact" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Contact</Link>
+                </div>
+              </div>
             </div>
 
-            {/* ── Reports & Data section ── */}
-            <div className="grid gap-1 border-t border-border pt-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-2">
-                Reports &amp; Data
-              </span>
-              <Link
-                to="/reports"
-                id="mobile-nav-site-reports"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
+            <div className="mt-2 pt-2 border-t border-border flex flex-col gap-2">
+              <Button
+                asChild
+                className="w-full font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md shadow-emerald-900/20 border border-emerald-400/30"
               >
-                <CalendarRange className="h-4 w-4 text-primary shrink-0" />
-                Site Reports
-              </Link>
-              <Link
-                to="/google-trends"
-                id="mobile-nav-google-trends"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
-              >
-                <TrendingUp className="h-4 w-4 text-primary shrink-0" />
-                Google Trends
-              </Link>
-              <Link
-                to="/cta-report"
-                id="mobile-nav-cta-reports"
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-3 py-2 text-sm font-semibold hover:bg-secondary flex items-center gap-2"
-              >
-                <ClipboardList className="h-4 w-4 text-primary shrink-0" />
-                CTA Reports
-              </Link>
-            </div>
-
-            <div className="mt-2 pt-2 border-t border-border">
+                <Link to="/book-appointment" onClick={() => setMobileOpen(false)}>
+                  <Calendar className="h-4 w-4 mr-1.5" />
+                  Book Appointment
+                </Link>
+              </Button>
               {isAuthenticated && user ? (
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between rounded-lg bg-secondary/80 p-2.5">
@@ -1093,15 +1183,10 @@ export function SiteFooter() {
             </p>
           </div>
 
-          {/* Col 2: Platform */}
+          {/* Col 2: Platform & Solutions */}
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Platform</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">Platform &amp; Solutions</h3>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
-              <li>
-                <Link to="/platform" className="hover:text-primary transition">
-                  Overview
-                </Link>
-              </li>
               <li>
                 <Link to="/platform" className="hover:text-primary transition">
                   How It Works
@@ -1109,23 +1194,33 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/platform" className="hover:text-primary transition">
-                  Technology
+                  Technology &amp; Security
                 </Link>
               </li>
               <li>
                 <Link to="/platform" className="hover:text-primary transition">
-                  Integrations
+                  Integrations &amp; Sensors
                 </Link>
               </li>
               <li>
-                <Link to="/pricing" className="hover:text-primary transition">
-                  Pricing & Plans
+                <Link to="/analytics" className="hover:text-primary transition">
+                  Analytics Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/coaches" className="hover:text-primary transition">
+                  Coaching Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/ecosystem" className="hover:text-primary transition">
+                  Olympic &amp; Elite Programs
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Sports (NEW PRIMARY SECTION) */}
+          {/* Col 3: Sports Hub */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-1.5">
               <span>Sports Hub</span>
@@ -1136,7 +1231,7 @@ export function SiteFooter() {
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
               <li>
                 <Link to="/sports/running" className="hover:text-primary transition font-medium">
-                  Running (GPS & Pace)
+                  Running (GPS &amp; Pace)
                 </Link>
               </li>
               <li>
@@ -1146,7 +1241,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/sports/athletics/high-jump" className="hover:text-primary transition">
-                  High Jump & Track
+                  High Jump &amp; Track
                 </Link>
               </li>
               <li>
@@ -1156,16 +1251,16 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/sports/hockey" className="hover:text-primary transition">
-                  Hockey & Ice Sports
+                  Hockey &amp; Ice Sports
                 </Link>
               </li>
               <li>
                 <Link to="/sports/relay" className="hover:text-primary transition">
-                  Relay & Combined
+                  Relay &amp; Combined
                 </Link>
               </li>
               <li>
-                <Link to="/sports/game-analysis" className="hover:text-primary transition">
+                <Link to="/sports/game-analysis" className="hover:text-primary transition font-medium text-foreground">
                   Game Analysis Suite
                 </Link>
               </li>
@@ -1180,74 +1275,74 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Col 4: Analytics & Athletes */}
+          {/* Col 4: ICP & Case Studies */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-              Intelligence
+              ICP &amp; Proof
             </h3>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
               <li>
-                <Link to="/analytics" className="hover:text-primary transition">
-                  Performance Insights
-                </Link>
-              </li>
-              <li>
-                <Link to="/analytics" className="hover:text-primary transition">
-                  Load & Recovery
-                </Link>
-              </li>
-              <li>
-                <Link to="/analytics" className="hover:text-primary transition">
-                  AI Recommendations
-                </Link>
-              </li>
-              <li>
                 <Link to="/athletes" className="hover:text-primary transition">
-                  Athletes Dashboard
+                  Athletes Portal
                 </Link>
               </li>
               <li>
                 <Link to="/coaches" className="hover:text-primary transition">
-                  Coaches & Teams
+                  Coaches &amp; Teams
+                </Link>
+              </li>
+              <li>
+                <Link to="/institution" className="hover:text-primary transition">
+                  Institutions &amp; NOCs
                 </Link>
               </li>
               <li>
                 <Link to="/ecosystem" className="hover:text-primary transition">
-                  Sports Ecosystem
+                  Governing Federations
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources" className="hover:text-primary transition font-medium text-foreground">
+                  Case Studies &amp; Success Stories
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources" className="hover:text-primary transition">
+                  Video Guides &amp; Tutorials
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 5: Company & Legal */}
+          {/* Col 5: Resources & Company */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-              Company & Legal
+              Resources &amp; Company
             </h3>
             <ul className="mt-4 grid gap-2.5 text-sm text-muted-foreground">
               <li>
+                <Link to="/reports" className="hover:text-primary transition">
+                  Telemetry Reports
+                </Link>
+              </li>
+              <li>
+                <Link to="/google-trends" className="hover:text-primary transition">
+                  Google Trends
+                </Link>
+              </li>
+              <li>
+                <Link to="/cta-report" className="hover:text-primary transition">
+                  CTA Reports
+                </Link>
+              </li>
+              <li>
                 <Link to="/about" className="hover:text-primary transition">
-                  Company & Team
-                </Link>
-              </li>
-              <li>
-                <Link to="/careers" className="hover:text-primary transition">
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link to="/resources" className="hover:text-primary transition">
-                  API & Docs
-                </Link>
-              </li>
-              <li>
-                <Link to="/help" className="hover:text-primary transition">
-                  Help Center
+                  Mission &amp; Team
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-primary transition">
-                  Contact
+                  Contact Support
                 </Link>
               </li>
               <li>
@@ -1260,12 +1355,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/privacy" className="hover:text-primary transition">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="hover:text-primary transition">
-                  Terms of Service
+                  Privacy &amp; Terms
                 </Link>
               </li>
             </ul>

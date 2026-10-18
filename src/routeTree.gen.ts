@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AthletePerformanceRouteImport } from './routes/athlete-performance'
 import { Route as AthletesRouteImport } from './routes/athletes'
+import { Route as BookAppointmentRouteImport } from './routes/book-appointment'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as CoachesRouteImport } from './routes/coaches'
 import { Route as CommunityRouteImport } from './routes/community'
@@ -69,6 +70,11 @@ const AthletePerformanceRoute = AthletePerformanceRouteImport.update({
 const AthletesRoute = AthletesRouteImport.update({
   id: '/athletes',
   path: '/athletes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookAppointmentRoute = BookAppointmentRouteImport.update({
+  id: '/book-appointment',
+  path: '/book-appointment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/athlete-performance': typeof AthletePerformanceRoute
   '/athletes': typeof AthletesRoute
+  '/book-appointment': typeof BookAppointmentRoute
   '/careers': typeof CareersRoute
   '/coaches': typeof CoachesRoute
   '/community': typeof CommunityRoute
@@ -271,6 +278,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/athlete-performance': typeof AthletePerformanceRoute
   '/athletes': typeof AthletesRoute
+  '/book-appointment': typeof BookAppointmentRoute
   '/careers': typeof CareersRoute
   '/coaches': typeof CoachesRoute
   '/community': typeof CommunityRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/athlete-performance': typeof AthletePerformanceRoute
   '/athletes': typeof AthletesRoute
+  '/book-appointment': typeof BookAppointmentRoute
   '/careers': typeof CareersRoute
   '/coaches': typeof CoachesRoute
   '/community': typeof CommunityRoute
@@ -350,6 +359,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/athlete-performance'
     | '/athletes'
+    | '/book-appointment'
     | '/careers'
     | '/coaches'
     | '/community'
@@ -388,6 +398,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/athlete-performance'
     | '/athletes'
+    | '/book-appointment'
     | '/careers'
     | '/coaches'
     | '/community'
@@ -426,6 +437,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/athlete-performance'
     | '/athletes'
+    | '/book-appointment'
     | '/careers'
     | '/coaches'
     | '/community'
@@ -465,6 +477,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   AthletePerformanceRoute: typeof AthletePerformanceRoute
   AthletesRoute: typeof AthletesRoute
+  BookAppointmentRoute: typeof BookAppointmentRoute
   CareersRoute: typeof CareersRoute
   CoachesRoute: typeof CoachesRoute
   CommunityRoute: typeof CommunityRoute
@@ -533,6 +546,13 @@ declare module '@tanstack/react-router' {
       path: '/athletes'
       fullPath: '/athletes'
       preLoaderRoute: typeof AthletesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book-appointment': {
+      id: '/book-appointment'
+      path: '/book-appointment'
+      fullPath: '/book-appointment'
+      preLoaderRoute: typeof BookAppointmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -761,6 +781,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   AthletePerformanceRoute: AthletePerformanceRoute,
   AthletesRoute: AthletesRoute,
+  BookAppointmentRoute: BookAppointmentRoute,
   CareersRoute: CareersRoute,
   CoachesRoute: CoachesRoute,
   CommunityRoute: CommunityRoute,

@@ -34,32 +34,93 @@ const articles = [
 ];
 
 const caseStudies = [
-  { team: "Metropolitan Athletics Club", metric: "-42% Soft Tissue Injuries", story: "How continuous ACWR tracking kept 32 sprinters healthy through national championships." },
-  { team: "Premier League Division 1", metric: "+1.34 xG Differential", story: "Implementing real-time press resistance heatmaps during live tactical halftime debriefs." },
+  {
+    type: "National Federation Implementation",
+    team: "French Athletics Federation (FFA)",
+    metric: "-42% Soft Tissue Injuries",
+    deployment: "High-Performance Olympic Center — Paris",
+    story: "Deployed optical biomechanics & continuous ACWR tracking across 38 national squad sprinters and decathletes preparing for European and World Championships."
+  },
+  {
+    type: "High-Performance Center Deployment",
+    team: "National Swimming Institute (FIN)",
+    metric: "+8.4% Turn Efficiency & Stroke Index",
+    deployment: "Federal Aquatic Training Center",
+    story: "Implemented multi-angle Swolf and stroke rate computer vision cameras during live taper cycles across 100m and 200m freestyle teams."
+  },
+  {
+    type: "Club & League Integration",
+    team: "Premier League Elite Academy",
+    metric: "+1.34 xG Differential & 22% Faster Press Recoveries",
+    deployment: "First Team & Under-21 Tactical Analysis Center",
+    story: "Integrated automated pitch telemetry and real-time press resistance heatmaps into halftime coaching headsets and debrief monitors."
+  },
+];
+
+const successStories = [
+  {
+    athlete: "Elena Rostova (Marathon / 10,000m)",
+    badge: "World Championships Finalist",
+    metric: "2h 19m 40s (PR -2m 15s)",
+    quote: "SportsMax ACWR and live biomechanical fatigue detection showed my coach exactly when my ground contact time became asymmetrical.",
+    tags: ["Running", "ACWR Load", "GPS Telemetry"]
+  },
+  {
+    athlete: "Men's 4x100m National Relay Squad",
+    badge: "Continental Gold Medalists",
+    metric: "0.28s Shaved on Handover Window",
+    quote: "Optical velocity synchronization in the exchange zone eliminated our deceleration spikes between runner 2 and 3.",
+    tags: ["Relay", "Optical Tracking", "Split Telemetry"]
+  },
+  {
+    athlete: "High Jump Olympic Development Program",
+    badge: "National Podium Sweep",
+    metric: "2.34m Clearance Peak (+5cm PR)",
+    quote: "Curve acceleration and takeoff angle telemetry gave our jumpers millimeter precision on bar clearance apex points.",
+    tags: ["High Jump", "Kinematics", "Apex Trajectory"]
+  }
+];
+
+const videoGuides = [
+  {
+    title: "Platform Walkthrough: Setting Up Olympic Macrocycles",
+    duration: "14:20",
+    category: "Platform Walkthrough",
+    description: "Full guide on structuring 4-year Olympic cycles, peak timing weeks, and connecting squad wearables."
+  },
+  {
+    title: "Coaching Cues: Automated Live Feedback Workflows",
+    duration: "08:45",
+    category: "Coaching Cue Demos",
+    description: "How to trigger instant audio/tablet cues to field coaches during sprint starts and tactical drills."
+  },
+  {
+    title: "Analytics Tutorial: Decoding Acute-to-Chronic Workload Ratios",
+    duration: "11:15",
+    category: "Analytics Tutorial",
+    description: "Deep dive into sweet spot calibration (0.8 - 1.3 ACWR) and preventing spike-induced soft tissue strain."
+  },
+  {
+    title: "Match Suite Masterclass: Formation Detection & Press Resistance",
+    duration: "16:05",
+    category: "How-To Video",
+    description: "Step-by-step video on importing live optical camera feeds and extracting automated player passing radar matrices."
+  }
 ];
 
 export function ResourcesPage() {
-  const [activeTab, setActiveTab] = useState<"blog" | "case-studies" | "knowledge-base" | "api">("blog");
+  const [activeTab, setActiveTab] = useState<"case-studies" | "success-stories" | "video-guides" | "blog" | "knowledge-base" | "api">("case-studies");
 
   return (
     <>
       <PageIntro
-        eyebrow="Resources & Research"
-        title="Sports Science & Developer Documentation"
-        text="Dive deep into peer-reviewed sports science methodologies, tactical whitepapers, customer case studies, and REST/WebSocket API endpoints."
+        eyebrow="Proof & Education"
+        title="Case Studies, Success Stories & Video Guides"
+        text="Explore detailed national federation deployments, athlete outcome metrics, video tutorials, sports science research, and developer API documentation."
         action={
           <div className="flex flex-col items-end gap-3">
             <DemoBadge />
             <div className="flex flex-wrap gap-1 bg-secondary p-1 rounded-lg border border-border">
-              <button
-                type="button"
-                onClick={() => setActiveTab("blog")}
-                className={`px-3 py-1.5 rounded text-xs font-bold transition ${
-                  activeTab === "blog" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                Blog & Articles
-              </button>
               <button
                 type="button"
                 onClick={() => setActiveTab("case-studies")}
@@ -71,12 +132,39 @@ export function ResourcesPage() {
               </button>
               <button
                 type="button"
+                onClick={() => setActiveTab("success-stories")}
+                className={`px-3 py-1.5 rounded text-xs font-bold transition ${
+                  activeTab === "success-stories" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Success Stories
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("video-guides")}
+                className={`px-3 py-1.5 rounded text-xs font-bold transition ${
+                  activeTab === "video-guides" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Video Guides
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("blog")}
+                className={`px-3 py-1.5 rounded text-xs font-bold transition ${
+                  activeTab === "blog" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Blog &amp; Articles
+              </button>
+              <button
+                type="button"
                 onClick={() => setActiveTab("knowledge-base")}
                 className={`px-3 py-1.5 rounded text-xs font-bold transition ${
                   activeTab === "knowledge-base" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                Knowledge Base
+                Guides
               </button>
               <button
                 type="button"
@@ -85,7 +173,7 @@ export function ResourcesPage() {
                   activeTab === "api" ? "bg-primary text-primary-foreground shadow-xs" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                API Documentation
+                API Specs
               </button>
             </div>
           </div>
@@ -94,35 +182,81 @@ export function ResourcesPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap">
-          {/* Tab 1: Blog */}
-          {activeTab === "blog" && (
+          {/* Tab 1: Case Studies */}
+          {activeTab === "case-studies" && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {articles.map((a) => (
-                <article key={a.title} className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+              {caseStudies.map((cs) => (
+                <div key={cs.team} className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{a.category}</span>
-                    <h3 className="text-base font-bold mt-2 text-foreground">{a.title}</h3>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{cs.type}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-foreground">{cs.team}</h3>
+                    <p className="text-[11px] font-semibold text-muted-foreground mt-0.5">{cs.deployment}</p>
+                    <div className="mt-3 inline-block rounded bg-primary/10 text-primary font-mono font-bold text-sm px-2.5 py-1">
+                      {cs.metric}
+                    </div>
+                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed">{cs.story}</p>
                   </div>
-                  <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{a.date}</span>
-                    <span>{a.readTime}</span>
+                  <div className="mt-5 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-primary">
+                    <span>Full Implementation Study</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           )}
 
-          {/* Tab 2: Case Studies */}
-          {activeTab === "case-studies" && (
-            <div className="grid gap-6 sm:grid-cols-2">
-              {caseStudies.map((cs) => (
-                <div key={cs.team} className="surface-card p-6">
-                  <span className="text-xs font-bold uppercase tracking-wider text-primary">Case Study</span>
-                  <h3 className="text-xl font-bold mt-1 text-foreground">{cs.team}</h3>
-                  <div className="mt-3 inline-block rounded bg-primary/10 text-primary font-mono font-bold text-sm px-2.5 py-1">
-                    {cs.metric}
+          {/* Tab 2: Success Stories */}
+          {activeTab === "success-stories" && (
+            <div className="grid gap-6 sm:grid-cols-3">
+              {successStories.map((story) => (
+                <div key={story.athlete} className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+                  <div>
+                    <span className="rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[10px] font-black uppercase tracking-wider px-2 py-0.5">
+                      {story.badge}
+                    </span>
+                    <h3 className="text-base font-bold text-foreground mt-3">{story.athlete}</h3>
+                    <div className="mt-2 inline-block rounded bg-primary/10 text-primary font-mono font-bold text-sm px-2.5 py-1">
+                      {story.metric}
+                    </div>
+                    <p className="mt-3 text-xs text-muted-foreground italic leading-relaxed">
+                      "{story.quote}"
+                    </p>
                   </div>
-                  <p className="mt-3 text-xs text-muted-foreground leading-relaxed">{cs.story}</p>
+                  <div className="mt-5 pt-3 border-t border-border flex flex-wrap gap-1.5">
+                    {story.tags.map((t) => (
+                      <span key={t} className="rounded bg-secondary text-foreground text-[10px] font-semibold px-2 py-0.5">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Tab 3: Video Guides */}
+          {activeTab === "video-guides" && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {videoGuides.map((vg) => (
+                <div key={vg.title} className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary">{vg.category}</span>
+                      <span className="rounded bg-secondary text-muted-foreground text-[10px] font-mono px-2 py-0.5">
+                        ⏱ {vg.duration}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-bold text-foreground mt-1">{vg.title}</h3>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{vg.description}</p>
+                  </div>
+                  <div className="mt-5 pt-3 border-t border-border flex items-center justify-between">
+                    <span className="text-xs font-semibold text-primary inline-flex items-center gap-1.5">
+                      ▶ Watch Walkthrough Video
+                    </span>
+                    <span className="text-[10px] text-muted-foreground font-mono">1080p 60fps</span>
+                  </div>
                 </div>
               ))}
             </div>
