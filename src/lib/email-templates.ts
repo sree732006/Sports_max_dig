@@ -2,6 +2,7 @@
 // High-fidelity, email-client compatible HTML with inline CSS, responsive layout, dark footer, and plain-text fallbacks.
 
 import {
+  ASSET_HOST,
   emailDocOpen,
   emailDocClose,
   emailHeader,
@@ -1005,7 +1006,10 @@ export function renderPartnerOutreachEmail(input: PartnerOutreachInput): Rendere
         SportsMax Intelligence &bull; <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;">hello@sportsmax.ai</a>
       </div>
     `, "#ffffff") +
-    emailFooter({ showUnsubscribe: true }) +
+    emailFooter({
+  showUnsubscribe: true,
+  footerImageUrl: `${ASSET_HOST}/email-banners/05-lead-generation-footer.png`,
+}) +
     emailDocClose();
 
   const text = `Dear ${firstName},
@@ -1275,6 +1279,7 @@ export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
       subline: "Every Performance Has a Story. Let's turn your athletic data into intelligence.",
       badge: "Welcome",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/01-welcome-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
@@ -1311,7 +1316,8 @@ export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
         <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
       </p>
     `, "#ffffff") +
-    emailFooter({ showUnsubscribe: true }) +
+    emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/01-welcome-footer.png`,
+    }) +
     emailDocClose();
 
   const text = `Welcome to SportsMax Intelligence, ${firstName}!
@@ -1358,6 +1364,7 @@ export function renderReengagementEmail(input: ReengagementEmailInput): Rendered
       subline: "Every Performance Has a Story. Discover the new features waiting for you.",
       badge: "Updates",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/02-reengagement-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
@@ -1386,7 +1393,7 @@ export function renderReengagementEmail(input: ReengagementEmailInput): Rendered
         <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
       </p>
     `, "#ffffff") +
-    emailFooter({ showUnsubscribe: true }) +
+    emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/02-reengagement-footer.png` }) +
     emailDocClose();
 
   const text = `Hello ${firstName},
@@ -1435,6 +1442,7 @@ export function renderAdvertisementEmail(input: AdvertisementEmailInput): Render
       subline: "Every Performance Has a Story. Empower your roster with high-precision telemetry.",
       badge: "Featured",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/03-advertisement-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
@@ -1462,7 +1470,7 @@ export function renderAdvertisementEmail(input: AdvertisementEmailInput): Render
         <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
       </p>
     `, "#ffffff") +
-    emailFooter({ showUnsubscribe: true }) +
+    emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/03-advertisement-footer.png` }) +
     emailDocClose();
 
   const text = `${input.campaignHeadline}
@@ -1508,6 +1516,7 @@ export function renderBusinessValueEmail(input: BusinessValueEmailInput): Render
       subline: `Demonstrated capabilities for ${escHtml(input.recipientOrganization)}`,
       badge: "Value Brief",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/04-business-value-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
@@ -1585,6 +1594,7 @@ export function renderLeadGenerationEmail(input: LeadGenerationEmailInput): Rend
       subline: "Every Performance Has a Story. Practical frameworks for coaches and analysts.",
       badge: "Free Guide",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/05-lead-generation-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
@@ -1664,6 +1674,7 @@ export function renderProductHighlightEmail(input: ProductHighlightEmailInput): 
       subline: input.featureSummary,
       badge: "Spotlight",
       showHeroImage: true,
+      heroImageUrl: `${ASSET_HOST}/email-banners/06-product-highlight-header.png`,
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">

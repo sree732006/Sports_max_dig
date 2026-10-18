@@ -1,0 +1,16 @@
+Subject: We Miss You on the Field — New SportsMax Updates Inside
+
+Hello Sree,
+
+We miss you on the SportsMax Intelligence platform!
+
+Explore our latest sports analytics dashboard.
+
+What's New:
+• Sub-50ms live telemetry
+• Institution & squad hierarchy
+• Automated reporting digests
+
+Reactivate your session: https://sports-max-dig.vercel.app/dashboard
+© 2026 SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact

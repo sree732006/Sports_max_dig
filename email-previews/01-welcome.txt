@@ -1,0 +1,16 @@
+Subject: Welcome to SportsMax Intelligence — Every Performance Has a Story
+
+Welcome to SportsMax Intelligence, Sree!
+
+Every Performance Has a Story. Let's turn your athletic data into intelligence.
+
+3 Steps to Get Started:
+1. Explore the 24+ Sports Directory
+2. Connect your wearable telemetry and match footage
+3. Join our channels on YouTube and LinkedIn
+
+Launch your dashboard: https://sports-max-dig.vercel.app/dashboard
+
+Questions? Email hello@sportsmax.ai
+© 2026 SportsMax Technologies Inc. All rights reserved.
+Unsubscribe: https://sports-max-dig.vercel.app/contact

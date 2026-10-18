@@ -133,6 +133,8 @@ export interface HeaderOptions {
   heroImageUrl?: string;
   /** Whether to show the hero banner image block. Defaults to true. */
   showHeroImage?: boolean;
+  /** Campaign-specific footer image URL */
+footerImageUrl?: string;
 }
 
 export function emailHeader(opts: HeaderOptions): string {
@@ -158,7 +160,7 @@ export function emailHeader(opts: HeaderOptions): string {
 
   return `
         <!-- Top Branded Header Bar -->
-        <tr>
+        <tr style="${opts.heroImageUrl ? 'display:none;' : ''}">
           <td style="background-color:#090e1a;background:linear-gradient(180deg, #070b15 0%, #0d1527 100%);padding:22px 32px;border-bottom:1px solid #1a2744;" class="sm-inner-pad">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
               <tr>
@@ -228,9 +230,22 @@ export interface FooterOptions {
   disclaimer?: string;
   /** Include secondary visual strip in footer. Defaults to false. */
   showVisualStrip?: boolean;
+  /** Optional campaign-specific footer banner image URL */
+  footerImageUrl?: string;
 }
 
 export function emailFooter(opts: FooterOptions = {}): string {
+  const footerImageHtml = opts.footerImageUrl
+  ? `<tr>
+       <td style="padding:0;line-height:0;background-color:#090d1a;">
+         <img src="${escHtml(opts.footerImageUrl)}"
+              alt="SportsMax campaign banner"
+              width="600"
+              style="display:block;width:100%;max-width:600px;height:auto;border:0;"
+         />
+       </td>
+     </tr>`
+  : "";
   const navLinksHtml = NAV_LINKS.map(
     (l) =>
       `<a href="${l.url}" style="color:#94a3b8;text-decoration:none;font-size:12px;font-weight:600;white-space:nowrap;display:inline-block;padding:2px 4px;">${l.label}</a>`
@@ -258,6 +273,7 @@ export function emailFooter(opts: FooterOptions = {}): string {
     : "";
 
   return `
+  ${footerImageHtml}
         <!-- Distinct Branded Footer -->
         <tr>
           <td style="background-color:#070b15;background:linear-gradient(180deg, #0a0f1d 0%, #05070d 100%);border-top:1px solid #1a2744;padding:32px 32px 24px;" class="sm-inner-pad">
