@@ -29,6 +29,7 @@ import { insights } from "@/lib/sports-data";
 import { INDIVIDUAL_SPORTS, TEAM_SPORTS, GAME_ANALYSIS_MODULES } from "@/lib/sports-directory";
 import runnerImage from "@/assets/sportsmax-runner.jpg";
 import { ConnectWithSportsMax } from "@/components/connect-with-sportsmax";
+import { SportsHeroShowcase } from "@/components/sports-hero-showcase";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,131 +56,8 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   return (
     <>
-      {/* Light Theme Hero */}
-      <section className="relative min-h-[min(880px,92vh)] overflow-hidden border-b border-border pt-18 bg-background">
-        <img
-          src={runnerImage}
-          width={1600}
-          height={1000}
-          alt="Runner on track with integrated performance data traces"
-          className="absolute inset-0 h-full w-full object-cover object-[68%_center] opacity-85"
-        />
-        {/* Luminous Light Theme Gradient Overlay for optimal high contrast */}
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,color-mix(in_oklab,var(--background)_96%,transparent)_42%,color-mix(in_oklab,var(--background)_45%,transparent)_75%,color-mix(in_oklab,var(--background)_75%,transparent)_100%)]" />
-        <div className="sport-grid absolute inset-0 opacity-25" />
-
-        <div className="content-wrap relative flex min-h-[min(790px,calc(92vh-72px))] items-center py-16">
-          <div className="max-w-2xl reveal">
-            <div className="mb-6 flex flex-wrap items-center gap-3">
-              <DemoBadge />
-              <span className="rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs px-3 py-1 uppercase tracking-wider flex items-center gap-1.5">
-                <Flame className="h-3.5 w-3.5 fill-primary/30" /> New Primary Sports Hub Added
-              </span>
-            </div>
-
-            <h1 className="text-balance text-5xl font-black leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              Turn Sports Data Into{" "}
-              <span className="text-primary font-black">Performance Intelligence</span>
-            </h1>
-
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              SportsMax combines individual athlete biometrics, team tactics, optical computer vision, and automated coaching cues across 24+ sports.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg" className="font-bold shadow-md">
-                <Link to="/sports">
-                  Explore Sports Hub <ArrowRight className="h-4 w-4 ml-1.5" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-semibold bg-card/80">
-                <Link to="/sports/game-analysis">Tactical Analysis Suite</Link>
-              </Button>
-              <Button asChild size="lg" variant="ghost" className="font-semibold text-muted-foreground hover:text-foreground">
-                <Link to="/platform">How It Works</Link>
-              </Button>
-            </div>
-
-            {/* Quick-Jump Sport Pills */}
-            <div className="mt-8 flex flex-wrap items-center gap-2 pt-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mr-1">
-                Featured:
-              </span>
-              <Link
-                to="/sports/running"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                🏃 Running (GPS & Pace)
-              </Link>
-              <Link
-                to="/sports/swimming"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                🏊 Swimming (SWOLF)
-              </Link>
-              <Link
-                to="/sports/athletics/high-jump"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                👟 High Jump (2.28m)
-              </Link>
-              <Link
-                to="/sports/football"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                ⚽ Football (xG)
-              </Link>
-              <Link
-                to="/sports/hockey"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                🏒 Hockey (Corsi)
-              </Link>
-              <Link
-                to="/sports/relay"
-                className="rounded-full bg-card/90 border border-border px-3 py-1 text-xs font-semibold text-foreground hover:border-primary/50 shadow-xs transition"
-              >
-                🔄 Relay Events
-              </Link>
-            </div>
-
-            <div className="mt-12 grid max-w-xl grid-cols-3 gap-3 border-t border-border/70 pt-6">
-              <Stat value="24+ Sports" label="Directory coverage" />
-              <Stat value="< 50ms" label="Live telemetry feed" />
-              <Stat value="99.2%" label="Event detection precision" />
-            </div>
-          </div>
-        </div>
-
-        {/* Live Floating Widget in Light Theme */}
-        <div className="absolute bottom-8 right-[6%] hidden w-80 rounded-xl border border-border/90 bg-card/95 p-5 shadow-xl backdrop-blur-md lg:block">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Live Runner Cadence
-            </span>
-            <span className="flex items-center gap-1 text-xs font-bold text-primary">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Optimal
-            </span>
-          </div>
-          <div className="mt-3 flex items-end justify-between">
-            <div>
-              <span className="font-display text-3xl font-extrabold text-foreground">170</span>
-              <span className="text-xs text-muted-foreground ml-1">spm</span>
-            </div>
-            <span className="text-xs font-mono font-semibold text-primary">Pace: 5:14 /km</span>
-          </div>
-          <div className="mt-4 flex h-12 items-end gap-1.5">
-            {[45, 62, 54, 72, 60, 84, 70, 92, 78, 96, 82, 90].map((v, i) => (
-              <span
-                key={i}
-                className="flex-1 rounded-xs bg-primary/80 transition-all hover:bg-primary"
-                style={{ height: `${v}%` }}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Dynamic Thematic Telemetry Showcase Hero (GreenNext / Physiomatics Flow) */}
+      <SportsHeroShowcase />
 
       {/* NEW PRIMARY SECTION: SPORTS INTELLIGENCE HUB */}
       <section className="py-20 bg-background border-b border-border">
