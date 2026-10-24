@@ -28,7 +28,18 @@ import { Button } from "@/components/ui/button";
 import { PageIntro, MetricCard, SectionHead, DemoBadge } from "@/components/sports-ui";
 import { SportVideoSubmission } from "@/components/sport-video-submission";
 
+import clusterImage from "@/assets/ai_sports_cluster_1792572342884.jpg";
+
+type InstitutionTab = "All" | "School" | "College";
+
 export const Route = createFileRoute("/institution")({
+  validateSearch: (search: Record<string, unknown>): { type?: InstitutionTab } => {
+    const rawType = search["type"];
+    if (rawType === "All" || rawType === "School" || rawType === "College") {
+      return { type: rawType };
+    }
+    return {};
+  },
   head: () => ({
     meta: [
       { title: "Institution Intelligence Hub (School & College) — SportsMax" },
@@ -153,11 +164,18 @@ const INITIAL_STUDENTS: StudentRecord[] = [
 ];
 
 export function InstitutionHubPage() {
-  const [institutionFilter, setInstitutionFilter] = useState<"All" | "School" | "College">("All");
+  const search = Route.useSearch();
+  const [institutionFilter, setInstitutionFilter] = useState<"All" | "School" | "College">(search.type ?? "All");
   const [hierarchyRole, setHierarchyRole] = useState<"All" | "Coach" | "Student">("All");
   const [selectedSport, setSelectedSport] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<StudentRecord | null>(INITIAL_STUDENTS[0] ?? null);
+
+  useEffect(() => {
+    if (search.type && search.type !== institutionFilter) {
+      setInstitutionFilter(search.type);
+    }
+  }, [search.type]);
 
   // Video submissions stored in localStorage
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -200,6 +218,54 @@ export function InstitutionHubPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap space-y-12">
+          {/* Institutional ICP Showcase Banner */}
+          <div className="surface-card overflow-hidden border border-border/80">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[250px] overflow-hidden">
+                <img
+                  src={clusterImage}
+                  alt="High-performance computing cluster for sports science"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/95" />
+                <div className="absolute bottom-4 left-4 rounded-md bg-background/80 backdrop-blur-md px-3 py-1.5 border border-primary/30">
+                  <span className="text-[11px] font-mono font-semibold uppercase text-primary flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                    Multi-Campus Academic Sports Science Grid
+                  </span>
+                </div>
+              </div>
+              <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
+                    <Building className="h-3.5 w-3.5" /> ICP · Universities, Academies &amp; NOCs
+                  </div>
+                  <h3 className="mt-1 text-xl font-bold tracking-tight">Institutional High-Performance Governance</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    Purpose-built for athletic directors, university faculties, and academy boards. Centralize compliance, manage multi-sport video ingest, and discover Olympic-caliber student talent across collegiate cohorts.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Institutions</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">140+</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">NCAA &amp; Global</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Student Cohort</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">8,400+</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Active Roster</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">FERPA / HIPAA</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">100%</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Compliant Vault</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Top Hierarchy Navigation Banner */}
           <div className="rounded-2xl border border-border bg-card p-6 shadow-md">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-5 mb-5">

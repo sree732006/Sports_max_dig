@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Activity,
@@ -26,7 +26,24 @@ import {
 } from "@/components/sports-ui";
 import { athletes, leaderboard, progression, runTrend, weekly } from "@/lib/sports-data";
 
+import runnerImage from "@/assets/sportsmax-runner.jpg";
+
+type AthleteTab = "dashboard" | "profiles" | "goals" | "consistency" | "bests";
+
 export const Route = createFileRoute("/athletes")({
+  validateSearch: (search: Record<string, unknown>): { tab?: AthleteTab } => {
+    const rawTab = search["tab"];
+    if (
+      rawTab === "dashboard" ||
+      rawTab === "profiles" ||
+      rawTab === "goals" ||
+      rawTab === "consistency" ||
+      rawTab === "bests"
+    ) {
+      return { tab: rawTab };
+    }
+    return {};
+  },
   head: () => ({
     meta: [
       { title: "Athletes Hub & Personal Intelligence — SportsMax" },
@@ -49,7 +66,14 @@ const personalBests = [
 ];
 
 export function AthletesPage() {
-  const [activeTab, setActiveTab] = useState<"dashboard" | "profiles" | "goals" | "consistency" | "bests">("dashboard");
+  const search = Route.useSearch();
+  const [activeTab, setActiveTab] = useState<AthleteTab>(search.tab ?? "dashboard");
+
+  useEffect(() => {
+    if (search.tab && search.tab !== activeTab) {
+      setActiveTab(search.tab);
+    }
+  }, [search.tab]);
 
   return (
     <>
@@ -113,6 +137,54 @@ export function AthletesPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap">
+          {/* Athlete ICP Showcase Banner with Biometric Telemetry */}
+          <div className="mb-10 surface-card overflow-hidden border border-border/80">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[250px] overflow-hidden">
+                <img
+                  src={runnerImage}
+                  alt="Elite athlete individual telemetry"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/95" />
+                <div className="absolute bottom-4 left-4 rounded-md bg-background/80 backdrop-blur-md px-3 py-1.5 border border-primary/30">
+                  <span className="text-[11px] font-mono font-semibold uppercase text-primary flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Autonomous Athlete Bio-Telemetry &amp; PR Ledger
+                  </span>
+                </div>
+              </div>
+              <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
+                    <Sparkles className="h-3.5 w-3.5" /> ICP · Individual Athletes &amp; Olympians
+                  </div>
+                  <h3 className="mt-1 text-xl font-bold tracking-tight">Precision Self-Coaching &amp; Biomechanical Ledger</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    Designed specifically for competitive athletes seeking edge over standard fitness trackers. Full ownership of raw IMU kinematics, VO2 peak trajectories, and verified personal best milestones.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Readiness</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">94 / 100</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Peak Form</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Streak</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">21 Days</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Level 4 Tier</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Personal Bests</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">5 Verified</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">WADA Audited</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Tab 1: Dashboard */}
           {activeTab === "dashboard" && (
             <div className="grid gap-6">

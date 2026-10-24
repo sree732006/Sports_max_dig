@@ -55,6 +55,8 @@ const comparisonMetrics = [
   { metric: "Expected Goals (xG)", playerA: "0.42", playerB: "0.18", winner: "A" },
 ];
 
+import arenaImage from "@/assets/sports_tactical_arena_1792572299956.jpg";
+
 export function GameAnalysisPage() {
   const [activeModule, setActiveModule] = useState<
     "match-dashboard" | "tactical" | "player-comp" | "team-comp" | "events" | "reports"
@@ -83,6 +85,54 @@ export function GameAnalysisPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap">
+          {/* Visual Showcase Card with Tactical Arena Stream */}
+          <div className="mb-10 surface-card overflow-hidden border border-border/80">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[260px] overflow-hidden">
+                <img
+                  src={arenaImage}
+                  alt="Stadium Tactical Arena tracking overlay"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/95" />
+                <div className="absolute bottom-4 left-4 rounded-md bg-background/80 backdrop-blur-md px-3 py-1.5 border border-primary/30">
+                  <span className="text-[11px] font-mono font-semibold uppercase text-primary flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                    Live 32-Camera 4K Computer Vision Voronoi Grid
+                  </span>
+                </div>
+              </div>
+              <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
+                    <BrainCircuit className="h-3.5 w-3.5" /> Edge Neural Inferencing · Vision-AI V3
+                  </div>
+                  <h3 className="mt-1 text-xl font-bold tracking-tight">Real-Time Pitch Control & Spatial Dominance</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    Sub-38ms inference latency computing continuous convex hulls, defensive block compact ratios, and probabilistic passing lane occlusion values across 22 simultaneous athletes.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Pitch Control</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">58.4%</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">+6.2% 2nd Half</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Def. Compactness</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">28.4 m</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Tier 1 Target</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">xT Generated</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">+1.84</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Top 5% League</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Module Navigation Tabs */}
           <div className="flex flex-wrap items-center gap-2 border-b border-border pb-4 mb-8">
             <button

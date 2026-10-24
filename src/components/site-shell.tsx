@@ -326,6 +326,7 @@ export function SiteHeader() {
                 </div>
                 <Link
                   to="/platform"
+                  search={{ tab: "how-it-works" }}
                   onClick={() => setPlatformHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -337,6 +338,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/platform"
+                  search={{ tab: "technology" }}
                   onClick={() => setPlatformHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -348,6 +350,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/platform"
+                  search={{ tab: "integrations" }}
                   onClick={() => setPlatformHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -359,6 +362,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/platform"
+                  search={{ tab: "security" }}
                   onClick={() => setPlatformHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -590,6 +594,7 @@ export function SiteHeader() {
                 </div>
                 <Link
                   to="/athletes"
+                  search={{ tab: "dashboard" }}
                   onClick={() => setSegmentsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -601,6 +606,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/coaches"
+                  search={{ tab: "team-dashboard" }}
                   onClick={() => setSegmentsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -612,6 +618,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/institution"
+                  search={{ type: "All" }}
                   onClick={() => setSegmentsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -626,6 +633,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/ecosystem"
+                  search={{ tab: "olympic" }}
                   onClick={() => setSegmentsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -647,6 +655,7 @@ export function SiteHeader() {
           >
             <Link
               to="/resources"
+              search={{ tab: "case-studies" }}
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
               Case Studies &amp; Guides
@@ -660,6 +669,7 @@ export function SiteHeader() {
                 </div>
                 <Link
                   to="/resources"
+                  search={{ tab: "case-studies" }}
                   onClick={() => setCasesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -671,6 +681,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/resources"
+                  search={{ tab: "success-stories" }}
                   onClick={() => setCasesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -682,6 +693,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/resources"
+                  search={{ tab: "video-guides" }}
                   onClick={() => setCasesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -703,6 +715,7 @@ export function SiteHeader() {
           >
             <Link
               to="/resources"
+              search={{ tab: "blog" }}
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
             >
               Resources
@@ -715,7 +728,7 @@ export function SiteHeader() {
                   Knowledge &amp; Intelligence Reports
                 </div>
                 <Link
-                  to="/resources"
+                  to="/insights"
                   onClick={() => setResourcesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -739,6 +752,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/resources"
+                  search={{ tab: "blog" }}
                   onClick={() => setResourcesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -750,6 +764,7 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/resources"
+                  search={{ tab: "api" }}
                   onClick={() => setResourcesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
@@ -1044,15 +1059,16 @@ export function SiteHeader() {
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/resources"
+                  search={{ tab: "case-studies" }}
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
                 >
                   Case Studies &amp; Guides
                 </Link>
                 <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Case Studies (National Federations)</Link>
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Success Stories (Athlete Outcomes)</Link>
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Video Guides (Tutorials &amp; Demos)</Link>
+                  <Link to="/resources" search={{ tab: "case-studies" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Case Studies (National Federations)</Link>
+                  <Link to="/resources" search={{ tab: "success-stories" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Success Stories (Athlete Outcomes)</Link>
+                  <Link to="/resources" search={{ tab: "video-guides" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Video Guides (Tutorials &amp; Demos)</Link>
                 </div>
               </div>
 
@@ -1060,16 +1076,17 @@ export function SiteHeader() {
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/resources"
+                  search={{ tab: "blog" }}
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
                 >
                   Resources &amp; Intelligence
                 </Link>
                 <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Insights</Link>
+                  <Link to="/insights" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Insights</Link>
                   <Link to="/reports" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 font-medium text-foreground">• Reports</Link>
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Blog</Link>
-                  <Link to="/resources" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Documentation</Link>
+                  <Link to="/resources" search={{ tab: "blog" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Blog</Link>
+                  <Link to="/resources" search={{ tab: "api" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Documentation</Link>
                   <Link to="/google-trends" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Google Trends</Link>
                   <Link to="/cta-report" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• CTA Reports</Link>
                 </div>

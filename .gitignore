@@ -37,3 +37,6 @@ dist-ssr
 .vercel
 
 lead_dedup_store.json
+*.csv
+__pycache__/
+*.py

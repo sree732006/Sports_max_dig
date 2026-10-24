@@ -42,7 +42,17 @@ import {
   type SportItem,
 } from "@/lib/sports-directory";
 
+export type SportsCategory = "all" | "individual" | "team" | "analysis";
+
 export const Route = createFileRoute("/sports/")({
+  validateSearch: (search: Record<string, unknown>): { category?: SportsCategory } => {
+    const validCats: SportsCategory[] = ["all", "individual", "team", "analysis"];
+    const raw = search["category"];
+    if (typeof raw === "string" && validCats.includes(raw as SportsCategory)) {
+      return { category: raw as SportsCategory };
+    }
+    return {};
+  },
   head: () => ({
     meta: [
       { title: "All Sports Directory & Intelligence — SportsMax" },
@@ -57,8 +67,14 @@ export const Route = createFileRoute("/sports/")({
 });
 
 function SportsDirectoryPage() {
-  const [filter, setFilter] = useState<"all" | "individual" | "team" | "analysis">("all");
+  const searchParams = Route.useSearch();
+  const [filter, setFilter] = useState<SportsCategory>(searchParams.category || "all");
   const [search, setSearch] = useState("");
+
+  if (searchParams.category && searchParams.category !== filter) {
+    setFilter(searchParams.category);
+  }
+
 
   const allItems = [
     ...INDIVIDUAL_SPORTS,
@@ -98,6 +114,38 @@ function SportsDirectoryPage() {
           </div>
         }
       />
+
+      {/* Sports Directory KPI Ribbon */}
+      <section className="border-y border-border/80 bg-card/60 py-4 backdrop-blur-md">
+        <div className="content-wrap">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+            <div className="p-2 border-r border-border/50 last:border-r-0">
+              <div className="text-xl lg:text-2xl font-black text-primary font-mono tracking-tight">24+ Sports</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Certified Ontologies</div>
+            </div>
+            <div className="p-2 border-r border-border/50 last:border-r-0">
+              <div className="text-xl lg:text-2xl font-black text-foreground font-mono tracking-tight">14,200+</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Tracked Athletes</div>
+            </div>
+            <div className="p-2 border-r border-border/50 last:border-r-0">
+              <div className="text-xl lg:text-2xl font-black text-primary font-mono tracking-tight">120 FPS</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Optical Tracking</div>
+            </div>
+            <div className="p-2 border-r border-border/50 last:border-r-0">
+              <div className="text-xl lg:text-2xl font-black text-foreground font-mono tracking-tight">&lt; 38ms</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Tactical Inference</div>
+            </div>
+            <div className="p-2 border-r border-border/50 last:border-r-0">
+              <div className="text-xl lg:text-2xl font-black text-primary font-mono tracking-tight">± 2.4mm</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Skeletal 3D Error</div>
+            </div>
+            <div className="p-2">
+              <div className="text-xl lg:text-2xl font-black text-foreground font-mono tracking-tight">EHR / WADA</div>
+              <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mt-0.5">Medical Compliance</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="py-12 bg-background">
         <div className="content-wrap">

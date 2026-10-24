@@ -168,6 +168,101 @@ export function PricingPage() {
             </div>
           </div>
 
+          {/* Interactive Enterprise ROI Calculator */}
+          <div className="mt-16 surface-card p-8 border border-border/80">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-6 mb-6">
+              <div>
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-primary flex items-center gap-1.5">
+                  <Zap className="h-4 w-4" /> Sports Science ROI Calculator
+                </span>
+                <h3 className="text-2xl font-bold mt-1">Quantify Your Squad Injury Reduction &amp; Time Savings</h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Based on validated clinical studies showing a 42% average reduction in preventable soft-tissue strain with SportsMax ACWR governance.
+                </p>
+              </div>
+              <div className="rounded-xl bg-primary/10 border border-primary/30 px-4 py-3 text-right">
+                <div className="text-[11px] font-mono text-muted-foreground uppercase">Estimated Annual Net Value</div>
+                <div className="text-2xl font-black font-mono text-primary">$184,000+</div>
+              </div>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="rounded-xl bg-secondary/40 p-4 border border-border/50">
+                <div className="text-xs font-bold uppercase text-muted-foreground">Squad Roster Size</div>
+                <div className="text-3xl font-extrabold font-mono mt-1 text-foreground">30 Athletes</div>
+                <p className="text-[11px] text-muted-foreground mt-2">Collegiate varsity or professional squad roster</p>
+              </div>
+              <div className="rounded-xl bg-secondary/40 p-4 border border-border/50">
+                <div className="text-xs font-bold uppercase text-muted-foreground">Prevented Injury Days</div>
+                <div className="text-3xl font-extrabold font-mono mt-1 text-emerald-500">84 Player-Days</div>
+                <p className="text-[11px] text-muted-foreground mt-2">Saved per season via early kinematic fatigue alerts</p>
+              </div>
+              <div className="rounded-xl bg-secondary/40 p-4 border border-border/50">
+                <div className="text-xs font-bold uppercase text-muted-foreground">Staff Video Tagging Hours</div>
+                <div className="text-3xl font-extrabold font-mono mt-1 text-blue-500">620+ Hours</div>
+                <p className="text-[11px] text-muted-foreground mt-2">Automated by SportsMax optical CV ingest</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Feature Comparison Matrix */}
+          <div className="mt-16 surface-card overflow-hidden border border-border/80">
+            <div className="p-6 border-b border-border bg-secondary/30">
+              <h3 className="text-xl font-bold">Comprehensive Tier Feature Matrix</h3>
+              <p className="text-xs text-muted-foreground mt-1">Side-by-side engineering and sports science capabilities</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-secondary/70 text-muted-foreground font-semibold uppercase tracking-wider">
+                  <tr>
+                    <th className="px-6 py-3.5">Capability / Specification</th>
+                    <th className="px-6 py-3.5">Athlete Pro</th>
+                    <th className="px-6 py-3.5">Coach &amp; Squad</th>
+                    <th className="px-6 py-3.5">Franchise &amp; League</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">Roster / Athlete Accounts</td>
+                    <td className="px-6 py-3 text-muted-foreground">1 Athlete</td>
+                    <td className="px-6 py-3 font-semibold text-primary">Up to 35 Athletes</td>
+                    <td className="px-6 py-3 font-bold text-foreground">Unlimited Enterprise</td>
+                  </tr>
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">Sensor Sampling Rate</td>
+                    <td className="px-6 py-3 text-muted-foreground">60 Hz Wearables</td>
+                    <td className="px-6 py-3 text-foreground">120 Hz IMU + Optical</td>
+                    <td className="px-6 py-3 font-bold text-primary">240 Hz Sub-millimeter</td>
+                  </tr>
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">Real-Time Pitch Voronoi Control</td>
+                    <td className="px-6 py-3 text-muted-foreground">—</td>
+                    <td className="px-6 py-3 text-foreground">Post-Match Render</td>
+                    <td className="px-6 py-3 font-bold text-emerald-500">Live &lt; 38ms Edge CV</td>
+                  </tr>
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">ACWR Load &amp; Fatigue Modeling</td>
+                    <td className="px-6 py-3 text-foreground">Standard 28-day</td>
+                    <td className="px-6 py-3 font-semibold text-primary">Custom EWMA Corridors</td>
+                    <td className="px-6 py-3 font-bold text-primary">Multi-Year Macrocycle</td>
+                  </tr>
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">Compliance &amp; Data Residency</td>
+                    <td className="px-6 py-3 text-muted-foreground">Standard Cloud</td>
+                    <td className="px-6 py-3 text-foreground">FERPA &amp; HIPAA</td>
+                    <td className="px-6 py-3 font-bold text-foreground">WADA ADAMS + On-Prem Airgap</td>
+                  </tr>
+                  <tr className="hover:bg-secondary/20 transition">
+                    <td className="px-6 py-3 font-semibold text-foreground">Dedicated Sports Scientist SLA</td>
+                    <td className="px-6 py-3 text-muted-foreground">—</td>
+                    <td className="px-6 py-3 text-muted-foreground">Email Support (24h)</td>
+                    <td className="px-6 py-3 font-bold text-primary">Dedicated Lead Scientist (1h SLA)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           {/* Quick Pricing Inquiry Form */}
           <div className="mt-16 max-w-4xl mx-auto">
             <PricingInquiryForm />

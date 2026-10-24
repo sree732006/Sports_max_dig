@@ -56,6 +56,8 @@ const strokeBreakdown = [
   { stroke: "Butterfly", laps: "4 Laps", distance: "200m", avgSwolf: "36.0", efficiency: "86%" },
 ];
 
+import swimImage from "@/assets/swimming_biomechanics_1792572365169.jpg";
+
 export function SwimmingSportPage() {
   const [poolType, setPoolType] = useState<"50m" | "25m">("50m");
 
@@ -98,6 +100,54 @@ export function SwimmingSportPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap">
+          {/* Visual Showcase Card with Aquatic Telemetry */}
+          <div className="mb-10 surface-card overflow-hidden border border-border/80">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[260px] overflow-hidden">
+                <img
+                  src={swimImage}
+                  alt="Underwater stroke kinematic telemetry"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/95" />
+                <div className="absolute bottom-4 left-4 rounded-md bg-background/80 backdrop-blur-md px-3 py-1.5 border border-primary/30">
+                  <span className="text-[11px] font-mono font-semibold uppercase text-primary flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+                    Sub-Surface 120 FPS Optical Multi-Lane Hydrodynamics
+                  </span>
+                </div>
+              </div>
+              <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
+                    <Waves className="h-3.5 w-3.5" /> Aquatic Hydro-Dynamics · SWOLF V2
+                  </div>
+                  <h3 className="mt-1 text-xl font-bold tracking-tight">Underwater Breakout & Stroke Vector Analysis</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    Sub-surface refraction correction algorithms tracking hand entry angle, early vertical forearm (EVF) hold, and kick propulsive amplitude across flip turn breakouts.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">SWOLF Index</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">32.4</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Elite Range (&lt; 35)</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Turn Breakout</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">2.42 m/s</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">+0.18 m/s delta</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">DPS (Dist/Stroke)</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">2.28 m</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">96% Propulsive</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <SectionHead
             eyebrow="Session Overview"
             title="2,400m Threshold Interval Set"

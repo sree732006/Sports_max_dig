@@ -1,5 +1,9 @@
 import "./lib/error-capture";
-
+import {
+  checkHttpMethod,
+  checkBearerToken,
+  securityErrorResponse,
+} from "./lib/security-controller";
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
@@ -49,8 +53,63 @@ export default {
     try {
       const url = new URL(request.url);
 
+      // Secured Server Endpoint: /api/redis/health (returns only connection status, no credentials)
+      if (url.pathname === "/api/redis/health") {
+        const methodCheck = checkHttpMethod(request, ["GET"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        try {
+          const { checkRedisHealth } = await import("./lib/redis");
+          const health = await checkRedisHealth();
+
+          return new Response(
+            JSON.stringify({
+              status: health.status,
+              connected: health.status === "connected",
+              ping: health.ping || null,
+              timestamp: health.timestamp,
+              error: health.error || null,
+            }),
+            {
+              status: health.status === "connected" ? 200 : 503,
+              headers: {
+                "content-type": "application/json",
+                "cache-control": "no-store, max-age=0",
+              },
+            }
+          );
+        } catch (err) {
+          const msg = err instanceof Error ? err.message : "Internal Redis Health Check Error";
+          return new Response(
+            JSON.stringify({
+              status: "error",
+              connected: false,
+              timestamp: new Date().toISOString(),
+              error: msg,
+            }),
+            {
+              status: 503,
+              headers: {
+                "content-type": "application/json",
+                "cache-control": "no-store, max-age=0",
+              },
+            }
+          );
+        }
+      }
+
       // Secured Server Endpoint: /api/reports/trigger
-      if (url.pathname === "/api/reports/trigger" && (request.method === "POST" || request.method === "GET")) {
+      if (url.pathname === "/api/reports/trigger") {
+  const methodCheck = checkHttpMethod(request, ["POST", "GET"]);
+
+  if (!methodCheck.allowed) {
+    return securityErrorResponse(
+      methodCheck.status,
+      methodCheck.message,
+    );
+  }
         const cronSecret = process.env["REPORT_CRON_SECRET"] || process.env["CRON_SECRET"];
         if (!cronSecret) {
           console.error("[Report Scheduler] Rejecting request: Neither REPORT_CRON_SECRET nor CRON_SECRET environment variable is configured.");
@@ -60,15 +119,14 @@ export default {
           });
         }
 
-        const authHeader = request.headers.get("authorization") || "";
-        const token = authHeader.replace(/^Bearer\s+/i, "") || url.searchParams.get("secret") || "";
+        const authCheck = checkBearerToken(request, cronSecret);
 
-        if (!token || token !== cronSecret) {
-          return new Response(JSON.stringify({ error: "Unauthorized: Invalid or missing cron secret" }), {
-            status: 401,
-            headers: { "content-type": "application/json" },
-          });
-        }
+if (!authCheck.allowed) {
+  return securityErrorResponse(
+    authCheck.status,
+    "Unauthorized: Invalid or missing cron secret",
+  );
+}
 
         let body: any = {};
         if (request.method === "POST") {
@@ -102,9 +160,29 @@ export default {
         });
       }
 
-      // Secured Server Endpoint: /api/reports/logs
-      if (url.pathname === "/api/reports/logs" && request.method === "GET") {
-        const { getExecutionHistory } = await import("./lib/server-reporting");
+      
+// Secured Server Endpoint: /api/reports/logs
+if (url.pathname === "/api/reports/logs") {
+  const methodCheck = checkHttpMethod(request, ["GET"]);
+
+  if (!methodCheck.allowed) {
+    return securityErrorResponse(
+      methodCheck.status,
+      methodCheck.message,
+    );
+  }
+
+  const cronSecret =
+    process.env["REPORT_CRON_SECRET"] ||
+    process.env["CRON_SECRET"];
+
+  const authCheck = checkBearerToken(request, cronSecret);
+
+if (!authCheck.allowed) {
+  return securityErrorResponse(authCheck.status, "Unauthorized");
+}
+
+  const { getExecutionHistory } = await import("./lib/server-reporting");
         return new Response(JSON.stringify({ logs: getExecutionHistory() }), {
           status: 200,
           headers: { "content-type": "application/json" },

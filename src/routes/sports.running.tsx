@@ -62,6 +62,8 @@ const hrZones = [
   { zone: "Zone 5: Maximum", range: "> 175 bpm", time: "00:00", pct: "0%" },
 ];
 
+import runnerImage from "@/assets/sportsmax-runner.jpg";
+
 export function RunningSportPage() {
   const [period, setPeriod] = useState("4 weeks");
   const [activeTab, setActiveTab] = useState<"splits" | "zones" | "gear">("splits");
@@ -86,6 +88,54 @@ export function RunningSportPage() {
 
       <section className="py-12 bg-background">
         <div className="content-wrap">
+          {/* Visual Showcase Card with Biomechanical Telemetry */}
+          <div className="mb-10 surface-card overflow-hidden border border-border/80">
+            <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="relative min-h-[260px] overflow-hidden">
+                <img
+                  src={runnerImage}
+                  alt="Elite runner kinematic tracking"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-background/95" />
+                <div className="absolute bottom-4 left-4 rounded-md bg-background/80 backdrop-blur-md px-3 py-1.5 border border-primary/30">
+                  <span className="text-[11px] font-mono font-semibold uppercase text-primary flex items-center gap-1.5">
+                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    120 FPS Optoelectronic Kinematic Stream
+                  </span>
+                </div>
+              </div>
+              <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
+                    <Zap className="h-3.5 w-3.5" /> Sensor Array Telemetry · Stride V4
+                  </div>
+                  <h3 className="mt-1 text-xl font-bold tracking-tight">Kinematic Stride Corridor Analysis</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    High-speed photogrammetry synchronizing dual tri-axial IMUs and pressure insoles for sub-millimeter plantar contact symmetry and vertical oscillation damping.
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">GCT</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">214 ms</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">-6ms vs Baseline</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">Vert Ratio</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">6.8%</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Optimal &lt; 8%</div>
+                  </div>
+                  <div className="rounded-lg bg-secondary/40 p-2.5">
+                    <div className="text-[11px] text-muted-foreground uppercase font-mono">L/R Balance</div>
+                    <div className="text-base font-bold font-mono text-foreground mt-0.5">50.2 / 49.8</div>
+                    <div className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Near Perfect</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Top Key Performance Indicators */}
           <SectionHead
             eyebrow="Session Summary"
