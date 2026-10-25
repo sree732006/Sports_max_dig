@@ -28,6 +28,7 @@ import {
   ShieldCheck,
   Sparkles,
   Trophy,
+  User,
   Users,
   Video,
   Waves,
@@ -637,6 +638,640 @@ function HomePage() {
         </div>
       </section>
 
+
+      {/* ─────────────────────────────────────────────────────────────
+          1. WHAT WE SERVICE (OUR CORE CAPABILITIES)
+          ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-background border-b border-border">
+        <div className="content-wrap">
+          <div className="max-w-3xl mb-12">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
+              <span className="size-2 rounded-full bg-primary animate-pulse" />
+              1. What We Service · Core Capabilities
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
+              From Raw Video to <span className="text-primary">Game-Winning Intelligence</span>.
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+              We transform unstructured video footage into automated, frame-by-frame tactical, biomechanical, and physical insights—<strong className="text-foreground">no wearables required</strong>.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Capability 1 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition group border-t-2 border-t-primary">
+              <div>
+                <div className="size-11 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
+                  <Goal className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Automated Tactical Analysis</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  AI-driven camera calibration and multi-object tracking to generate 2D/3D pitch/court control models, passing networks, and automated formation breakdowns.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-primary">
+                <span>120 FPS Optical Tracking</span>
+                <Link to="/sports/game-analysis" className="hover:underline flex items-center gap-1">
+                  Explore Suite &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Capability 2 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition group border-t-2 border-t-emerald-500">
+              <div>
+                <div className="size-11 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-4 group-hover:scale-105 transition-transform">
+                  <Cpu className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Sensorless Biomechanics</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Advanced pose estimation to extract joint angles, stride length, swing paths, and release points directly from standard video feeds without awkward harnesses.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-emerald-500">
+                <span>24-Keypoint Markerless</span>
+                <Link to="/sports/running" className="hover:underline flex items-center gap-1">
+                  Kinematics Lab &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Capability 3 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition group border-t-2 border-t-amber-500">
+              <div>
+                <div className="size-11 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-4 group-hover:scale-105 transition-transform">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Intelligent Event Tagging</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Natural Language Processing (NLP) and computer vision that automatically log play-by-play events (shots, tackles, turnovers, rebounds) in real time.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-amber-500">
+                <span>Zero Manual Entry</span>
+                <Link to="/analytics" className="hover:underline flex items-center gap-1">
+                  Live Tagging &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Capability 4 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition group border-t-2 border-t-red-500">
+              <div>
+                <div className="size-11 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-4 group-hover:scale-105 transition-transform">
+                  <ShieldAlert className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Load &amp; Injury Risk Monitoring</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Visual tracking of player acceleration, deceleration, and high-intensity distance to calculate Acute:Chronic Workload Ratios (ACWR) and flag fatigue risks.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-red-500">
+                <span>-30% Soft-Tissue Risk</span>
+                <Link to="/coaches" className="hover:underline flex items-center gap-1">
+                  Load Governance &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Capability 5 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition group border-t-2 border-t-teal-500 md:col-span-2 lg:col-span-2">
+              <div>
+                <div className="size-11 rounded-lg bg-teal-500/10 flex items-center justify-center text-teal-400 mb-4 group-hover:scale-105 transition-transform">
+                  <Video className="h-5 w-5" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">Automated Highlight &amp; Scouting Reels</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Instantly generate customized video clips based on natural language queries (e.g., <span className="font-mono text-primary bg-primary/10 px-1.5 py-0.5 rounded">&ldquo;Show all successful defensive transitions by Player X in the last 3 matches&rdquo;</span>). Cut scouting compilation times from days to seconds.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-teal-400">
+                <span>NLP Video Search Index</span>
+                <Link to="/resources" search={{ tab: "video-guides" }} className="hover:underline flex items-center gap-1">
+                  See Video Search Demo &rarr;
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          2. WHOM WE SERVICE (THE PERFORMANCE ECOSYSTEM)
+          ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-secondary/25 border-b border-border">
+        <div className="content-wrap">
+          <div className="max-w-3xl mb-12">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
+              2. Whom We Service · Ecosystem
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
+              Built for Every Level of the <span className="text-primary">Performance Ecosystem</span>.
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Tailored intelligence for the people who make the critical decisions.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Stakeholder 1 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-primary/15 text-primary text-[10px] font-bold uppercase px-2 py-0.5">Professional Tier</span>
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <h3 className="text-base font-bold text-foreground">Elite Clubs &amp; Professional Franchises</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  For Head Coaches and Video Analysts who need to cut hours of manual film review down to seconds of AI-curated, actionable insights.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/coaches" className="text-xs font-bold text-primary hover:underline flex items-center justify-between">
+                  <span>Coaching Tactical Console</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Stakeholder 2 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-blue-500/15 text-blue-500 text-[10px] font-bold uppercase px-2 py-0.5">Collegiate NCAA</span>
+                  <Milestone className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <h3 className="text-base font-bold text-foreground">University &amp; Collegiate Programs</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  For Athletic Directors and S&amp;C Coaches seeking enterprise-level analytics to maximize roster development and gain a recruiting edge on a budget.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/institution" className="text-xs font-bold text-blue-500 hover:underline flex items-center justify-between">
+                  <span>Collegiate Solutions</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Stakeholder 3 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-amber-500/15 text-amber-500 text-[10px] font-bold uppercase px-2 py-0.5">National Level</span>
+                  <Trophy className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <h3 className="text-base font-bold text-foreground">National Federations &amp; Olympic Committees</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  For high-performance directors requiring standardized, multi-sport biomechanical and tactical benchmarking across national talent pools.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/ecosystem" className="text-xs font-bold text-amber-500 hover:underline flex items-center justify-between">
+                  <span>Olympic Benchmarks</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Stakeholder 4 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-emerald-500/15 text-emerald-500 text-[10px] font-bold uppercase px-2 py-0.5">Individual</span>
+                  <User className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <h3 className="text-base font-bold text-foreground">Individual Elite Athletes &amp; Agencies</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  For players and their representatives who need quantifiable, video-backed performance data to prove their market value and guide technical development.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/athletes" className="text-xs font-bold text-emerald-500 hover:underline flex items-center justify-between">
+                  <span>Athlete Verification</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Stakeholder 5 */}
+            <div className="surface-card p-6 flex flex-col justify-between hover:border-primary/50 transition md:col-span-2 lg:col-span-2">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-purple-500/15 text-purple-400 text-[10px] font-bold uppercase px-2 py-0.5">Media &amp; Streaming</span>
+                  <Radio className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <h3 className="text-base font-bold text-foreground">Broadcasters &amp; Media Partners</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  For production teams looking to automate real-time advanced stat overlays, win-probability models, and instant highlight generation for viewers across broadcast streams.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/sports/game-analysis" className="text-xs font-bold text-purple-400 hover:underline flex items-center justify-between">
+                  <span>Broadcast Integration APIs</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          3. SPORTS DOMAINS (MULTI-SPORT INTELLIGENCE)
+          ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-background border-b border-border">
+        <div className="content-wrap">
+          <div className="max-w-3xl mb-12">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
+              3. Sports Domains · Taxonomy
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
+              Multi-Sport Intelligence, <span className="text-primary">Adapted to the Physics of the Game</span>.
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Our AI models are trained on the unique kinematic and tactical realities of diverse sporting environments.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {/* Domain 1: Invasion Sports */}
+            <div className="surface-card p-6 flex flex-col justify-between border-t-4 border-t-primary hover:border-primary/60 transition group">
+              <div>
+                <span className="text-2xl mb-3 block">⚽</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-primary font-bold">Category 01</span>
+                <h3 className="text-lg font-bold text-foreground mt-1">Invasion Sports</h3>
+                <p className="text-[11px] font-semibold text-muted-foreground mt-0.5">Soccer, Basketball, Rugby, Hockey</p>
+                <div className="mt-4 rounded-lg bg-secondary/50 p-3 border border-border/60">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground block mb-1">Analytical Focus</span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Spatial tracking, defensive shape analysis, expected goals/threat (xG/xT), and transition speed.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-bold text-primary">
+                <Link to="/sports/football" className="hover:underline flex items-center gap-1">
+                  Soccer Suite &rarr;
+                </Link>
+                <Link to="/sports/hockey" className="hover:underline">
+                  Hockey &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Domain 2: Striking & Net Sports */}
+            <div className="surface-card p-6 flex flex-col justify-between border-t-4 border-t-emerald-500 hover:border-emerald-500/60 transition group">
+              <div>
+                <span className="text-2xl mb-3 block">🎾</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-500 font-bold">Category 02</span>
+                <h3 className="text-lg font-bold text-foreground mt-1">Striking &amp; Net Sports</h3>
+                <p className="text-[11px] font-semibold text-muted-foreground mt-0.5">Tennis, Baseball, Cricket, Golf</p>
+                <div className="mt-4 rounded-lg bg-secondary/50 p-3 border border-border/60">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground block mb-1">Analytical Focus</span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Ball trajectory, spin-rate estimation, swing/bat path kinematics, and shot-placement heatmaps.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/sports" className="text-xs font-bold text-emerald-500 hover:underline flex items-center justify-between">
+                  <span>Ball Trajectory Specs</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Domain 3: Racing & Endurance */}
+            <div className="surface-card p-6 flex flex-col justify-between border-t-4 border-t-amber-500 hover:border-amber-500/60 transition group">
+              <div>
+                <span className="text-2xl mb-3 block">🏃</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-500 font-bold">Category 03</span>
+                <h3 className="text-lg font-bold text-foreground mt-1">Racing &amp; Endurance</h3>
+                <p className="text-[11px] font-semibold text-muted-foreground mt-0.5">Track &amp; Field, Swimming, Cycling</p>
+                <div className="mt-4 rounded-lg bg-secondary/50 p-3 border border-border/60">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground block mb-1">Analytical Focus</span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Stride/stroke symmetry, pacing strategy, aerodynamic drafting analysis, and finish-line kinematics.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-bold text-amber-500">
+                <Link to="/sports/running" className="hover:underline">
+                  Running &rarr;
+                </Link>
+                <Link to="/sports/swimming" className="hover:underline">
+                  Swimming &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Domain 4: Combat & Aesthetic Sports */}
+            <div className="surface-card p-6 flex flex-col justify-between border-t-4 border-t-purple-500 hover:border-purple-500/60 transition group">
+              <div>
+                <span className="text-2xl mb-3 block">🥊</span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-purple-400 font-bold">Category 04</span>
+                <h3 className="text-lg font-bold text-foreground mt-1">Combat &amp; Aesthetic Sports</h3>
+                <p className="text-[11px] font-semibold text-muted-foreground mt-0.5">Boxing, MMA, Gymnastics, Diving</p>
+                <div className="mt-4 rounded-lg bg-secondary/50 p-3 border border-border/60">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-foreground block mb-1">Analytical Focus</span>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Strike velocity &amp; classification, ring generalship (spatial dominance), and automated form deduction scoring.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border">
+                <Link to="/sports/athletics/high-jump" className="text-xs font-bold text-purple-400 hover:underline flex items-center justify-between">
+                  <span>Form Scoring Engine</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          4. ANALYTICAL OUTCOMES (THE MEASURABLE ROI)
+          ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-secondary/20 border-b border-border">
+        <div className="content-wrap">
+          <div className="max-w-3xl mb-12">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold uppercase tracking-wider text-emerald-500 mb-3">
+              4. Analytical Outcomes · Measurable ROI
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
+              Analytics That <span className="text-emerald-500">Move the Needle</span>.
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+              We don’t just provide data; we deliver measurable improvements in performance, health, and operational efficiency. CXOs and Directors buy outcomes, not features.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {/* Outcome 1 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-emerald-500/50 transition">
+              <div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-emerald-500">
+                  📉 30%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-foreground mt-2">
+                  Reduction in Soft-Tissue Injuries
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  By visually monitoring high-intensity deceleration loads and flagging ACWR spikes before they result in injury.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border text-[11px] font-mono text-emerald-500 font-bold">
+                $184k Avg Medical Savings
+              </div>
+            </div>
+
+            {/* Outcome 2 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-primary/50 transition">
+              <div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-primary">
+                  ⏱️ 85%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-foreground mt-2">
+                  Less Time on Video Tagging
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Automating the logging of events, freeing up analysts to focus on strategy rather than manual data entry.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border text-[11px] font-mono text-primary font-bold">
+                48 hrs &rarr; 30 mins post-match
+              </div>
+            </div>
+
+            {/* Outcome 3 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-amber-500/50 transition">
+              <div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-amber-500">
+                  🎯 40%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-foreground mt-2">
+                  Increase in Scouting Efficiency
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Allowing recruiters to search thousands of hours of footage using natural language queries to find undervalued talent.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border text-[11px] font-mono text-amber-500 font-bold">
+                Instant Clip Compilation
+              </div>
+            </div>
+
+            {/* Outcome 4 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-teal-500/50 transition">
+              <div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-teal-400">
+                  📈 15%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-foreground mt-2">
+                  Tactical Execution Improvement
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Providing coaches with immediate, post-possession visual feedback on spacing and formation adherence.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border text-[11px] font-mono text-teal-400 font-bold">
+                Pitch-side Tablet Sync
+              </div>
+            </div>
+
+            {/* Outcome 5 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-indigo-500/50 transition sm:col-span-2 lg:col-span-1">
+              <div>
+                <div className="text-3xl sm:text-4xl font-display font-black text-indigo-400">
+                  💰 +24%
+                </div>
+                <div className="text-xs font-bold uppercase tracking-wider text-foreground mt-2">
+                  Higher Athlete Valuation
+                </div>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Equipping players and agencies with professional-grade, video-verified performance metrics to strengthen contract negotiations.
+                </p>
+              </div>
+              <div className="mt-6 pt-3 border-t border-border text-[11px] font-mono text-indigo-400 font-bold">
+                Verified Telemetry Ledger
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          5. CASE STUDIES (PROVEN IMPACT · CHALLENGE → SOLUTION → IMPACT)
+          ───────────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-background border-b border-border">
+        <div className="content-wrap">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
+                5. Case Studies · Proven Impact
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
+                Proven Impact Across the <span className="text-primary">Sporting World</span>.
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl">
+                See how leading organizations and athletes use SportsMax to gain an unfair advantage.
+              </p>
+            </div>
+            <Button asChild variant="outline">
+              <Link to="/resources" search={{ tab: "case-studies" }}>
+                Browse Full Case Studies Library &rarr;
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Case Study 1 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-primary/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-primary/15 text-primary text-[10px] font-bold uppercase px-2 py-0.5">Tier-2 Football Club</span>
+                  <span className="text-xs font-mono text-muted-foreground">Europe</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">The Mid-Market Soccer Club</h3>
+
+                {/* Challenge */}
+                <div className="mt-4 rounded-lg bg-red-500/5 border border-red-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-red-500 mb-1">
+                    The Challenge
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    A Tier-2 football club lacked the budget for expensive optical tracking systems, relying on manual, error-prone video tagging that delayed post-match analysis by 48 hours.
+                  </p>
+                </div>
+
+                {/* Solution */}
+                <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
+                    The SportsMax Solution
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Deployed our single-camera AI tactical analysis module to automatically track all 22 players and the ball, generating pitch-control maps and automated event logs.
+                  </p>
+                </div>
+
+                {/* Impact */}
+                <div className="mt-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-500 mb-1">
+                    The Impact
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Reduced video analysis time by 80%. Coaching staff identified a critical defensive spacing flaw, leading to a tactical adjustment that resulted in a <strong className="text-foreground">4-match unbeaten streak and a 25% drop in goals conceded</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-primary">
+                <span>Outcome: -80% Analysis Time</span>
+                <Link to="/resources" search={{ tab: "case-studies" }} className="hover:underline">
+                  Read Case &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Case Study 2 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-amber-500/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-amber-500/15 text-amber-500 text-[10px] font-bold uppercase px-2 py-0.5">Olympic Track Federation</span>
+                  <span className="text-xs font-mono text-muted-foreground">National</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">The Olympic Track &amp; Field Federation</h3>
+
+                {/* Challenge */}
+                <div className="mt-4 rounded-lg bg-red-500/5 border border-red-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-red-500 mb-1">
+                    The Challenge
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    National coaches needed a way to monitor the biomechanical form of 50+ sprinters across remote training centers without disrupting their natural movement with wearable sensors.
+                  </p>
+                </div>
+
+                {/* Solution */}
+                <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
+                    The SportsMax Solution
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Implemented our sensorless pose-estimation engine, allowing coaches to upload standard smartphone video and receive automated reports on stride length, ground contact time, and joint angles.
+                  </p>
+                </div>
+
+                {/* Impact */}
+                <div className="mt-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-500 mb-1">
+                    The Impact
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Identified and corrected a recurring hamstring-risk asymmetry in 3 key athletes prior to the Olympic trials, resulting in <strong className="text-foreground">two personal bests and one national record</strong>.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-amber-500">
+                <span>Outcome: 2 PBs &amp; 1 National Record</span>
+                <Link to="/resources" search={{ tab: "case-studies" }} className="hover:underline">
+                  Read Case &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* Case Study 3 */}
+            <div className="surface-card p-6 flex flex-col justify-between border hover:border-blue-500/50 transition">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="rounded bg-blue-500/15 text-blue-500 text-[10px] font-bold uppercase px-2 py-0.5">NCAA Division-1 Program</span>
+                  <span className="text-xs font-mono text-muted-foreground">Basketball</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">The Division-1 University Basketball Program</h3>
+
+                {/* Challenge */}
+                <div className="mt-4 rounded-lg bg-red-500/5 border border-red-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-red-500 mb-1">
+                    The Challenge
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    The video coordinator was overwhelmed by the need to create individualized, 3-minute highlight reels for 15 players after every game for recruitment and development.
+                  </p>
+                </div>
+
+                {/* Solution */}
+                <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
+                    The SportsMax Solution
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Utilized our Automated Highlight &amp; Scouting engine, setting up custom AI triggers for &ldquo;successful defensive closeouts&rdquo; and &ldquo;transition assists.&rdquo;
+                  </p>
+                </div>
+
+                {/* Impact */}
+                <div className="mt-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20 p-3">
+                  <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-emerald-500 mb-1">
+                    The Impact
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Cut highlight generation time from 4 hours per game to under 15 minutes, allowing coaching staff to focus entirely on game preparation and player development.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs font-semibold text-blue-500">
+                <span>Outcome: 4 hrs &rarr; &lt;15 mins</span>
+                <Link to="/resources" search={{ tab: "case-studies" }} className="hover:underline">
+                  Read Case &rarr;
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* TRUSTGRID.AI REFERENCE SECTION: FULL-SPECTRUM SPORTS AI ARCHITECTURE */}
       <section className="py-20 bg-background border-b border-border">

@@ -12,6 +12,7 @@ import {
   ChevronDown,
   ChevronRight,
   ClipboardList,
+  Cpu,
   Database,
   FileBarChart2,
   FileText,
@@ -25,6 +26,7 @@ import {
   LogOut,
   Menu,
   Milestone,
+  Radio,
   Search,
   Shield,
   ShieldAlert,
@@ -290,6 +292,7 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [platformHover, setPlatformHover] = useState(false);
   const [solutionsHover, setSolutionsHover] = useState(false);
+  const [productsHover, setProductsHover] = useState(false);
   const [sportsHover, setSportsHover] = useState(false);
   const [segmentsHover, setSegmentsHover] = useState(false);
   const [casesHover, setCasesHover] = useState(false);
@@ -305,7 +308,169 @@ export function SiteHeader() {
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5" aria-label="Main navigation">
 
 
-          {/* 1. Platform */}
+          {/* 1. What We Serve (Our Core Capabilities) */}
+          <div
+            className="relative"
+            onMouseEnter={() => setSolutionsHover(true)}
+            onMouseLeave={() => setSolutionsHover(false)}
+          >
+            <Link
+              to="/analytics"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
+            >
+              What We Serve
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
+
+            {solutionsHover && (
+              <div className="absolute left-0 top-full mt-1 w-92 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5 flex items-center justify-between">
+                  <span>Core Capabilities</span>
+                  <span className="text-[9px] font-mono text-primary font-bold">No Wearables Needed</span>
+                </div>
+                <Link
+                  to="/sports/game-analysis"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Goal className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Automated Tactical Analysis</div>
+                    <div className="text-[11px] text-muted-foreground">Pitch control, passing networks &amp; formation breakdowns</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/sports/running"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Cpu className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Sensorless Biomechanics</div>
+                    <div className="text-[11px] text-muted-foreground">24-keypoint pose estimation, joint angles &amp; stride metrics</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/analytics"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Sparkles className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Intelligent Event Tagging</div>
+                    <div className="text-[11px] text-muted-foreground">Real-time NLP + vision play-by-play logging</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/coaches"
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <ShieldAlert className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Load &amp; Injury Risk Monitoring</div>
+                    <div className="text-[11px] text-muted-foreground">Deceleration tracking, ACWR governance &amp; fatigue alerts</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/resources"
+                  search={{ tab: "video-guides" }}
+                  onClick={() => setSolutionsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Video className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Automated Highlights &amp; Scouting</div>
+                    <div className="text-[11px] text-muted-foreground">NLP natural query video search &amp; recruit clip compiler</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* 2. Whom We Serve (The Performance Ecosystem) */}
+          <div
+            className="relative"
+            onMouseEnter={() => setSegmentsHover(true)}
+            onMouseLeave={() => setSegmentsHover(false)}
+          >
+            <button
+              type="button"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
+            >
+              Whom We Serve
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </button>
+
+            {segmentsHover && (
+              <div className="absolute left-0 top-full mt-1 w-88 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
+                  The Performance Ecosystem
+                </div>
+                <Link
+                  to="/coaches"
+                  search={{ tab: "team-dashboard" }}
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Users className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Elite Clubs &amp; Pro Franchises</div>
+                    <div className="text-[11px] text-muted-foreground">Cut film review from hours to seconds with AI curation</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/institution"
+                  search={{ type: "All" }}
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Milestone className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">University &amp; Collegiate (NCAA)</div>
+                    <div className="text-[11px] text-muted-foreground">Maximize roster growth &amp; recruiting edge on budget</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/ecosystem"
+                  search={{ tab: "olympic" }}
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Trophy className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">National Federations &amp; NOCs</div>
+                    <div className="text-[11px] text-muted-foreground">Standardized multi-sport talent benchmarking</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/athletes"
+                  search={{ tab: "dashboard" }}
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <User className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Elite Athletes &amp; Agencies</div>
+                    <div className="text-[11px] text-muted-foreground">Video-verified metrics to prove market value</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/sports/game-analysis"
+                  onClick={() => setSegmentsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Radio className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Broadcasters &amp; Media Partners</div>
+                    <div className="text-[11px] text-muted-foreground">Automated stat overlays, win-prob &amp; highlights</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* 3. How It Works (Platform Architecture) */}
           <div
             className="relative"
             onMouseEnter={() => setPlatformHover(true)}
@@ -313,16 +478,16 @@ export function SiteHeader() {
           >
             <Link
               to="/platform"
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              Platform
+              How It Works
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
             {platformHover && (
-              <div className="absolute left-0 top-full mt-1 w-72 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+              <div className="absolute left-0 top-full mt-1 w-80 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
                 <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
-                  Core Technology &amp; Architecture
+                  End-to-End Pipeline
                 </div>
                 <Link
                   to="/platform"
@@ -332,8 +497,8 @@ export function SiteHeader() {
                 >
                   <Gauge className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">How It Works</div>
-                    <div className="text-[11px] text-muted-foreground">Data capture, optical telemetry &amp; live AI models</div>
+                    <div className="font-semibold text-xs text-foreground">1. Capture &amp; Ingest</div>
+                    <div className="text-[11px] text-muted-foreground">Standard video, 120 FPS optical &amp; optional sensors</div>
                   </div>
                 </Link>
                 <Link
@@ -344,8 +509,8 @@ export function SiteHeader() {
                 >
                   <Zap className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Technology</div>
-                    <div className="text-[11px] text-muted-foreground">Biomechanics, kinematics &amp; automated ML pipelines</div>
+                    <div className="font-semibold text-xs text-foreground">2. Kinematic AI Inference</div>
+                    <div className="text-[11px] text-muted-foreground">Inverse dynamic torque, ACWR &amp; Voronoi grids</div>
                   </div>
                 </Link>
                 <Link
@@ -356,8 +521,8 @@ export function SiteHeader() {
                 >
                   <Database className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Integrations</div>
-                    <div className="text-[11px] text-muted-foreground">Garmin, Polar, Catapult, VICON, IMUs &amp; REST APIs</div>
+                    <div className="font-semibold text-xs text-foreground">3. Integrations &amp; API</div>
+                    <div className="text-[11px] text-muted-foreground">Catapult, Polar, REST endpoints &amp; WebSockets</div>
                   </div>
                 </Link>
                 <Link
@@ -368,74 +533,97 @@ export function SiteHeader() {
                 >
                   <Shield className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Security</div>
-                    <div className="text-[11px] text-muted-foreground">WADA compliance, encrypted telemetry &amp; RBAC safeguards</div>
+                    <div className="font-semibold text-xs text-foreground">4. Sovereign Security Enclave</div>
+                    <div className="text-[11px] text-muted-foreground">WADA ADAMS ledger, HIPAA/GDPR &amp; SOC 2 Type II</div>
                   </div>
                 </Link>
               </div>
             )}
           </div>
 
-          {/* 2. Solutions */}
+          {/* 4. Products (Separate Menu) */}
           <div
             className="relative"
-            onMouseEnter={() => setSolutionsHover(true)}
-            onMouseLeave={() => setSolutionsHover(false)}
+            onMouseEnter={() => setProductsHover(true)}
+            onMouseLeave={() => setProductsHover(false)}
           >
             <Link
-              to="/analytics"
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+              to="/pricing"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              Solutions
+              Products
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
-            {solutionsHover && (
-              <div className="absolute left-0 top-full mt-1 w-76 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
-                  High-Level Service Offerings
+            {productsHover && (
+              <div className="absolute left-0 top-full mt-1 w-88 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5 flex items-center justify-between">
+                  <span>Software &amp; Subscriptions</span>
+                  <Link to="/pricing" onClick={() => setProductsHover(false)} className="text-[10px] text-primary hover:underline">
+                    View Pricing &rarr;
+                  </Link>
                 </div>
                 <Link
-                  to="/analytics"
-                  onClick={() => setSolutionsHover(false)}
+                  to="/sports/game-analysis"
+                  onClick={() => setProductsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
                   <BarChart3 className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Analytics Services</div>
-                    <div className="text-[11px] text-muted-foreground">Session deep-dives, load ratios &amp; AI automated cues</div>
+                    <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
+                      SportsMax Match Suite™
+                      <span className="rounded bg-primary/15 text-primary text-[9px] font-bold px-1.5 py-0.2">Core</span>
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">Live 120 FPS optical tracking, pitch control &amp; xG analytics</div>
+                  </div>
+                </Link>
+                <Link
+                  to="/platform"
+                  search={{ tab: "technology" }}
+                  onClick={() => setProductsHover(false)}
+                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
+                >
+                  <Cpu className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-xs text-foreground">Kinematics MoCap Engine™</div>
+                    <div className="text-[11px] text-muted-foreground">24-point markerless pose estimation from standard video</div>
                   </div>
                 </Link>
                 <Link
                   to="/coaches"
-                  onClick={() => setSolutionsHover(false)}
+                  search={{ tab: "team-dashboard" }}
+                  onClick={() => setProductsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <Bot className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <Bot className="h-4 w-4 text-accent shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Coaching Services</div>
-                    <div className="text-[11px] text-muted-foreground">Tactical whiteboards, drill assignments &amp; athlete feedback</div>
+                    <div className="font-semibold text-xs text-foreground">Autonomous Coach Fleet™</div>
+                    <div className="text-[11px] text-muted-foreground">Automated tactical debriefs, ACWR alerts &amp; live cues</div>
                   </div>
                 </Link>
                 <Link
-                  to="/ecosystem"
-                  onClick={() => setSolutionsHover(false)}
+                  to="/platform"
+                  search={{ tab: "security" }}
+                  onClick={() => setProductsHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <Trophy className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <Shield className="h-4 w-4 text-chart-3 shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
-                      Olympic &amp; Elite Programs
-                      <span className="rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 text-[9px] font-bold px-1.5 py-0.2">Gold</span>
-                    </div>
-                    <div className="text-[11px] text-muted-foreground">Podium tracking, quadrennial macrocycles &amp; peak timing</div>
+                    <div className="font-semibold text-xs text-foreground">Sovereign Data Enclave™</div>
+                    <div className="text-[11px] text-muted-foreground">HIPAA/WADA compliant biometric vault &amp; audit trails</div>
                   </div>
                 </Link>
+                <div className="mt-2 pt-2 border-t border-border flex items-center justify-between px-2 text-xs">
+                  <span className="text-muted-foreground">Want custom enterprise deployment?</span>
+                  <Link to="/pricing" onClick={() => setProductsHover(false)} className="font-bold text-primary hover:underline">
+                    Compare Plans &rarr;
+                  </Link>
+                </div>
               </div>
             )}
           </div>
 
-          {/* 3. Sports */}
+          {/* 5. Sports (Taxonomy) */}
           <div
             className="relative"
             onMouseEnter={() => setSportsHover(true)}
@@ -443,14 +631,11 @@ export function SiteHeader() {
           >
             <Link
               to="/sports"
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
               <span className="flex items-center gap-1">
                 <Flame className="h-3.5 w-3.5 fill-primary/20 text-primary" />
                 Sports
-              </span>
-              <span className="rounded bg-primary/15 px-1 py-0.2 text-[9px] font-black uppercase text-primary">
-                New
               </span>
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
@@ -458,52 +643,11 @@ export function SiteHeader() {
             {sportsHover && (
               <div className="absolute left-0 top-full mt-1 w-[720px] rounded-xl border border-border bg-card p-5 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
                 <div className="grid grid-cols-3 gap-5">
-                  {/* Individual Sports Column */}
+                  {/* Invasion & Team Sports */}
                   <div>
                     <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-2.5">
                       <span className="text-xs font-bold uppercase tracking-wider text-foreground">
-                        Individual Sports
-                      </span>
-                    </div>
-                    <ul className="grid gap-2 text-xs">
-                      <li>
-                        <Link
-                          to="/sports/running"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
-                        >
-                          <span>🏃 Running</span>
-                          <span className="text-[10px] text-muted-foreground">GPS &amp; Pace</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/swimming"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
-                        >
-                          <span>🏊 Swimming</span>
-                          <span className="text-[10px] text-muted-foreground">SWOLF &amp; Splits</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/sports/athletics/high-jump"
-                          onClick={() => setSportsHover(false)}
-                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
-                        >
-                          <span>👟 High Jump</span>
-                          <span className="text-[10px] text-muted-foreground">Kinematics</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Team Sports Column */}
-                  <div>
-                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-2.5">
-                      <span className="text-xs font-bold uppercase tracking-wider text-foreground">
-                        Team Sports
+                        Invasion &amp; Team
                       </span>
                     </div>
                     <ul className="grid gap-2 text-xs">
@@ -540,7 +684,48 @@ export function SiteHeader() {
                     </ul>
                   </div>
 
-                  {/* Game Analysis Suite & All Sports */}
+                  {/* Racing & Endurance */}
+                  <div>
+                    <div className="flex items-center justify-between border-b border-border/70 pb-2 mb-2.5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-foreground">
+                        Racing &amp; Athletics
+                      </span>
+                    </div>
+                    <ul className="grid gap-2 text-xs">
+                      <li>
+                        <Link
+                          to="/sports/running"
+                          onClick={() => setSportsHover(false)}
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
+                        >
+                          <span>🏃 Running</span>
+                          <span className="text-[10px] text-muted-foreground">GPS &amp; Pace</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/sports/swimming"
+                          onClick={() => setSportsHover(false)}
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
+                        >
+                          <span>🏊 Swimming</span>
+                          <span className="text-[10px] text-muted-foreground">SWOLF &amp; Splits</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/sports/athletics/high-jump"
+                          onClick={() => setSportsHover(false)}
+                          className="font-medium text-foreground hover:text-primary flex items-center justify-between"
+                        >
+                          <span>👟 High Jump</span>
+                          <span className="text-[10px] text-muted-foreground">Kinematics</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Tactical Suite Box */}
                   <div className="bg-secondary/40 rounded-lg p-3 flex flex-col justify-between">
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-foreground block mb-2">
@@ -573,81 +758,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 4. ICP */}
-          <div
-            className="relative"
-            onMouseEnter={() => setSegmentsHover(true)}
-            onMouseLeave={() => setSegmentsHover(false)}
-          >
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
-            >
-              ICP
-              <ChevronDown className="h-3 w-3 text-muted-foreground" />
-            </button>
-
-            {segmentsHover && (
-              <div className="absolute left-0 top-full mt-1 w-76 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
-                  Tailored by User Type
-                </div>
-                <Link
-                  to="/athletes"
-                  search={{ tab: "dashboard" }}
-                  onClick={() => setSegmentsHover(false)}
-                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
-                >
-                  <User className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-xs text-foreground">Athletes</div>
-                    <div className="text-[11px] text-muted-foreground">Self-tracking, PR archives &amp; biomechanics feedback</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/coaches"
-                  search={{ tab: "team-dashboard" }}
-                  onClick={() => setSegmentsHover(false)}
-                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
-                >
-                  <Users className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-xs text-foreground">Coaches &amp; Teams</div>
-                    <div className="text-[11px] text-muted-foreground">Roster management, workload monitoring &amp; game strategy</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/institution"
-                  search={{ type: "All" }}
-                  onClick={() => setSegmentsHover(false)}
-                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
-                >
-                  <Milestone className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-xs text-foreground flex items-center gap-1">
-                      Institutions / NOCs
-                      <span className="rounded bg-primary/20 text-primary text-[9px] font-bold px-1.5 py-0.2">Elite</span>
-                    </div>
-                    <div className="text-[11px] text-muted-foreground">Universities, academies &amp; National Olympic Committees</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/ecosystem"
-                  search={{ tab: "olympic" }}
-                  onClick={() => setSegmentsHover(false)}
-                  className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
-                >
-                  <Globe className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-xs text-foreground">Federations</div>
-                    <div className="text-[11px] text-muted-foreground">National governing bodies, benchmarking &amp; talent IDs</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* 5. Case Studies & Guides (Replaces Pricing) */}
+          {/* 6. Case Studies (Proven Impact) */}
           <div
             className="relative"
             onMouseEnter={() => setCasesHover(true)}
@@ -658,14 +769,14 @@ export function SiteHeader() {
               search={{ tab: "case-studies" }}
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              Case Studies &amp; Guides
+              Case Studies
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
             {casesHover && (
               <div className="absolute left-0 top-full mt-1 w-84 rounded-xl border border-border bg-card p-3 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-150 z-50">
                 <div className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-2 pb-1.5">
-                  Proof &amp; Education
+                  Proven Impact · Challenge &rarr; Impact
                 </div>
                 <Link
                   to="/resources"
@@ -675,8 +786,8 @@ export function SiteHeader() {
                 >
                   <FileText className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Case Studies</div>
-                    <div className="text-[11px] text-muted-foreground">National federation implementations &amp; high-performance deployments</div>
+                    <div className="font-semibold text-xs text-foreground">Verified Case Studies</div>
+                    <div className="text-[11px] text-muted-foreground">Pro clubs, Olympic federations &amp; NCAA D1 results</div>
                   </div>
                 </Link>
                 <Link
@@ -685,10 +796,10 @@ export function SiteHeader() {
                   onClick={() => setCasesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <Trophy className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <Trophy className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Success Stories</div>
-                    <div className="text-[11px] text-muted-foreground">Athlete, team and coach outcome highlights with verified metrics</div>
+                    <div className="font-semibold text-xs text-foreground">Athlete Outcomes</div>
+                    <div className="text-[11px] text-muted-foreground">Personal bests, national records &amp; injury reductions</div>
                   </div>
                 </Link>
                 <Link
@@ -697,17 +808,17 @@ export function SiteHeader() {
                   onClick={() => setCasesHover(false)}
                   className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <Video className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                  <Video className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-foreground">Video Guides</div>
-                    <div className="text-[11px] text-muted-foreground">How-to walkthroughs, coaching cue demos &amp; analytics tutorials</div>
+                    <div className="font-semibold text-xs text-foreground">Video Walkthroughs</div>
+                    <div className="text-[11px] text-muted-foreground">Coaching cue demos &amp; analytics tutorials</div>
                   </div>
                 </Link>
               </div>
             )}
           </div>
 
-          {/* 6. Resources */}
+          {/* 7. Resources */}
           <div
             className="relative"
             onMouseEnter={() => setResourcesHover(true)}
@@ -716,7 +827,7 @@ export function SiteHeader() {
             <Link
               to="/resources"
               search={{ tab: "blog" }}
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
               Resources
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
@@ -800,7 +911,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 7. About */}
+          {/* 8. About Us (Separate Dedicated Section) */}
           <div
             className="relative"
             onMouseEnter={() => setAboutHover(true)}
@@ -808,9 +919,9 @@ export function SiteHeader() {
           >
             <Link
               to="/about"
-              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              About
+              About Us
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
@@ -824,7 +935,7 @@ export function SiteHeader() {
                   onClick={() => setAboutHover(false)}
                   className="block rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <div className="font-semibold text-xs text-foreground">Mission</div>
+                  <div className="font-semibold text-xs text-foreground">Mission &amp; Vision</div>
                   <div className="text-[11px] text-muted-foreground">Democratizing Olympic-level intelligence</div>
                 </Link>
                 <Link
@@ -832,15 +943,15 @@ export function SiteHeader() {
                   onClick={() => setAboutHover(false)}
                   className="block rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <div className="font-semibold text-xs text-foreground">Team</div>
-                  <div className="text-[11px] text-muted-foreground">World-class sports scientists &amp; engineers</div>
+                  <div className="font-semibold text-xs text-foreground">Leadership &amp; Team</div>
+                  <div className="text-[11px] text-muted-foreground">World-class sports scientists &amp; CV engineers</div>
                 </Link>
                 <Link
                   to="/ecosystem"
                   onClick={() => setAboutHover(false)}
                   className="block rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <div className="font-semibold text-xs text-foreground">Partners</div>
+                  <div className="font-semibold text-xs text-foreground">Partners &amp; Federations</div>
                   <div className="text-[11px] text-muted-foreground">Federations, hardware brands &amp; universities</div>
                 </Link>
                 <Link
@@ -848,13 +959,14 @@ export function SiteHeader() {
                   onClick={() => setAboutHover(false)}
                   className="block rounded-lg p-2 hover:bg-secondary transition"
                 >
-                  <div className="font-semibold text-xs text-foreground">Contact</div>
+                  <div className="font-semibold text-xs text-foreground">Contact Us</div>
                   <div className="text-[11px] text-muted-foreground">High-performance consultation &amp; support</div>
                 </Link>
               </div>
             )}
           </div>
         </nav>
+
 
         {/* Action Controls */}
         <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
@@ -1003,59 +1115,79 @@ export function SiteHeader() {
               </div>
             </div>
 
-            {/* 7 Core Structured Sections */}
+            {/* Core Structured Sections (Trustgrid.ai Standard) */}
             <div className="grid gap-1 border-t border-border pt-3">
               <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-2">
                 Navigation Menu
               </span>
 
-              {/* 1. Platform */}
-              <div className="border-b border-border/50 pb-2 pt-1">
-                <Link
-                  to="/platform"
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
-                >
-                  Platform
-                </Link>
-                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
-                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• How it Works</Link>
-                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Technology</Link>
-                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Integrations</Link>
-                  <Link to="/platform" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Security</Link>
-                </div>
-              </div>
-
-              {/* 2. Solutions */}
+              {/* 1. What We Serve */}
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/analytics"
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
                 >
-                  Solutions
+                  What We Serve
                 </Link>
                 <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
-                  <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Analytics Services</Link>
-                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Coaching Services</Link>
-                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Olympic &amp; Elite Programs</Link>
+                  <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Automated Tactical Analysis</Link>
+                  <Link to="/sports/running" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Sensorless Biomechanics</Link>
+                  <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Intelligent Event Tagging</Link>
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Load &amp; Injury Risk Monitoring</Link>
+                  <Link to="/resources" search={{ tab: "video-guides" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Automated Highlights &amp; Scouting</Link>
                 </div>
               </div>
 
-              {/* 3. ICP */}
+              {/* 2. Whom We Serve */}
               <div className="border-b border-border/50 pb-2 pt-1">
                 <div className="rounded-md px-3 py-1.5 text-sm font-semibold text-foreground">
-                  ICP
+                  Whom We Serve
                 </div>
-                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
-                  <Link to="/athletes" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Athletes</Link>
-                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Coaches &amp; Teams</Link>
-                  <Link to="/institution" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Institutions / NOCs</Link>
-                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Federations</Link>
+                <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Elite Clubs &amp; Pro Franchises</Link>
+                  <Link to="/institution" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• University &amp; Collegiate (NCAA)</Link>
+                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• National Federations &amp; NOCs</Link>
+                  <Link to="/athletes" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Elite Athletes &amp; Agencies</Link>
+                  <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Broadcasters &amp; Media Partners</Link>
                 </div>
               </div>
 
-              {/* 4. Case Studies & Guides */}
+              {/* 3. How It Works */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/platform"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  How It Works
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/platform" search={{ tab: "how-it-works" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• 1. Capture &amp; Ingest</Link>
+                  <Link to="/platform" search={{ tab: "technology" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• 2. AI Inference</Link>
+                  <Link to="/platform" search={{ tab: "integrations" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• 3. Sensor API</Link>
+                  <Link to="/platform" search={{ tab: "security" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• 4. Sovereign Enclave</Link>
+                </div>
+              </div>
+
+              {/* 4. Products */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/pricing"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
+                >
+                  Products &amp; Plans
+                </Link>
+                <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
+                  <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Match Suite™</Link>
+                  <Link to="/platform" search={{ tab: "technology" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• MoCap Engine™</Link>
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Coach Fleet™</Link>
+                  <Link to="/pricing" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 font-bold text-primary">• Pricing &amp; ROI</Link>
+                </div>
+              </div>
+
+              {/* 5. Case Studies */}
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/resources"
@@ -1063,16 +1195,16 @@ export function SiteHeader() {
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
                 >
-                  Case Studies &amp; Guides
+                  Case Studies &amp; Outcomes
                 </Link>
                 <div className="pl-4 pb-1 grid grid-cols-1 gap-1 text-xs text-muted-foreground">
-                  <Link to="/resources" search={{ tab: "case-studies" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Case Studies (National Federations)</Link>
-                  <Link to="/resources" search={{ tab: "success-stories" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Success Stories (Athlete Outcomes)</Link>
-                  <Link to="/resources" search={{ tab: "video-guides" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Video Guides (Tutorials &amp; Demos)</Link>
+                  <Link to="/resources" search={{ tab: "case-studies" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Verified Case Studies</Link>
+                  <Link to="/resources" search={{ tab: "success-stories" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Athlete Outcomes &amp; PBs</Link>
+                  <Link to="/resources" search={{ tab: "video-guides" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Video Walkthroughs</Link>
                 </div>
               </div>
 
-              {/* 5. Resources */}
+              {/* 6. Resources */}
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/resources"
@@ -1092,20 +1224,20 @@ export function SiteHeader() {
                 </div>
               </div>
 
-              {/* 6. About */}
+              {/* 7. About Us */}
               <div className="pb-2 pt-1">
                 <Link
                   to="/about"
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold hover:bg-secondary block"
                 >
-                  About SportsMax
+                  About Us
                 </Link>
                 <div className="pl-4 pb-1 grid grid-cols-2 gap-1 text-xs text-muted-foreground">
                   <Link to="/about" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Mission</Link>
                   <Link to="/about" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Team</Link>
                   <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Partners</Link>
-                  <Link to="/contact" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Contact</Link>
+                  <Link to="/contact" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Contact Us</Link>
                 </div>
               </div>
             </div>
