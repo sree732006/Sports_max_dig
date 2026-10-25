@@ -24,6 +24,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as EcosystemRouteImport } from './routes/ecosystem'
 import { Route as GoogleTrendsRouteImport } from './routes/google-trends'
 import { Route as HelpRouteImport } from './routes/help'
+import { Route as IcpRouteImport } from './routes/icp'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as InstitutionRouteImport } from './routes/institution'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
@@ -120,6 +121,11 @@ const GoogleTrendsRoute = GoogleTrendsRouteImport.update({
 const HelpRoute = HelpRouteImport.update({
   id: '/help',
   path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IcpRoute = IcpRouteImport.update({
+  id: '/icp',
+  path: '/icp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsightsRoute = InsightsRouteImport.update({
@@ -249,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
   '/help': typeof HelpRoute
+  '/icp': typeof IcpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
@@ -288,6 +295,7 @@ export interface FileRoutesByTo {
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
   '/help': typeof HelpRoute
+  '/icp': typeof IcpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
@@ -328,6 +336,7 @@ export interface FileRoutesById {
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
   '/help': typeof HelpRoute
+  '/icp': typeof IcpRoute
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
@@ -369,6 +378,7 @@ export interface FileRouteTypes {
     | '/ecosystem'
     | '/google-trends'
     | '/help'
+    | '/icp'
     | '/insights'
     | '/institution'
     | '/linkedin'
@@ -408,6 +418,7 @@ export interface FileRouteTypes {
     | '/ecosystem'
     | '/google-trends'
     | '/help'
+    | '/icp'
     | '/insights'
     | '/institution'
     | '/linkedin'
@@ -447,6 +458,7 @@ export interface FileRouteTypes {
     | '/ecosystem'
     | '/google-trends'
     | '/help'
+    | '/icp'
     | '/insights'
     | '/institution'
     | '/linkedin'
@@ -487,6 +499,7 @@ export interface RootRouteChildren {
   EcosystemRoute: typeof EcosystemRoute
   GoogleTrendsRoute: typeof GoogleTrendsRoute
   HelpRoute: typeof HelpRoute
+  IcpRoute: typeof IcpRoute
   InsightsRoute: typeof InsightsRoute
   InstitutionRoute: typeof InstitutionRoute
   LinkedinRoute: typeof LinkedinRoute
@@ -616,6 +629,13 @@ declare module '@tanstack/react-router' {
       path: '/help'
       fullPath: '/help'
       preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/icp': {
+      id: '/icp'
+      path: '/icp'
+      fullPath: '/icp'
+      preLoaderRoute: typeof IcpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insights': {
@@ -791,6 +811,7 @@ const rootRouteChildren: RootRouteChildren = {
   EcosystemRoute: EcosystemRoute,
   GoogleTrendsRoute: GoogleTrendsRoute,
   HelpRoute: HelpRoute,
+  IcpRoute: IcpRoute,
   InsightsRoute: InsightsRoute,
   InstitutionRoute: InstitutionRoute,
   LinkedinRoute: LinkedinRoute,

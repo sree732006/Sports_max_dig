@@ -72,3 +72,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
+/* Dark nav dropdown panels – override theme tokens for readability */
+.nav-dd {
+  --foreground: 248 250 252; /* slate-50 */
+  --muted-foreground: 148 163 184; /* slate-400 */
+  --secondary: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.10);
+}
+.nav-dd * { color: inherit; }
+.nav-dd .dd-title { color: #f8fafc; font-weight: 600; }
+.nav-dd .dd-desc  { color: #94a3b8; }
+.nav-dd .dd-label { color: #64748b; }
+.nav-dd a:hover   { background: rgba(255,255,255,0.07) !important; }
+.nav-dd .dd-divider { border-color: rgba(255,255,255,0.08); }
+

@@ -640,14 +640,14 @@ function HomePage() {
 
 
       {/* ─────────────────────────────────────────────────────────────
-          1. WHAT WE SERVICE (OUR CORE CAPABILITIES)
+          1. PLATFORM CAPABILITIES
           ───────────────────────────────────────────────────────────── */}
       <section className="py-20 bg-background border-b border-border">
         <div className="content-wrap">
           <div className="max-w-3xl mb-12">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
               <span className="size-2 rounded-full bg-primary animate-pulse" />
-              1. What We Service · Core Capabilities
+              Platform Capabilities
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
               From Raw Video to <span className="text-primary">Game-Winning Intelligence</span>.
@@ -757,13 +757,13 @@ function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          2. WHOM WE SERVICE (THE PERFORMANCE ECOSYSTEM)
+          2. ICP & SOLUTIONS (THE PERFORMANCE ECOSYSTEM)
           ───────────────────────────────────────────────────────────── */}
       <section className="py-20 bg-secondary/25 border-b border-border">
         <div className="content-wrap">
           <div className="max-w-3xl mb-12">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono font-bold uppercase tracking-wider text-primary mb-3">
-              2. Whom We Service · Ecosystem
+              ICP &amp; Solutions · Persona Ecosystem
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold uppercase tracking-tight text-foreground">
               Built for Every Level of the <span className="text-primary">Performance Ecosystem</span>.
@@ -873,6 +873,28 @@ function HomePage() {
                 </Link>
               </div>
             </div>
+          </div>
+
+          {/* Full SPICED Deep-Dive Banner */}
+          <div className="mt-10 rounded-2xl border border-primary/30 bg-gradient-to-r from-emerald-950/60 via-slate-900 to-slate-900 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="space-y-2 text-center md:text-left">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/20 text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
+                Executive SPICED Framework
+              </span>
+              <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
+                Explore Full Situation, Pain, Impact, &amp; Decision Models
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                Dive into tailored strategic breakdowns for all 5 stakeholder groups—quantifying injury cost avoidance, recruitment ROI, and 48-hour onboarding timelines.
+              </p>
+            </div>
+            <Link
+              to="/icp"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-xs sm:text-sm font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition whitespace-nowrap shrink-0"
+            >
+              <span>View Full ICP &amp; SPICED Suite</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
