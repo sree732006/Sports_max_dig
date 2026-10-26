@@ -155,7 +155,7 @@ function SpicedCard({ step, label, Icon, iconColor, heading, body, accent }: {
 
 export function ICPPage() {
   const [activeICP, setActiveICP] = useState(0);
-  const icp = ICP_DATA[activeICP];
+  const icp = (ICP_DATA[activeICP] ?? ICP_DATA[0])!;
 
   return (
     <div className="min-h-screen bg-[#080f1a] text-slate-100">

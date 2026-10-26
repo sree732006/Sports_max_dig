@@ -5,6 +5,7 @@ import {
   ArrowRight,
   BarChart2,
   BrainCircuit,
+  Calendar,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
@@ -473,7 +474,7 @@ function HomePage() {
           {/* Bottom Slide Controller Bar (Precision Motion Style) */}
           <div className="mt-10 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
             {/* Slide Navigation Progress Bars */}
-            <div className="flex items-center gap-2 flex-1 w-full max-w-xl" role="tablist" aria-label="Hero Slide Navigation">
+            <div className="flex items-center gap-2 flex-1 w-full max-w-lg" role="tablist" aria-label="Hero Slide Navigation">
               {HERO_SLIDES.map((slide, sidx) => (
                 <button
                   key={slide.id}
@@ -493,8 +494,8 @@ function HomePage() {
               ))}
             </div>
 
-            {/* Slide Number + Controls */}
-            <div className="flex items-center gap-3 shrink-0">
+            {/* Slide Number + Controls + Slider-level Book Appointment CTA */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-3 shrink-0 w-full sm:w-auto">
               <div className="text-[11px] font-mono text-slate-300">
                 <span className="text-white font-bold">0{currentSlide + 1}</span>
                 <span className="text-slate-500"> / 0{HERO_SLIDES.length}</span>
@@ -527,6 +528,20 @@ function HomePage() {
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
+              </div>
+
+              {/* Slider-Level Book Appointment CTA */}
+              <div className="pl-1 sm:pl-3 sm:border-l sm:border-white/15">
+                <Button
+                  asChild
+                  size="sm"
+                  className="font-bold text-xs bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 shadow-lg shadow-emerald-950/40 border border-emerald-300/40 px-3.5 py-1.5 h-8 transition-transform hover:scale-[1.03]"
+                >
+                  <Link to="/book-appointment">
+                    <Calendar className="h-3.5 w-3.5 mr-1.5 text-slate-950" />
+                    Book Appointment
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
