@@ -1005,6 +1005,17 @@ export function SiteHeader() {
                   <div className="font-semibold text-xs text-slate-100">Contact Us</div>
                   <div className="text-[11px] text-slate-400">High-performance consultation &amp; support</div>
                 </Link>
+                <Link
+                  to="/book-appointment"
+                  onClick={() => setAboutHover(false)}
+                  className="block rounded-lg p-2 hover:bg-white/[0.07] transition border-t border-white/10 mt-1"
+                >
+                  <div className="font-semibold text-xs text-emerald-400 flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
+                    Book Consultation / Appointment
+                  </div>
+                  <div className="text-[11px] text-slate-400">Schedule a 1-on-1 discovery call with sports science team</div>
+                </Link>
               </div>
             )}
           </div>
@@ -1013,17 +1024,6 @@ export function SiteHeader() {
 
         {/* Action Controls */}
         <div className="hidden lg:flex items-center gap-1.5 xl:gap-2 shrink-0">
-          {/* Highlighted Book Appointment Button */}
-          <Button
-            asChild
-            size="sm"
-            className="font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md shadow-emerald-900/20 border border-emerald-400/30 px-3 transition-transform hover:scale-[1.02]"
-          >
-            <Link to="/book-appointment">
-              <Calendar className="h-3.5 w-3.5 mr-1" />
-              Book Appointment
-            </Link>
-          </Button>
 
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
@@ -1315,20 +1315,12 @@ export function SiteHeader() {
                   <Link to="/about" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Team</Link>
                   <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Partners</Link>
                   <Link to="/contact" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Contact Us</Link>
+                  <Link to="/book-appointment" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 font-semibold text-emerald-400">• Book Appointment</Link>
                 </div>
               </div>
             </div>
 
             <div className="mt-2 pt-2 border-t border-border flex flex-col gap-2">
-              <Button
-                asChild
-                className="w-full font-bold text-xs bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md shadow-emerald-900/20 border border-emerald-400/30"
-              >
-                <Link to="/book-appointment" onClick={() => setMobileOpen(false)}>
-                  <Calendar className="h-4 w-4 mr-1.5" />
-                  Book Appointment
-                </Link>
-              </Button>
               {isAuthenticated && user ? (
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between rounded-lg bg-secondary/80 p-2.5">
@@ -1569,6 +1561,14 @@ export function SiteFooter() {
               <li>
                 <Link to="/contact" className="hover:text-primary transition">
                   Contact Support
+                </Link>
+              </li>
+              <li>
+                <Link to="/book-appointment" className="text-emerald-400 hover:text-emerald-300 font-semibold transition flex items-center gap-1.5">
+                  <span>Book Appointment</span>
+                  <span className="rounded bg-emerald-500/20 px-1 py-0.2 text-[8px] font-black uppercase text-emerald-400">
+                    Live
+                  </span>
                 </Link>
               </li>
               <li>
