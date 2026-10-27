@@ -294,6 +294,8 @@ export function AuthDialog({
 export function SiteHeader() {
   const { user, isAuthenticated, logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [offerHover, setOfferHover] = useState(false);
+  const [serveHover, setServeHover] = useState(false);
   const [platformHover, setPlatformHover] = useState(false);
   const [solutionsHover, setSolutionsHover] = useState(false);
   const [productsHover, setProductsHover] = useState(false);
@@ -312,149 +314,162 @@ export function SiteHeader() {
         <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5" aria-label="Main navigation">
 
 
-          {/* 1. Solutions (Offerings + ICP Who We Serve) */}
+          {/* 1. What We Offer */}
           <div
             className="relative"
-            onMouseEnter={() => setSegmentsHover(true)}
-            onMouseLeave={() => setSegmentsHover(false)}
+            onMouseEnter={() => setOfferHover(true)}
+            onMouseLeave={() => setOfferHover(false)}
           >
             <Link
               to="/coaches"
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              Solutions
+              What We Offer
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
-            {segmentsHover && (
-              <div className="absolute left-0 top-full mt-1 w-[680px] rounded-xl border border-emerald-900/40 p-4 shadow-[0_8px_40px_-4px_rgba(0,0,0,0.55)] ring-1 ring-white/5 animate-in fade-in-50 zoom-in-95 duration-150 z-50 text-slate-100" style={{background: 'linear-gradient(135deg, #0f172a 80%, #0d2318 100%)'}}>
-                <div className="grid grid-cols-2 gap-x-6">
-
-                  {/* LEFT: Offerings / Solutions */}
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
-                      <span>Offerings</span>
-                      <Link to="/coaches" onClick={() => setSegmentsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
-                        All Solutions &rarr;
-                      </Link>
+            {offerHover && (
+              <div className="absolute left-0 top-full mt-1 w-[380px] rounded-xl border border-emerald-900/40 p-4 shadow-[0_8px_40px_-4px_rgba(0,0,0,0.55)] ring-1 ring-white/5 animate-in fade-in-50 zoom-in-95 duration-150 z-50 text-slate-100" style={{background: 'linear-gradient(135deg, #0f172a 80%, #0d2318 100%)'}}>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
+                  <span>Core Offerings &amp; Suites</span>
+                  <Link to="/coaches" onClick={() => setOfferHover(false)} className="text-[9px] font-mono text-primary hover:underline">
+                    All Solutions &rarr;
+                  </Link>
+                </div>
+                <div className="space-y-1">
+                  <Link
+                    to="/sports/game-analysis"
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Activity className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Match Intelligence Suite</div>
+                      <div className="text-[11px] text-slate-400">Real-time xG, formation detection &amp; tactical event reports</div>
                     </div>
-                    <Link
-                      to="/sports/game-analysis"
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
-                    >
-                      <Activity className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Match Intelligence Suite</div>
-                        <div className="text-[11px] text-slate-400">Real-time xG, formation detection &amp; event reports</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/platform"
-                      search={{ tab: "technology" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
-                    >
-                      <BrainCircuit className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Biomechanics &amp; Motion Capture</div>
-                        <div className="text-[11px] text-slate-400">Sensorless 3D athlete pose estimation</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/analytics"
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
-                    >
-                      <BarChart2 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Performance Analytics</div>
-                        <div className="text-[11px] text-slate-400">Load monitoring, injury risk &amp; trend dashboards</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/platform"
-                      search={{ tab: "how-it-works" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
-                    >
-                      <Sparkles className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Automated Highlights &amp; Scouting</div>
-                        <div className="text-[11px] text-slate-400">AI-curated clip packages for recruiters &amp; media</div>
-                      </div>
-                    </Link>
-                  </div>
-
-                  {/* RIGHT: Who We Serve / ICP */}
-                  <div className="border-l border-white/10 pl-6">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
-                      <span>Who We Serve</span>
-                      <Link to="/icp" onClick={() => setSegmentsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
-                        View ICP Overview &rarr;
-                      </Link>
+                  </Link>
+                  <Link
+                    to="/platform"
+                    search={{ tab: "technology" }}
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <BrainCircuit className="h-4 w-4 text-teal-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Biomechanics &amp; Motion Capture</div>
+                      <div className="text-[11px] text-slate-400">Sensorless 3D athlete pose estimation &amp; joint tracking</div>
                     </div>
-                    <Link
-                      to="/coaches"
-                      search={{ tab: "team-dashboard" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition"
-                    >
-                      <Users className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Elite Clubs &amp; Pro Franchises</div>
-                        <div className="text-[11px] text-slate-400">AI film review &amp; squad intelligence</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/institution"
-                      search={{ type: "All" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition"
-                    >
-                      <Milestone className="h-3.5 w-3.5 text-blue-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Universities &amp; Collegiate</div>
-                        <div className="text-[11px] text-slate-400">Roster growth &amp; recruiting edge</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/ecosystem"
-                      search={{ tab: "olympic" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition"
-                    >
-                      <Trophy className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">National Federations &amp; NOCs</div>
-                        <div className="text-[11px] text-slate-400">Multi-sport talent benchmarking</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/athletes"
-                      search={{ tab: "dashboard" }}
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition"
-                    >
-                      <User className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Elite Athletes &amp; Agencies</div>
-                        <div className="text-[11px] text-slate-400">Video-verified metrics for market value</div>
-                      </div>
-                    </Link>
-                    <Link
-                      to="/sports/game-analysis"
-                      onClick={() => setSegmentsHover(false)}
-                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition"
-                    >
-                      <Radio className="h-3.5 w-3.5 text-purple-400 shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs text-slate-100">Broadcasters &amp; Media</div>
-                        <div className="text-[11px] text-slate-400">Stat overlays, win-prob &amp; highlights</div>
-                      </div>
-                    </Link>
-                  </div>
+                  </Link>
+                  <Link
+                    to="/analytics"
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <BarChart2 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Performance Analytics</div>
+                      <div className="text-[11px] text-slate-400">Load monitoring, injury risk &amp; longitudinal dashboards</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/platform"
+                    search={{ tab: "how-it-works" }}
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Sparkles className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Automated Highlights &amp; Scouting</div>
+                      <div className="text-[11px] text-slate-400">AI-curated clip packages for recruiters &amp; media partners</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
 
+          {/* 2. Whom We Serve */}
+          <div
+            className="relative"
+            onMouseEnter={() => setServeHover(true)}
+            onMouseLeave={() => setServeHover(false)}
+          >
+            <Link
+              to="/icp"
+              className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
+            >
+              Whom We Serve
+              <ChevronDown className="h-3 w-3 text-muted-foreground" />
+            </Link>
+
+            {serveHover && (
+              <div className="absolute left-0 top-full mt-1 w-[380px] rounded-xl border border-emerald-900/40 p-4 shadow-[0_8px_40px_-4px_rgba(0,0,0,0.55)] ring-1 ring-white/5 animate-in fade-in-50 zoom-in-95 duration-150 z-50 text-slate-100" style={{background: 'linear-gradient(135deg, #0f172a 80%, #0d2318 100%)'}}>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
+                  <span>Target Segments &amp; ICP</span>
+                  <Link to="/icp" onClick={() => setServeHover(false)} className="text-[9px] font-mono text-primary hover:underline">
+                    View ICP Overview &rarr;
+                  </Link>
+                </div>
+                <div className="space-y-1">
+                  <Link
+                    to="/coaches"
+                    search={{ tab: "team-dashboard" }}
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Users className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Elite Clubs &amp; Pro Franchises</div>
+                      <div className="text-[11px] text-slate-400">AI film review, squad intelligence &amp; matchday tactics</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/institution"
+                    search={{ type: "All" }}
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Milestone className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Universities &amp; Collegiate (NCAA D1)</div>
+                      <div className="text-[11px] text-slate-400">Roster growth, transfer portal &amp; recruiting edge</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/ecosystem"
+                    search={{ tab: "olympic" }}
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Trophy className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">National Federations &amp; NOCs</div>
+                      <div className="text-[11px] text-slate-400">Multi-sport talent pathways &amp; Olympic podium benchmarks</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/athletes"
+                    search={{ tab: "dashboard" }}
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <User className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Elite Athletes &amp; Agencies</div>
+                      <div className="text-[11px] text-slate-400">Video-verified metrics for contract negotiations &amp; market value</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/sports/game-analysis"
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Radio className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100">Broadcasters &amp; Media Networks</div>
+                      <div className="text-[11px] text-slate-400">Live stat overlays, win-probability graphs &amp; highlights</div>
+                    </div>
+                  </Link>
                 </div>
               </div>
             )}
@@ -1149,40 +1164,40 @@ export function SiteHeader() {
                 Navigation Menu
               </span>
 
-              {/* 1. Solutions */}
+              {/* 1. What We Offer */}
               <div className="border-b border-border/50 pb-2 pt-1">
                 <Link
                   to="/coaches"
                   onClick={() => setMobileOpen(false)}
                   className="rounded-md px-3 py-1.5 text-sm font-semibold text-foreground flex items-center justify-between hover:text-primary"
                 >
-                  <span>Solutions</span>
-                  <span className="text-[10px] font-mono font-bold text-primary">Offerings &rarr;</span>
+                  <span>What We Offer</span>
+                  <span className="text-[10px] font-mono font-bold text-primary">Suites &rarr;</span>
                 </Link>
-                <div className="pl-4 pb-1 text-xs text-muted-foreground space-y-2">
-                  {/* Offerings */}
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">Offerings</span>
-                    <div className="grid grid-cols-1 gap-0.5">
-                      <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Match Intelligence Suite</Link>
-                      <Link to="/platform" search={{ tab: "technology" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Biomechanics &amp; Motion Capture</Link>
-                      <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Performance Analytics</Link>
-                      <Link to="/platform" search={{ tab: "how-it-works" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Automated Highlights &amp; Scouting</Link>
-                    </div>
-                  </div>
-                  {/* Who We Serve / ICP */}
-                  <div className="border-t border-border/40 pt-1.5">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Who We Serve</span>
-                      <Link to="/icp" onClick={() => setMobileOpen(false)} className="text-[9px] text-primary font-mono hover:underline">ICP Overview &rarr;</Link>
-                    </div>
-                    <div className="grid grid-cols-2 gap-0.5">
-                      <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Elite Clubs</Link>
-                      <Link to="/institution" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Universities</Link>
-                      <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Federations</Link>
-                      <Link to="/athletes" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Athletes</Link>
-                    </div>
-                  </div>
+                <div className="pl-4 pb-1 text-xs text-muted-foreground space-y-1 mt-1">
+                  <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Match Intelligence Suite</Link>
+                  <Link to="/platform" search={{ tab: "technology" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Biomechanics &amp; Motion Capture</Link>
+                  <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Performance Analytics</Link>
+                  <Link to="/platform" search={{ tab: "how-it-works" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Automated Highlights &amp; Scouting</Link>
+                </div>
+              </div>
+
+              {/* 2. Whom We Serve */}
+              <div className="border-b border-border/50 pb-2 pt-1">
+                <Link
+                  to="/icp"
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-3 py-1.5 text-sm font-semibold text-foreground flex items-center justify-between hover:text-primary"
+                >
+                  <span>Whom We Serve</span>
+                  <span className="text-[10px] font-mono font-bold text-primary">ICP &rarr;</span>
+                </Link>
+                <div className="pl-4 pb-1 text-xs text-muted-foreground grid grid-cols-2 gap-1 mt-1">
+                  <Link to="/coaches" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Elite Clubs</Link>
+                  <Link to="/institution" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Universities</Link>
+                  <Link to="/ecosystem" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Federations</Link>
+                  <Link to="/athletes" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5">• Athletes</Link>
+                  <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 col-span-2">• Broadcasters &amp; Media</Link>
                 </div>
               </div>
 
