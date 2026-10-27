@@ -475,7 +475,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 2. Products (Merged with Platform Capabilities) */}
+          {/* 3. Platform */}
           <div
             className="relative"
             onMouseEnter={() => setProductsHover(true)}
@@ -485,7 +485,7 @@ export function SiteHeader() {
               to="/pricing"
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              Products
+              Platform
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
@@ -495,7 +495,7 @@ export function SiteHeader() {
                   {/* Col 1: Software Suites & Products */}
                   <div className="border-r border-white/10 pr-3">
                     <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1 pb-1.5 flex items-center justify-between border-b border-white/10 mb-1.5">
-                      <span>Products &amp; Subscriptions</span>
+                      <span>Plans &amp; Pricing</span>
                       <Link to="/pricing" onClick={() => setProductsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
                         Pricing &rarr;
                       </Link>
@@ -522,8 +522,8 @@ export function SiteHeader() {
                     >
                       <Cpu className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-xs text-slate-100">Kinematics MoCap Engine™</div>
-                        <div className="text-[10px] text-slate-400">24-point markerless pose estimation</div>
+                        <div className="font-semibold text-xs text-slate-100">Body Movement Tracker™</div>
+                        <div className="text-[10px] text-slate-400">No wearables or sensors needed — just your video</div>
                       </div>
                     </Link>
                     <Link
@@ -534,8 +534,8 @@ export function SiteHeader() {
                     >
                       <Bot className="h-3.5 w-3.5 text-accent shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-xs text-slate-100">Autonomous Coach Fleet™</div>
-                        <div className="text-[10px] text-slate-400">Automated tactical debriefs &amp; ACWR alerts</div>
+                        <div className="font-semibold text-xs text-slate-100">AI Coaching Assistant™</div>
+                        <div className="text-[10px] text-slate-400">Smart post-match reports &amp; player workload alerts</div>
                       </div>
                     </Link>
                     <Link
@@ -546,8 +546,8 @@ export function SiteHeader() {
                     >
                       <Shield className="h-3.5 w-3.5 text-chart-3 shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-xs text-slate-100">Sovereign Data Enclave™</div>
-                        <div className="text-[10px] text-slate-400">HIPAA &amp; WADA compliant biometric vault</div>
+                        <div className="font-semibold text-xs text-slate-100">Secure Data Storage™</div>
+                        <div className="text-[10px] text-slate-400">Your team's data is private and meets global regulations</div>
                       </div>
                     </Link>
                   </div>
@@ -555,7 +555,7 @@ export function SiteHeader() {
                   {/* Col 2: Platform Capabilities */}
                   <div>
                     <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1 pb-1.5 flex items-center justify-between border-b border-white/10 mb-1.5">
-                      <span>Platform Capabilities</span>
+                      <span>Key Features</span>
                       <Link to="/analytics" onClick={() => setProductsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
                         Analytics &rarr;
                       </Link>
@@ -589,8 +589,8 @@ export function SiteHeader() {
                     >
                       <Sparkles className="h-3.5 w-3.5 text-amber-500 shrink-0 mt-0.5" />
                       <div>
-                        <div className="font-semibold text-xs text-slate-100">Intelligent Event Tagging</div>
-                        <div className="text-[10px] text-slate-400">Real-time NLP + vision play-by-play</div>
+                        <div className="font-semibold text-xs text-slate-100">Auto Match Tagging</div>
+                        <div className="text-[10px] text-slate-400">Key moments tagged automatically as the match happens</div>
                       </div>
                     </Link>
                     <Link
@@ -613,7 +613,7 @@ export function SiteHeader() {
                       <Video className="h-3.5 w-3.5 text-teal-400 shrink-0 mt-0.5" />
                       <div>
                         <div className="font-semibold text-xs text-slate-100">Automated Highlight Reels</div>
-                        <div className="text-[10px] text-slate-400">Natural query search &amp; clip compiler</div>
+                        <div className="text-[10px] text-slate-400">Search, find and compile clips using plain text</div>
                       </div>
                     </Link>
                   </div>
@@ -622,7 +622,7 @@ export function SiteHeader() {
             )}
           </div>
 
-          {/* 3. The Pipeline (End-to-End Architecture) */}
+          {/* 4. How It Works */}
           <div
             className="relative"
             onMouseEnter={() => setPlatformHover(true)}
@@ -632,14 +632,14 @@ export function SiteHeader() {
               to="/platform"
               className="inline-flex items-center gap-1 rounded-md px-2 xl:px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary hover:text-primary transition whitespace-nowrap"
             >
-              The Pipeline
+              How It Works
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </Link>
 
             {platformHover && (
               <div className="absolute left-0 top-full mt-1 w-80 rounded-xl border border-emerald-900/40 p-3 shadow-[0_8px_40px_-4px_rgba(0,0,0,0.55)] ring-1 ring-white/5 animate-in fade-in-50 zoom-in-95 duration-150 z-50 text-slate-100" style={{background: 'linear-gradient(135deg, #0f172a 80%, #0d2318 100%)'}}>
                 <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 pb-1.5">
-                  End-to-End Pipeline
+                  From Video to Insights — 4 Simple Steps
                 </div>
                 <Link
                   to="/platform"
@@ -649,8 +649,8 @@ export function SiteHeader() {
                 >
                   <Gauge className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-slate-100">1. Capture &amp; Ingest</div>
-                    <div className="text-[11px] text-slate-400">Standard video, 120 FPS optical &amp; optional sensors</div>
+                    <div className="font-semibold text-xs text-slate-100">1. Upload Your Video</div>
+                    <div className="text-[11px] text-slate-400">Use any match or training footage — no special camera needed</div>
                   </div>
                 </Link>
                 <Link
@@ -661,8 +661,8 @@ export function SiteHeader() {
                 >
                   <Zap className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-slate-100">2. Kinematic AI Inference</div>
-                    <div className="text-[11px] text-slate-400">Inverse dynamic torque, ACWR &amp; Voronoi grids</div>
+                    <div className="font-semibold text-xs text-slate-100">2. AI Analyses the Game</div>
+                    <div className="text-[11px] text-slate-400">Automatically detects player movements, formations &amp; events</div>
                   </div>
                 </Link>
                 <Link
@@ -673,8 +673,8 @@ export function SiteHeader() {
                 >
                   <Database className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-slate-100">3. Integrations &amp; API</div>
-                    <div className="text-[11px] text-slate-400">Catapult, Polar, REST endpoints &amp; WebSockets</div>
+                    <div className="font-semibold text-xs text-slate-100">3. Connect Your Tools</div>
+                    <div className="text-[11px] text-slate-400">Works with wearables, apps &amp; your existing team software</div>
                   </div>
                 </Link>
                 <Link
@@ -685,8 +685,8 @@ export function SiteHeader() {
                 >
                   <Shield className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-semibold text-xs text-slate-100">4. Sovereign Security Enclave</div>
-                    <div className="text-[11px] text-slate-400">WADA ADAMS ledger, HIPAA/GDPR &amp; SOC 2 Type II</div>
+                    <div className="font-semibold text-xs text-slate-100">4. Your Data, Fully Secured</div>
+                    <div className="text-[11px] text-slate-400">Meets global sports &amp; health data compliance standards</div>
                   </div>
                 </Link>
               </div>
