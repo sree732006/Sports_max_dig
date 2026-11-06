@@ -34,6 +34,7 @@ import {
   Search,
   Shield,
   ShieldAlert,
+  ShieldCheck,
   Sparkles,
   TrendingUp,
   Trophy,
@@ -86,6 +87,13 @@ export function AuthDialog({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("Athletic Director / Coach");
+  const [institutionType, setInstitutionType] = useState("University (NCAA / Collegiate)");
+  const [organization, setOrganization] = useState("");
+  const [primarySport, setPrimarySport] = useState("Football / Soccer");
+  const [athleteCount, setAthleteCount] = useState("25-100 athletes");
+  const [country, setCountry] = useState("United States");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -120,13 +128,31 @@ export function AuthDialog({
           setLoading(false);
           return;
         }
-        const res = await signup(name, email, password);
+        if (!password || password.length < 6) {
+          setError("Password must be at least 6 characters.");
+          setLoading(false);
+          return;
+        }
+
+        const res = await signup({
+          name: name.trim(),
+          email: email.trim(),
+          password,
+          phone: phone.trim(),
+          role,
+          institutionType,
+          organization: organization.trim() || "Sports Organization",
+          primarySport,
+          athleteCount,
+          country,
+        });
+
         if (!res.success) {
           setError(res.error || "Failed to create account.");
           setLoading(false);
           return;
         }
-        setSuccessMsg("Account registered successfully! Redirecting to dashboard...");
+        setSuccessMsg("Registration complete & synced to Google Sheets! Redirecting to dashboard...");
       } else {
         if (!email.trim()) {
           setError("Please enter your email address.");
@@ -139,13 +165,13 @@ export function AuthDialog({
           setLoading(false);
           return;
         }
-        setSuccessMsg("Signed in successfully! Redirecting to dashboard...");
+        setSuccessMsg("Signed in successfully & logged! Redirecting to dashboard...");
       }
 
       setTimeout(() => {
         setOpen(false);
         navigate({ to: "/dashboard" });
-      }, 700);
+      }, 750);
     } catch {
       setError("An unexpected error occurred. Please try again.");
     } finally {
@@ -156,7 +182,7 @@ export function AuthDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="border-border bg-card shadow-2xl sm:max-w-md">
+      <DialogContent className={`border-border bg-card shadow-2xl transition-all duration-200 ${mode === "signup" ? "sm:max-w-xl max-h-[92vh] overflow-y-auto" : "sm:max-w-md"}`}>
         <DialogHeader>
           <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <Activity className="h-6 w-6" />
@@ -167,7 +193,7 @@ export function AuthDialog({
           <DialogDescription className="text-center text-sm text-muted-foreground">
             {mode === "login"
               ? "Access athlete telemetry, tactical analytics, and AI training models."
-              : "Start your intelligence trial for athletes and coaching staffs."}
+              : "Register your institution, coaching staff, or athletic program with verified data sync."}
           </DialogDescription>
         </DialogHeader>
 
@@ -217,45 +243,197 @@ export function AuthDialog({
         )}
 
         <form onSubmit={handleSubmit} className="grid gap-3 pt-1">
-          {mode === "signup" && (
-            <label className="grid gap-1 text-xs font-semibold text-foreground">
-              Full Name *
-              <Input
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Alex Jordan"
-                className="bg-background"
-                disabled={loading}
-              />
-            </label>
+          {mode === "signup" ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Full Name *
+                  <Input
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. Coach David Miller"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Work / Institution Email *
+                  <Input
+                    required
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="miller@athletics.edu"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Password (Stored Hashed) *
+                  <Input
+                    required
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Min 6 characters"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Phone Number
+                  <Input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+1 (555) 019-2834"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Your Primary Role *
+                  <select
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-foreground"
+                    disabled={loading}
+                  >
+                    <option value="Athletic Director / Department Head">Athletic Director / Department Head</option>
+                    <option value="Head Coach / Tactical Specialist">Head Coach / Tactical Specialist</option>
+                    <option value="Assistant / Positional Coach">Assistant / Positional Coach</option>
+                    <option value="Strength & Conditioning (S&C) Lead">Strength & Conditioning (S&C) Lead</option>
+                    <option value="Sports Science / Biomechanics Director">Sports Science / Biomechanics Director</option>
+                    <option value="Performance Analyst / Video Coordinator">Performance Analyst / Video Coordinator</option>
+                    <option value="Student Athlete / Cadet">Student Athlete / Cadet</option>
+                    <option value="Scout / Technical Recruiter">Scout / Technical Recruiter</option>
+                  </select>
+                </label>
+
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Institution / Entity Type *
+                  <select
+                    value={institutionType}
+                    onChange={(e) => setInstitutionType(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-foreground"
+                    disabled={loading}
+                  >
+                    <option value="University (NCAA D1 / D2 / D3 / NAIA)">University (NCAA D1 / D2 / D3 / NAIA)</option>
+                    <option value="High School Athletic Association / Prep Academy">High School Athletic Association / Prep Academy</option>
+                    <option value="Professional Sports Club / Franchise">Professional Sports Club / Franchise</option>
+                    <option value="National Sports Federation / Olympic Committee">National Sports Federation / Olympic Committee</option>
+                    <option value="Private Training Lab / Biomechanics Center">Private Training Lab / Biomechanics Center</option>
+                    <option value="Independent Athlete / Personal Coach">Independent Athlete / Personal Coach</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Organization / Team Name *
+                  <Input
+                    required
+                    value={organization}
+                    onChange={(e) => setOrganization(e.target.value)}
+                    placeholder="e.g. Stanford Cardinal / Red Bull Academy"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Primary Sport Focus *
+                  <select
+                    value={primarySport}
+                    onChange={(e) => setPrimarySport(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-foreground"
+                    disabled={loading}
+                  >
+                    <option value="Football / Soccer">Football / Soccer</option>
+                    <option value="Track & Field / Sprint Athletics">Track & Field / Sprint Athletics</option>
+                    <option value="Competitive Swimming">Competitive Swimming</option>
+                    <option value="Field Hockey">Field Hockey</option>
+                    <option value="High Jump / Jumps">High Jump / Jumps</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Rugby / American Football">Rugby / American Football</option>
+                    <option value="Multi-Sport Department">Multi-Sport Department</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Roster / Squad Size
+                  <select
+                    value={athleteCount}
+                    onChange={(e) => setAthleteCount(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-xs shadow-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring text-foreground"
+                    disabled={loading}
+                  >
+                    <option value="1 - 15 athletes (Specialized squad)">1 - 15 athletes (Specialized squad)</option>
+                    <option value="15 - 50 athletes (Single varsity team)">15 - 50 athletes (Single varsity team)</option>
+                    <option value="50 - 200 athletes (Multiple varsity squads)">50 - 200 athletes (Multiple varsity squads)</option>
+                    <option value="200+ athletes (Entire athletic department)">200+ athletes (Entire athletic department)</option>
+                  </select>
+                </label>
+
+                <label className="grid gap-1 text-xs font-semibold text-foreground">
+                  Country / Region
+                  <Input
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="United States"
+                    className="bg-background h-9"
+                    disabled={loading}
+                  />
+                </label>
+              </div>
+
+              <div className="rounded-lg bg-primary/5 border border-primary/20 p-2.5 text-[11px] text-muted-foreground flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+                <span>
+                  Passwords are encrypted with <strong>SHA-256 + Salt</strong> before storage. Registration syncs directly to the SportsMax Google Sheet.
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <label className="grid gap-1 text-xs font-semibold text-foreground">
+                Email address *
+                <Input
+                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="athlete@sportsmax.ai"
+                  className="bg-background"
+                  disabled={loading}
+                />
+              </label>
+
+              <label className="grid gap-1 text-xs font-semibold text-foreground">
+                Password *
+                <Input
+                  required
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="bg-background"
+                  disabled={loading}
+                />
+              </label>
+            </>
           )}
-
-          <label className="grid gap-1 text-xs font-semibold text-foreground">
-            Email address *
-            <Input
-              required
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="athlete@sportsmax.ai"
-              className="bg-background"
-              disabled={loading}
-            />
-          </label>
-
-          <label className="grid gap-1 text-xs font-semibold text-foreground">
-            Password *
-            <Input
-              required
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="bg-background"
-              disabled={loading}
-            />
-          </label>
 
           <Button type="submit" disabled={loading} className="w-full mt-2 font-semibold">
             {loading ? (

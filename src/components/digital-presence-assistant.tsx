@@ -8,9 +8,12 @@ import {
   ClipboardList,
   FileSpreadsheet,
   Mail,
+  Download,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConnectWithSportsMaxForm } from "@/components/connect-with-sportsmax";
+import { downloadSportsMaxEbook } from "@/lib/download-ebook";
 
 // Utility: Time-based greeting
 function getTimeBasedGreeting() {
@@ -227,6 +230,31 @@ export function DigitalPresenceAssistant() {
               You are exploring <strong>{formatPathName(currentPath)}</strong>.
             </div>
 
+            {/* DOWNLOAD E-BOOK BANNER / CARD */}
+            <div className="rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-slate-900/40 to-slate-950/40 p-3 space-y-2 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                  <BookOpen className="w-3.5 h-3.5" /> Official SportsMax E-Book
+                </div>
+                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                  45 Pages · PDF
+                </span>
+              </div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                Download the complete 45-page treatise on Sports AI Engineering, Computer Vision Kinematics, ACWR Modeling, and Biometrics (Times New Roman, 1.5 spacing, fully justified).
+              </p>
+              <Button
+                size="sm"
+                className="w-full text-xs h-8 font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md flex items-center justify-center gap-2"
+                onClick={() => {
+                  trackEvent("ebook_download_clicked", { source: "digital_presence_chatbot" });
+                  downloadSportsMaxEbook({ source: "chatbot" });
+                }}
+              >
+                <Download className="w-3.5 h-3.5" /> Download Full E-Book (PDF)
+              </Button>
+            </div>
+
             {/* THREE RELEVANT QUESTIONS SECTION */}
             <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 space-y-2.5">
               <div className="text-[11px] font-bold uppercase tracking-wider text-primary flex items-center gap-1.5">
@@ -329,6 +357,25 @@ export function DigitalPresenceAssistant() {
           </div>
         </div>
       )}
+
+      {/* Floating Download E-Book FAB (Positioned ABOVE the Form button) */}
+      <button
+        type="button"
+        id="floating-sportsmax-ebook-button"
+        aria-label="Download SportsMax E-Book (PDF)"
+        onClick={() => {
+          trackEvent("ebook_download_clicked", { source: "floating_fab" });
+          downloadSportsMaxEbook({ source: "fab" });
+        }}
+        className="fixed bottom-38 right-6 z-50 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white p-3.5 rounded-full shadow-xl hover:shadow-blue-500/30 hover:scale-105 transition-all duration-200 flex items-center justify-center group"
+      >
+        <BookOpen className="w-5 h-5 text-white stroke-[2.2]" />
+
+        {/* Hover Tooltip */}
+        <span className="hidden group-hover:block absolute right-14 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 whitespace-nowrap shadow-xl pointer-events-none">
+          Download SportsMax E-Book (45 Pages PDF)
+        </span>
+      </button>
 
       {/* Floating Form Button (Positioned ABOVE the Chatbot button) */}
       <button
