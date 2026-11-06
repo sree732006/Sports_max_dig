@@ -5,6 +5,7 @@ import {
   type StoredAccount,
   type DetailedRegistrationData,
   syncAuthToGoogleSheets,
+  fetchUserFromGoogleSheet,
 } from "./auth-service";
 
 export type { User, DetailedRegistrationData };
@@ -23,6 +24,11 @@ interface AuthContextType {
 
 const AUTH_STORAGE_KEY = "smx_auth_user";
 const ACCOUNTS_STORAGE_KEY = "smx_registered_accounts";
+const FAILED_ATTEMPTS_KEY = "smx_login_failed_attempts";
+const LOCKOUT_EXPIRY_KEY = "smx_login_lockout_until";
+
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 60 * 1000; // 60 seconds cooldown
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -80,6 +86,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!cleanEmail) {
       return { success: false, error: "Please enter your email address." };
     }
+    if (!password) {
+      return { success: false, error: "Please enter your password." };
+    }
+
+    // 1. Check Brute-Force Rate Limiting Lockout
+    try {
+      const lockoutUntil = parseInt(localStorage.getItem(LOCKOUT_EXPIRY_KEY) || "0", 10);
+      const now = Date.now();
+      if (lockoutUntil && now < lockoutUntil) {
+        const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
+        return {
+          success: false,
+          error: `Too many failed attempts. Account temporarily locked for security. Please wait ${remainingSec}s.`,
+        };
+      }
+    } catch {}
 
     try {
       let accounts: StoredAccount[] = [];
@@ -90,56 +112,75 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       let match = accounts.find((a) => a.email.toLowerCase() === cleanEmail);
 
-      // Verify hashed password
-      if (match && password && match.passwordHash && match.salt) {
-        const isValid = await verifyPassword(password, match.passwordHash, match.salt);
-        if (!isValid) {
-          // Log failed attempt to Google Sheets
+      // 2. Cross-Device Verification: If user not in local browser cache, check Google Sheets Registered_Users
+      if (!match) {
+        const remoteUser = await fetchUserFromGoogleSheet(cleanEmail);
+        if (remoteUser) {
+          match = remoteUser;
+          accounts.push(remoteUser);
+          localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+        }
+      }
+
+      // 3. Strict Mode: If user is not registered, do NOT auto-onboard
+      if (!match) {
+        syncAuthToGoogleSheets("user_login", {
+          email: cleanEmail,
+          status: "FAILED_USER_NOT_FOUND",
+          ipInfo: "Client Browser",
+        });
+        return {
+          success: false,
+          error: "No account found with this email. Please register your account first.",
+        };
+      }
+
+      // 4. Verify password hash & salt
+      const isValid = await verifyPassword(password, match.passwordHash, match.salt);
+      if (!isValid) {
+        // Track failed attempt count for lockout
+        let failedCount = parseInt(localStorage.getItem(FAILED_ATTEMPTS_KEY) || "0", 10) + 1;
+        localStorage.setItem(FAILED_ATTEMPTS_KEY, String(failedCount));
+
+        if (failedCount >= MAX_FAILED_ATTEMPTS) {
+          const lockoutTime = Date.now() + LOCKOUT_DURATION_MS;
+          localStorage.setItem(LOCKOUT_EXPIRY_KEY, String(lockoutTime));
+          localStorage.removeItem(FAILED_ATTEMPTS_KEY);
+
           syncAuthToGoogleSheets("user_login", {
             email: cleanEmail,
             name: match.name,
             role: match.role || "Unknown",
-            status: "FAILED_INVALID_PASSWORD",
+            status: "LOCKED_OUT_EXCESSIVE_FAILURES",
             ipInfo: "Client Browser",
           });
-          return { success: false, error: "Incorrect password. Please try again." };
+
+          return {
+            success: false,
+            error: "Too many failed attempts (5/5). Account locked for 60 seconds for security.",
+          };
         }
-      }
 
-      // If user doesn't exist, create an account with hashed password
-      if (!match) {
-        const fallbackName = cleanEmail.split("@")[0]?.replace(/[._-]/g, " ") ?? "Member";
-        const formattedName = fallbackName
-          .split(" ")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ");
-
-        const { hash, salt } = await hashPassword(password || "password123");
-        match = {
-          id: "usr_" + Math.random().toString(36).substring(2, 9),
-          name: formattedName || "SportsMax Member",
+        // Log failed password attempt to Google Sheets
+        syncAuthToGoogleSheets("user_login", {
           email: cleanEmail,
-          passwordHash: hash,
-          salt,
-          role: "Performance Athlete",
-          organization: "Independent Athletics",
-          createdAt: new Date().toISOString(),
-        };
-        accounts.push(match);
-        localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
-
-        // Sync new auto-registered user to Google Sheets Users tab
-        syncAuthToGoogleSheets("user_registered", {
-          id: match.id,
           name: match.name,
-          email: match.email,
-          role: match.role,
-          organization: match.organization,
-          passwordHash: hash,
-          salt,
-          status: "SUCCESS_AUTO_ONBOARD",
+          role: match.role || "Unknown",
+          status: "FAILED_INVALID_PASSWORD",
+          attempts: `${failedCount}/${MAX_FAILED_ATTEMPTS}`,
+          ipInfo: "Client Browser",
         });
+
+        const attemptsLeft = MAX_FAILED_ATTEMPTS - failedCount;
+        return {
+          success: false,
+          error: `Incorrect password. ${attemptsLeft} attempt${attemptsLeft === 1 ? "" : "s"} remaining before lockout.`,
+        };
       }
+
+      // Successful Login: Reset failed attempts counter
+      localStorage.removeItem(FAILED_ATTEMPTS_KEY);
+      localStorage.removeItem(LOCKOUT_EXPIRY_KEY);
 
       const sessionUser: User = {
         id: match.id,

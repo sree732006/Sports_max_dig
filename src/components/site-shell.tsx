@@ -16,6 +16,8 @@ import {
   ClipboardList,
   Cpu,
   Database,
+  Eye,
+  EyeOff,
   FileBarChart2,
   FileSpreadsheet,
   FileText,
@@ -94,6 +96,7 @@ export function AuthDialog({
   const [primarySport, setPrimarySport] = useState("Football / Soccer");
   const [athleteCount, setAthleteCount] = useState("25-100 athletes");
   const [country, setCountry] = useState("United States");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -275,15 +278,25 @@ export function AuthDialog({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <label className="grid gap-1 text-xs font-semibold text-foreground">
                   Password (Stored Hashed) *
-                  <Input
-                    required
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Min 6 characters"
-                    className="bg-background h-9"
-                    disabled={loading}
-                  />
+                  <div className="relative">
+                    <Input
+                      required
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Min 6 characters"
+                      className="bg-background h-9 pr-9"
+                      disabled={loading}
+                    />
+                    <button
+                      type="button"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </label>
 
                 <label className="grid gap-1 text-xs font-semibold text-foreground">
@@ -422,15 +435,25 @@ export function AuthDialog({
 
               <label className="grid gap-1 text-xs font-semibold text-foreground">
                 Password *
-                <Input
-                  required
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="bg-background"
-                  disabled={loading}
-                />
+                <div className="relative">
+                  <Input
+                    required
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="bg-background pr-9"
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </label>
             </>
           )}

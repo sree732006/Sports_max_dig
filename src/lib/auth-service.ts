@@ -81,3 +81,40 @@ export async function syncAuthToGoogleSheets(
   }
 }
 
+/**
+ * Remotely fetches user record from the Google Sheet Registered_Users tab
+ * Allows seamless login across devices/browsers
+ */
+export async function fetchUserFromGoogleSheet(email: string): Promise<StoredAccount | null> {
+  const cleanEmail = email.trim().toLowerCase();
+  if (!cleanEmail) return null;
+
+  const analyticsUrl =
+    (typeof import.meta !== "undefined" && import.meta.env?.["VITE_ANALYTICS_URL"]) ||
+    (typeof process !== "undefined" && process.env?.["VITE_ANALYTICS_URL"]) ||
+    (typeof localStorage !== "undefined" && localStorage.getItem("smx_analytics_url")) ||
+    "";
+
+  if (!analyticsUrl) return null;
+
+  try {
+    const url = new URL(analyticsUrl);
+    url.searchParams.set("action", "find_user");
+    url.searchParams.set("email", cleanEmail);
+
+    const res = await fetch(url.toString(), {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (json.success && json.found && json.user) {
+      return json.user as StoredAccount;
+    }
+  } catch (err) {
+    console.warn("[Remote User Lookup Error]:", err);
+  }
+  return null;
+}
+

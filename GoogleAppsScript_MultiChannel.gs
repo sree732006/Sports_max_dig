@@ -480,6 +480,63 @@ function doPost(e) {
     }
 
     // =========================================================================
+    // 2B. REMOTE USER LOOKUP FOR STRICT LOGIN & CROSS-DEVICE AUTH
+    // =========================================================================
+    if (action === "find_user") {
+      const regSheet = ss.getSheetByName(CONFIG.SHEETS.REGISTERED_USERS);
+      const queryEmail = String(data.email || "").trim().toLowerCase();
+
+      if (!regSheet || !queryEmail || regSheet.getLastRow() < 2) {
+        return response({
+          success: false,
+          found: false,
+          message: "No user records found in Registered_Users sheet."
+        });
+      }
+
+      const rows = regSheet.getRange(2, 1, regSheet.getLastRow() - 1, 16).getValues();
+      let matchedUser = null;
+
+      for (let i = 0; i < rows.length; i++) {
+        const rowEmail = String(rows[i][2] || "").trim().toLowerCase();
+        if (rowEmail === queryEmail) {
+          matchedUser = {
+            id: String(rows[i][0] || ""),
+            name: String(rows[i][1] || ""),
+            email: String(rows[i][2] || ""),
+            passwordHash: String(rows[i][3] || ""),
+            salt: String(rows[i][4] || ""),
+            phone: String(rows[i][5] || ""),
+            role: String(rows[i][6] || ""),
+            institutionType: String(rows[i][7] || ""),
+            organization: String(rows[i][8] || ""),
+            primarySport: String(rows[i][9] || ""),
+            athleteCount: String(rows[i][10] || ""),
+            country: String(rows[i][11] || ""),
+            referralSource: String(rows[i][12] || ""),
+            status: String(rows[i][13] || "ACTIVE"),
+            createdAt: String(rows[i][15] || "")
+          };
+          break;
+        }
+      }
+
+      if (matchedUser) {
+        return response({
+          success: true,
+          found: true,
+          user: matchedUser
+        });
+      }
+
+      return response({
+        success: true,
+        found: false,
+        message: "User not found in Registered_Users sheet."
+      });
+    }
+
+    // =========================================================================
     // 3. YOUTUBE ENGAGEMENT SYNC
     // =========================================================================
     if (action === "youtube_engagement_sync") {
@@ -672,12 +729,50 @@ function doPost(e) {
 // GET REQUEST
 // ============================================================
 
-function doGet() {
-  return response({
-    success: true,
-    message: "SportsMax Analytics API is running.",
-    timestamp: new Date().toISOString()
-  });
+function doGet(e) {
+  try {
+    const action = e && e.parameter && e.parameter.action ? e.parameter.action : "";
+    const email = e && e.parameter && e.parameter.email ? e.parameter.email : "";
+
+    // Remote lookup via GET (CORS friendly)
+    if (action === "find_user" && email) {
+      const ss = getSpreadsheet();
+      const regSheet = ss.getSheetByName(CONFIG.SHEETS.REGISTERED_USERS);
+      const queryEmail = String(email).trim().toLowerCase();
+
+      if (!regSheet || regSheet.getLastRow() < 2) {
+        return response({ success: true, found: false });
+      }
+
+      const rows = regSheet.getRange(2, 1, regSheet.getLastRow() - 1, 16).getValues();
+      for (let i = 0; i < rows.length; i++) {
+        if (String(rows[i][2] || "").trim().toLowerCase() === queryEmail) {
+          return response({
+            success: true,
+            found: true,
+            user: {
+              id: String(rows[i][0] || ""),
+              name: String(rows[i][1] || ""),
+              email: String(rows[i][2] || ""),
+              passwordHash: String(rows[i][3] || ""),
+              salt: String(rows[i][4] || ""),
+              role: String(rows[i][6] || ""),
+              organization: String(rows[i][8] || "")
+            }
+          });
+        }
+      }
+      return response({ success: true, found: false });
+    }
+
+    return response({
+      success: true,
+      message: "SportsMax Analytics API is running.",
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    return response({ success: false, error: err.toString() });
+  }
 }
 
 // ============================================================
