@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "@/lib/auth-context";
-import { KeyRound, ShieldCheck, Clock, Laptop, RefreshCw } from "lucide-react";
+import { KeyRound, ShieldCheck, Clock, Laptop, RefreshCw, Database } from "lucide-react";
+import { RedisSessionManagerDialog } from "@/components/redis-session-manager-dialog";
 
 export function TokenSessionBanner() {
   const { user, sessionInfo, sessionToken, refreshSession } = useAuth();
@@ -52,6 +53,8 @@ export function TokenSessionBanner() {
             <RefreshCw className="h-3 w-3" />
             Refresh
           </button>
+
+          <RedisSessionManagerDialog />
         </div>
       </div>
     </div>

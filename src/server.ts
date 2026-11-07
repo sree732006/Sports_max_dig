@@ -100,6 +100,73 @@ export default {
         }
       }
 
+      // Redis Session Management: GET /api/sessions/active
+      if (url.pathname === "/api/sessions/active") {
+        const methodCheck = checkHttpMethod(request, ["GET"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        const { listActiveRedisSessions } = await import("./lib/redis-session-manager");
+        const sessionList = await listActiveRedisSessions();
+
+        return new Response(JSON.stringify(sessionList), {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "cache-control": "no-store, max-age=0",
+          },
+        });
+      }
+
+      // Redis Session Management: POST /api/sessions/create
+      if (url.pathname === "/api/sessions/create") {
+        const methodCheck = checkHttpMethod(request, ["POST"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        try {
+          const body = await request.json();
+          const { setRedisSession } = await import("./lib/redis-session-manager");
+          const result = await setRedisSession(body.session, body.ttlSeconds);
+
+          return new Response(JSON.stringify(result), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          return new Response(JSON.stringify({ error: err?.message || "Invalid session payload" }), {
+            status: 400,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
+      // Redis Session Management: POST /api/sessions/revoke
+      if (url.pathname === "/api/sessions/revoke") {
+        const methodCheck = checkHttpMethod(request, ["POST"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        try {
+          const body = await request.json();
+          const { revokeRedisSession } = await import("./lib/redis-session-manager");
+          const revoked = await revokeRedisSession(body.sessionId);
+
+          return new Response(JSON.stringify({ success: true, revoked }), {
+            status: 200,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          return new Response(JSON.stringify({ error: err?.message || "Failed to revoke session" }), {
+            status: 400,
+            headers: { "content-type": "application/json" },
+          });
+        }
+      }
+
       // Secured Server Endpoint: /api/reports/trigger
       if (url.pathname === "/api/reports/trigger") {
   const methodCheck = checkHttpMethod(request, ["POST", "GET"]);
