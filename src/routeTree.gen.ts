@@ -20,6 +20,7 @@ import { Route as CoachesRouteImport } from './routes/coaches'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CtaReportRouteImport } from './routes/cta-report'
+import { Route as CustomerJourneyRouteImport } from './routes/customer-journey'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as EcosystemRouteImport } from './routes/ecosystem'
 import { Route as GoogleTrendsRouteImport } from './routes/google-trends'
@@ -104,6 +105,11 @@ const ContactRoute = ContactRouteImport.update({
 const CtaReportRoute = CtaReportRouteImport.update({
   id: '/cta-report',
   path: '/cta-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerJourneyRoute = CustomerJourneyRouteImport.update({
+  id: '/customer-journey',
+  path: '/customer-journey',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -269,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/cta-report': typeof CtaReportRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
@@ -312,6 +319,7 @@ export interface FileRoutesByTo {
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/cta-report': typeof CtaReportRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
@@ -356,6 +364,7 @@ export interface FileRoutesById {
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/cta-report': typeof CtaReportRoute
+  '/customer-journey': typeof CustomerJourneyRoute
   '/dashboard': typeof DashboardRoute
   '/ecosystem': typeof EcosystemRoute
   '/google-trends': typeof GoogleTrendsRoute
@@ -401,6 +410,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/contact'
     | '/cta-report'
+    | '/customer-journey'
     | '/dashboard'
     | '/ecosystem'
     | '/google-trends'
@@ -444,6 +454,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/contact'
     | '/cta-report'
+    | '/customer-journey'
     | '/dashboard'
     | '/ecosystem'
     | '/google-trends'
@@ -487,6 +498,7 @@ export interface FileRouteTypes {
     | '/community'
     | '/contact'
     | '/cta-report'
+    | '/customer-journey'
     | '/dashboard'
     | '/ecosystem'
     | '/google-trends'
@@ -531,6 +543,7 @@ export interface RootRouteChildren {
   CommunityRoute: typeof CommunityRoute
   ContactRoute: typeof ContactRoute
   CtaReportRoute: typeof CtaReportRoute
+  CustomerJourneyRoute: typeof CustomerJourneyRoute
   DashboardRoute: typeof DashboardRoute
   EcosystemRoute: typeof EcosystemRoute
   GoogleTrendsRoute: typeof GoogleTrendsRoute
@@ -640,6 +653,13 @@ declare module '@tanstack/react-router' {
       path: '/cta-report'
       fullPath: '/cta-report'
       preLoaderRoute: typeof CtaReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer-journey': {
+      id: '/customer-journey'
+      path: '/customer-journey'
+      fullPath: '/customer-journey'
+      preLoaderRoute: typeof CustomerJourneyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -867,6 +887,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommunityRoute: CommunityRoute,
   ContactRoute: ContactRoute,
   CtaReportRoute: CtaReportRoute,
+  CustomerJourneyRoute: CustomerJourneyRoute,
   DashboardRoute: DashboardRoute,
   EcosystemRoute: EcosystemRoute,
   GoogleTrendsRoute: GoogleTrendsRoute,

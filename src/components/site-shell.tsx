@@ -14,6 +14,7 @@ import {
   ChevronDown,
   ChevronRight,
   ClipboardList,
+  Compass,
   Cpu,
   Database,
   Eye,
@@ -651,8 +652,8 @@ export function SiteHeader() {
               <div className="absolute left-0 top-full mt-1 w-[380px] rounded-xl border border-emerald-900/40 p-4 shadow-[0_8px_40px_-4px_rgba(0,0,0,0.55)] ring-1 ring-white/5 animate-in fade-in-50 zoom-in-95 duration-150 z-50 text-slate-100" style={{background: 'linear-gradient(135deg, #0f172a 80%, #0d2318 100%)'}}>
                 <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 pb-2 mb-2 border-b border-white/10 flex items-center justify-between">
                   <span>Target Segments &amp; ICP</span>
-                  <Link to="/icp" onClick={() => setServeHover(false)} className="text-[9px] font-mono text-primary hover:underline">
-                    View ICP Overview &rarr;
+                  <Link to="/customer-journey" onClick={() => setServeHover(false)} className="text-[9px] font-mono text-primary hover:underline">
+                    Customer Journey &rarr;
                   </Link>
                 </div>
                 <div className="space-y-1">
@@ -704,6 +705,20 @@ export function SiteHeader() {
                         <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 rounded font-mono">Config</span>
                       </div>
                       <div className="text-[11px] text-slate-400">Khelo India standards, PE cohorts &amp; parent report cards</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/customer-journey"
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition border-t border-white/10 mt-1"
+                  >
+                    <Compass className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100 flex items-center gap-1.5">
+                        <span>Customer Journey Map</span>
+                        <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.2 rounded font-mono">Funnel</span>
+                      </div>
+                      <div className="text-[11px] text-slate-400">6-stage lifecycle from discovery to Olympic scaling</div>
                     </div>
                   </Link>
                   <Link

@@ -166,3 +166,4 @@ export async function syncPhysicalConfigToGoogleSheets(config: AthletePhysicalCo
     return { success: true, error: err.message };
   }
 }
+

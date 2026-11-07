@@ -34,6 +34,7 @@ const CONFIG = {
     SCHOOL_CONFIG: "Schools_User_Config",
     VIDEO_UPLOADS: "PWA_Video_Uploads",
     PHYSICAL_CONFIG: "PWA_Physical_Config",
+    CUSTOMER_JOURNEY: "Customer_Journey_Events",
 
     // Analytics & Telemetry Sheets
     MASTER: "Live_Traffic_Events",
@@ -226,6 +227,25 @@ const HEADERS = {
     "Previous Injuries / Notes",
     "Platform Source",
     "Last Updated"
+  ],
+
+  // ==========================================================
+  // CUSTOMER JOURNEY: FUNNEL TRACKING & CONVERSION TOUCHPOINTS
+  // ==========================================================
+  Customer_Journey_Events: [
+    "Event ID",
+    "Visitor / User ID",
+    "User Name",
+    "Email Address",
+    "Role",
+    "Segment (Clubs/NCAA/Federations/Athletes)",
+    "Journey Stage (Awareness/Consideration/Intent/Conversion/Retention)",
+    "Action Taken",
+    "Touchpoint Component",
+    "Source Channel (Direct/Google/LinkedIn/YouTube)",
+    "Time Spent in Stage (sec)",
+    "Drop-off Risk Level",
+    "Timestamp"
   ],
 
   // ==========================================================
@@ -896,6 +916,48 @@ function doPost(e) {
         message: updated
           ? "Athlete physical configuration updated in Google Sheets."
           : "Athlete physical configuration created in Google Sheets."
+      });
+    }
+
+    // =========================================================================
+    // 2F. CUSTOMER JOURNEY: FUNNEL TRACKING & CONVERSION TOUCHPOINTS
+    // =========================================================================
+    if (action === "log_customer_journey") {
+      const journeySheet = getOrCreateSheet(
+        ss,
+        CONFIG.SHEETS.CUSTOMER_JOURNEY,
+        HEADERS.Customer_Journey_Events
+      );
+
+      const j = data.journey || {};
+      const eventId = "cj_" + Utilities.getUuid().substring(0, 10);
+      const timestamp = j.timestamp || new Date().toISOString();
+
+      const newRow = [
+        eventId,
+        j.userId || "anonymous",
+        j.userName || "Visitor",
+        j.email || "",
+        j.role || "Prospect",
+        j.segment || "Elite Clubs",
+        j.stage || "Awareness",
+        j.action || "Viewed ICP Solution",
+        j.touchpoint || "SPICED Assessment Card",
+        j.source || "Direct",
+        j.timeSpentSeconds || 0,
+        j.dropOffRisk || "Low",
+        timestamp
+      ];
+
+      journeySheet.appendRow(newRow);
+      SpreadsheetApp.flush();
+
+      return response({
+        success: true,
+        action: "log_customer_journey",
+        sheet: CONFIG.SHEETS.CUSTOMER_JOURNEY,
+        eventId: eventId,
+        message: "Customer journey touchpoint logged to Google Sheets."
       });
     }
 
