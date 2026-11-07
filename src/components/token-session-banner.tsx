@@ -26,10 +26,13 @@ export function TokenSessionBanner() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-primary flex items-center gap-1">
-                <KeyRound className="h-3.5 w-3.5" /> Token Session Active
+                <KeyRound className="h-3.5 w-3.5" /> JWT Session Active
               </span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-medium">
-                HMAC-SHA256 Signed
+                JWT HS256
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20 font-medium flex items-center gap-1">
+                <Database className="h-3 w-3" /> Redis Database
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">

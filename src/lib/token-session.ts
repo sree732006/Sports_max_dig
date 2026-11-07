@@ -152,7 +152,40 @@ export async function createSessionToken(
   const dataToSign = `${headerB64}.${payloadB64}`;
 
   const signature = await signWithHmac(dataToSign, FALLBACK_HMAC_SECRET);
-  return `${dataToSign}.${signature}`;
+  const token = `${dataToSign}.${signature}`;
+
+  // Automatically register and persist the Session Token in Redis Database
+  try {
+    if (typeof window !== "undefined") {
+      fetch("/api/sessions/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          session: {
+            sessionId: payload.sessionId,
+            jti: payload.sessionId,
+            userId: payload.userId,
+            userName: payload.name,
+            userEmail: payload.email,
+            userRole: payload.role,
+            device: typeof navigator !== "undefined" ? navigator.userAgent : "Browser Client",
+            browser: typeof navigator !== "undefined" ? navigator.userAgent.split(" ").slice(-1)[0] : "Web App",
+            ipAddress: "Client Browser",
+            location: "Active User Session",
+            createdAt: new Date().toISOString(),
+            lastActiveAt: new Date().toISOString(),
+            ttlSeconds: duration,
+            jwtToken: token,
+          },
+          ttlSeconds: duration,
+        }),
+      }).catch((err) => {
+        console.warn("[Redis Auto-Sync] Async Redis sync deferred:", err?.message);
+      });
+    }
+  } catch {}
+
+  return token;
 }
 
 /**

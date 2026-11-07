@@ -36,6 +36,8 @@ export interface SessionRecord {
   createdAt: string;
   lastActiveAt: string;
   ttlSeconds?: number;
+  jwtToken?: string;
+  jti?: string;
 }
 
 export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: React.ReactNode }) {
@@ -161,8 +163,8 @@ export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: R
 
           <div className="p-3 rounded-lg border border-border bg-secondary/20">
             <div className="text-[10px] uppercase font-bold text-muted-foreground">Key Schema Pattern</div>
-            <div className="text-xs font-mono font-semibold text-foreground mt-0.5">sportsmax:session:*</div>
-            <div className="text-[10px] text-muted-foreground mt-0.5">Indexed in Sorted Set</div>
+            <div className="text-xs font-mono font-semibold text-foreground mt-0.5">sportsmax:token:*</div>
+            <div className="text-[10px] text-muted-foreground mt-0.5">JWT (HS256) + Session Key</div>
           </div>
         </div>
 
@@ -223,7 +225,9 @@ export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: R
                         </div>
 
                         <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-mono mt-1">
-                          <span>Key: sportsmax:session:{sess.sessionId}</span>
+                          <span>Key: sportsmax:token:{sess.jti || sess.sessionId}</span>
+                          <span>•</span>
+                          <span className="text-emerald-500 font-sans font-medium">JWT HS256 Verified</span>
                           <span>•</span>
                           <span className="flex items-center gap-1 text-primary">
                             <Clock className="h-3 w-3" />

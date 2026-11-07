@@ -167,6 +167,98 @@ export default {
         }
       }
 
+      // JWT Token API: POST /api/auth/jwt-login (Issue JWT & Store in Redis)
+      if (url.pathname === "/api/auth/jwt-login") {
+        const methodCheck = checkHttpMethod(request, ["POST"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        try {
+          const body = await request.json();
+          const { createJwtSessionInRedis } = await import("./lib/redis-session-manager");
+          const ttl = body.ttlSeconds || 28800; // 8 hours default
+
+          const user = body.user || {
+            userId: body.userId || `usr_${Date.now().toString(36)}`,
+            userName: body.userName || body.name || "Enterprise User",
+            userEmail: body.userEmail || body.email || "user@sportsmax.org",
+            userRole: body.userRole || body.role || "Performance Athlete",
+            organization: body.organization || "SportsMax Academy",
+            device: body.device || request.headers.get("user-agent") || "Browser Client",
+            browser: body.browser || "Web Browser",
+            ipAddress: request.headers.get("x-forwarded-for") || "127.0.0.1",
+          };
+
+          const jwtSession = await createJwtSessionInRedis(user, ttl);
+
+          return new Response(
+            JSON.stringify({
+              success: true,
+              token: jwtSession.token,
+              payload: jwtSession.payload,
+              session: jwtSession.session,
+              mode: jwtSession.mode,
+              message: "JWT token generated and securely persisted in Redis Database",
+            }),
+            {
+              status: 200,
+              headers: { "content-type": "application/json" },
+            }
+          );
+        } catch (err: any) {
+          return new Response(
+            JSON.stringify({ success: false, error: err?.message || "Failed to issue JWT token" }),
+            {
+              status: 500,
+              headers: { "content-type": "application/json" },
+            }
+          );
+        }
+      }
+
+      // JWT Token API: POST /api/auth/jwt-verify (Verify JWT in Redis Database)
+      if (url.pathname === "/api/auth/jwt-verify") {
+        const methodCheck = checkHttpMethod(request, ["POST"]);
+        if (!methodCheck.allowed) {
+          return securityErrorResponse(methodCheck.status, methodCheck.message);
+        }
+
+        try {
+          const authHeader = request.headers.get("authorization");
+          let token = "";
+          if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7).trim();
+          } else {
+            const body = await request.json().catch(() => ({}));
+            token = body.token || "";
+          }
+
+          if (!token) {
+            return new Response(JSON.stringify({ valid: false, error: "Missing JWT token" }), {
+              status: 400,
+              headers: { "content-type": "application/json" },
+            });
+          }
+
+          const { verifyJwtSessionInRedis } = await import("./lib/redis-session-manager");
+          const verification = await verifyJwtSessionInRedis(token);
+
+          return new Response(JSON.stringify(verification), {
+            status: verification.valid ? 200 : 401,
+            headers: { "content-type": "application/json" },
+          });
+        } catch (err: any) {
+          return new Response(
+            JSON.stringify({ valid: false, error: err?.message || "Verification error" }),
+            {
+              status: 500,
+              headers: { "content-type": "application/json" },
+            }
+          );
+        }
+      }
+
       // Secured Server Endpoint: /api/reports/trigger
       if (url.pathname === "/api/reports/trigger") {
   const methodCheck = checkHttpMethod(request, ["POST", "GET"]);

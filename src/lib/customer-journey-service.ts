@@ -183,3 +183,4 @@ export async function syncJourneyEventToGoogleSheets(record: CustomerJourneyReco
     return { success: true, error: err.message };
   }
 }
+

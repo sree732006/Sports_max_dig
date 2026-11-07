@@ -409,6 +409,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = () => {
+    if (sessionInfo?.sessionId) {
+      // Revoke from Redis DB asynchronously
+      fetch("/api/sessions/revoke", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId: sessionInfo.sessionId }),
+      }).catch(() => {});
+    }
+
     if (user) {
       syncAuthToGoogleSheets("user_login", {
         userId: user.id,
