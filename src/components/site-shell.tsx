@@ -1258,6 +1258,12 @@ export function SiteHeader() {
 
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
+              <Button asChild variant="outline" size="sm" className="h-8 px-2.5 text-xs font-semibold border-emerald-500/40 hover:border-emerald-500 text-foreground">
+                <Link to="/schools-config">
+                  <GraduationCap className="h-3.5 w-3.5 mr-1 text-emerald-500" />
+                  <span>School Config</span>
+                </Link>
+              </Button>
               <SportsUserConfigFormDialog />
               <Link
                 to="/dashboard"
