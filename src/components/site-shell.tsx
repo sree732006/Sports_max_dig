@@ -578,6 +578,20 @@ export function SiteHeader() {
                     </div>
                   </Link>
                   <Link
+                    to="/dashboard"
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition bg-white/[0.03] border border-primary/20"
+                  >
+                    <BarChart3 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100 flex items-center gap-1.5">
+                        <span>Analytics Dashboard</span>
+                        <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.2 rounded font-mono font-bold">Hub</span>
+                      </div>
+                      <div className="text-[11px] text-slate-400">All configs: Sports, Schools PE &amp; Redis DB sessions</div>
+                    </div>
+                  </Link>
+                  <Link
                     to="/analytics"
                     onClick={() => setOfferHover(false)}
                     className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
@@ -787,10 +801,24 @@ export function SiteHeader() {
                   <div>
                     <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-1 pb-1.5 flex items-center justify-between border-b border-white/10 mb-1.5">
                       <span>Key Features</span>
-                      <Link to="/analytics" onClick={() => setProductsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
-                        Analytics &rarr;
+                      <Link to="/dashboard" onClick={() => setProductsHover(false)} className="text-[9px] font-mono text-primary hover:underline">
+                        Dashboard &rarr;
                       </Link>
                     </div>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setProductsHover(false)}
+                      className="flex items-start gap-2 rounded-lg p-1.5 hover:bg-white/[0.07] transition bg-white/[0.03] border border-emerald-500/20"
+                    >
+                      <BarChart3 className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-semibold text-xs text-slate-100 flex items-center gap-1">
+                          <span>Analytics Dashboard</span>
+                          <span className="text-[8px] bg-primary/20 text-primary px-1 rounded">Hub</span>
+                        </div>
+                        <div className="text-[10px] text-slate-400">Sports &amp; School config + Redis sessions</div>
+                      </div>
+                    </Link>
                     <Link
                       to="/sports/game-analysis"
                       onClick={() => setProductsHover(false)}
@@ -1258,13 +1286,6 @@ export function SiteHeader() {
 
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
-              <Button asChild variant="outline" size="sm" className="h-8 px-2.5 text-xs font-semibold border-emerald-500/40 hover:border-emerald-500 text-foreground">
-                <Link to="/schools-config">
-                  <GraduationCap className="h-3.5 w-3.5 mr-1 text-emerald-500" />
-                  <span>School Config</span>
-                </Link>
-              </Button>
-              <SportsUserConfigFormDialog />
               <Link
                 to="/dashboard"
                 className="flex items-center gap-2 rounded-lg bg-secondary/80 hover:bg-secondary border border-border px-3 py-1.5 transition text-xs font-medium text-foreground"
@@ -1413,6 +1434,7 @@ export function SiteHeader() {
                   <span className="text-[10px] font-mono font-bold text-primary">Suites &rarr;</span>
                 </Link>
                 <div className="pl-4 pb-1 text-xs text-muted-foreground space-y-1 mt-1">
+                  <Link to="/dashboard" onClick={() => setMobileOpen(false)} className="text-primary font-bold py-0.5 block">• Analytics Dashboard (Hub)</Link>
                   <Link to="/sports/game-analysis" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Match Intelligence Suite</Link>
                   <Link to="/platform" search={{ tab: "technology" }} onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Biomechanics &amp; Motion Capture</Link>
                   <Link to="/analytics" onClick={() => setMobileOpen(false)} className="hover:text-primary py-0.5 block">• Performance Analytics</Link>
