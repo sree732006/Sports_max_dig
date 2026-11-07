@@ -37,6 +37,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as RunAnalyticsRouteImport } from './routes/run-analytics'
 import { Route as SchoolsConfigRouteImport } from './routes/schools-config'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as VideoUploadRouteImport } from './routes/video-upload'
 import { Route as WebsiteAnalyticsRouteImport } from './routes/website-analytics'
 import { Route as YoutubeRouteImport } from './routes/youtube'
 import { Route as YoutubeAdminRouteImport } from './routes/youtube-admin'
@@ -189,6 +190,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideoUploadRoute = VideoUploadRouteImport.update({
+  id: '/video-upload',
+  path: '/video-upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WebsiteAnalyticsRoute = WebsiteAnalyticsRouteImport.update({
   id: '/website-analytics',
   path: '/website-analytics',
@@ -274,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/run-analytics': typeof RunAnalyticsRoute
   '/schools-config': typeof SchoolsConfigRoute
   '/terms': typeof TermsRoute
+  '/video-upload': typeof VideoUploadRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
   '/youtube': typeof YoutubeRoute
   '/youtube-admin': typeof YoutubeAdminRoute
@@ -315,6 +322,7 @@ export interface FileRoutesByTo {
   '/run-analytics': typeof RunAnalyticsRoute
   '/schools-config': typeof SchoolsConfigRoute
   '/terms': typeof TermsRoute
+  '/video-upload': typeof VideoUploadRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
   '/youtube': typeof YoutubeRoute
   '/youtube-admin': typeof YoutubeAdminRoute
@@ -357,6 +365,7 @@ export interface FileRoutesById {
   '/run-analytics': typeof RunAnalyticsRoute
   '/schools-config': typeof SchoolsConfigRoute
   '/terms': typeof TermsRoute
+  '/video-upload': typeof VideoUploadRoute
   '/website-analytics': typeof WebsiteAnalyticsRoute
   '/youtube': typeof YoutubeRoute
   '/youtube-admin': typeof YoutubeAdminRoute
@@ -400,6 +409,7 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/schools-config'
     | '/terms'
+    | '/video-upload'
     | '/website-analytics'
     | '/youtube'
     | '/youtube-admin'
@@ -441,6 +451,7 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/schools-config'
     | '/terms'
+    | '/video-upload'
     | '/website-analytics'
     | '/youtube'
     | '/youtube-admin'
@@ -482,6 +493,7 @@ export interface FileRouteTypes {
     | '/run-analytics'
     | '/schools-config'
     | '/terms'
+    | '/video-upload'
     | '/website-analytics'
     | '/youtube'
     | '/youtube-admin'
@@ -524,6 +536,7 @@ export interface RootRouteChildren {
   RunAnalyticsRoute: typeof RunAnalyticsRoute
   SchoolsConfigRoute: typeof SchoolsConfigRoute
   TermsRoute: typeof TermsRoute
+  VideoUploadRoute: typeof VideoUploadRoute
   WebsiteAnalyticsRoute: typeof WebsiteAnalyticsRoute
   YoutubeRoute: typeof YoutubeRoute
   YoutubeAdminRoute: typeof YoutubeAdminRoute
@@ -735,6 +748,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/video-upload': {
+      id: '/video-upload'
+      path: '/video-upload'
+      fullPath: '/video-upload'
+      preLoaderRoute: typeof VideoUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/website-analytics': {
       id: '/website-analytics'
       path: '/website-analytics'
@@ -844,6 +864,7 @@ const rootRouteChildren: RootRouteChildren = {
   RunAnalyticsRoute: RunAnalyticsRoute,
   SchoolsConfigRoute: SchoolsConfigRoute,
   TermsRoute: TermsRoute,
+  VideoUploadRoute: VideoUploadRoute,
   WebsiteAnalyticsRoute: WebsiteAnalyticsRoute,
   YoutubeRoute: YoutubeRoute,
   YoutubeAdminRoute: YoutubeAdminRoute,

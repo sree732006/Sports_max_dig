@@ -592,6 +592,20 @@ export function SiteHeader() {
                     </div>
                   </Link>
                   <Link
+                    to="/video-upload"
+                    onClick={() => setOfferHover(false)}
+                    className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <Video className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100 flex items-center gap-1.5">
+                        <span>PWA Mobile Video Upload</span>
+                        <span className="text-[9px] bg-rose-500/20 text-rose-400 px-1 rounded font-mono">PWA</span>
+                      </div>
+                      <div className="text-[11px] text-slate-400">Capture drill video for instant AI pose &amp; GCT kinematics</div>
+                    </div>
+                  </Link>
+                  <Link
                     to="/analytics"
                     onClick={() => setOfferHover(false)}
                     className="flex items-start gap-2.5 rounded-lg p-2 hover:bg-white/[0.07] transition"

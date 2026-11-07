@@ -21,6 +21,14 @@ import { captureUtmParams } from "@/lib/utm-tracker";
 // IN27-52: Microsoft Clarity Integration — Project ID: yrxe87qisd
 function initMicrosoftClarity() {
   if (typeof window === "undefined") return;
+  // Register PWA Service Worker
+  if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch((err) => {
+        console.warn("[PWA] Service worker registration ignored:", err);
+      });
+    });
+  }
   // Prevent double-init
   if ((window as unknown as Record<string, unknown>)["clarity"]) return;
   const clarityProjectId = "yrxe87qisd";
@@ -102,7 +110,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" },
+      { name: "theme-color", content: "#10b981" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "SportsMax" },
       { name: "author", content: "SportsMax" },
       { property: "og:site_name", content: "SportsMax" },
       { property: "og:type", content: "website" },
@@ -110,10 +123,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       {
+        rel: "manifest",
+        href: "/manifest.json",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },
-       { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/favicon.png" },
        { rel: "preconnect", href: "https://fonts.googleapis.com" },
        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
        { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" },

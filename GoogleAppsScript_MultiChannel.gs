@@ -32,6 +32,7 @@ const CONFIG = {
     LOGIN_LOGS: "Login_Logs",
     USER_CONFIG: "Sports_User_Config",
     SCHOOL_CONFIG: "Schools_User_Config",
+    VIDEO_UPLOADS: "PWA_Video_Uploads",
 
     // Analytics & Telemetry Sheets
     MASTER: "Live_Traffic_Events",
@@ -167,6 +168,31 @@ const HEADERS = {
     "Report Frequency",
     "Growth Tracking",
     "Last Updated"
+  ],
+
+  // ==========================================================
+  // PWA MOBILE APP: VIDEO UPLOADS & POSE ESTIMATION LOGS
+  // ==========================================================
+  PWA_Video_Uploads: [
+    "Upload ID",
+    "User ID",
+    "Athlete / Coach Name",
+    "Email Address",
+    "Role",
+    "Sport",
+    "Drill / Session Type",
+    "File Name",
+    "File Size (MB)",
+    "Video Duration (sec)",
+    "FPS / Resolution",
+    "Camera Angle",
+    "Biomechanical Goal",
+    "Upload Source (PWA / Web)",
+    "Processing Status",
+    "AI Vision Job ID",
+    "Estimated Valgus Moment",
+    "Keyframes Extracted",
+    "Timestamp"
   ],
 
   // ==========================================================
@@ -713,6 +739,54 @@ function doPost(e) {
         message: updated
           ? "Schools user configuration updated successfully."
           : "Schools user configuration created successfully."
+      });
+    }
+
+    // =========================================================================
+    // 2D. PWA MOBILE APP: VIDEO UPLOAD TELEMETRY LOGGING
+    // =========================================================================
+    if (action === "log_video_upload") {
+      const videoSheet = getOrCreateSheet(
+        ss,
+        CONFIG.SHEETS.VIDEO_UPLOADS,
+        HEADERS.PWA_Video_Uploads
+      );
+
+      const v = data.video || {};
+      const uploadId = v.uploadId || "vid_" + Utilities.getUuid().substring(0, 10);
+      const timestamp = v.timestamp || new Date().toISOString();
+
+      const newRow = [
+        uploadId,
+        v.userId || "anonymous",
+        v.userName || "Athlete User",
+        v.email || "",
+        v.role || "Athlete",
+        v.sport || "General Athletic",
+        v.drillType || "Biomechanical Movement Analysis",
+        v.fileName || "capture.mp4",
+        v.fileSizeMb || 0,
+        v.durationSeconds || 0,
+        v.resolution || "1080p 60fps",
+        v.cameraAngle || "Sagittal (Side View)",
+        v.biomechanicalGoal || "Joint Angle & Kinematic Tracking",
+        v.source || "PWA Mobile App",
+        v.status || "PROCESSED_SUCCESS",
+        v.aiJobId || "job_" + Utilities.getUuid().substring(0, 8),
+        v.valgusMoment || "Normal (Corridor Safe)",
+        v.keyframesExtracted || 120,
+        timestamp
+      ];
+
+      videoSheet.appendRow(newRow);
+      SpreadsheetApp.flush();
+
+      return response({
+        success: true,
+        action: "log_video_upload",
+        sheet: CONFIG.SHEETS.VIDEO_UPLOADS,
+        uploadId: uploadId,
+        message: "PWA Video Upload logged to Google Sheets successfully."
       });
     }
 
