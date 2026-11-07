@@ -5,6 +5,8 @@ const OFFLINE_URLS = [
   "/dashboard",
   "/video-upload",
   "/favicon.png",
+  "/icon-192.png",
+  "/icon-512.png",
   "/manifest.json"
 ];
 

@@ -1,21 +1,23 @@
 {
+  "id": "com.sportsmax.olympic.pwa",
   "name": "SportsMax Olympic AI Intelligence",
   "short_name": "SportsMax",
   "description": "High-Performance Mobile Biomechanics & Video AI Telemetry",
   "start_url": "/video-upload",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#090d16",
   "theme_color": "#10b981",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/favicon.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -27,15 +29,14 @@
       "short_name": "Upload",
       "description": "Capture field video for instant AI biomechanical pose analysis",
       "url": "/video-upload",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Live Dashboard",
       "short_name": "Dashboard",
       "description": "View athlete kinematics and workload",
       "url": "/dashboard",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }
-
