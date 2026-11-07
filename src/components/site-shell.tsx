@@ -97,6 +97,7 @@ export function AuthDialog({
   const [athleteCount, setAthleteCount] = useState("25-100 athletes");
   const [country, setCountry] = useState("United States");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -162,13 +163,13 @@ export function AuthDialog({
           setLoading(false);
           return;
         }
-        const res = await login(email, password);
+        const res = await login(email, password, rememberMe);
         if (!res.success) {
           setError(res.error || "Invalid login credentials.");
           setLoading(false);
           return;
         }
-        setSuccessMsg("Signed in successfully & logged! Redirecting to dashboard...");
+        setSuccessMsg("Signed in with token! Redirecting to dashboard...");
       }
 
       setTimeout(() => {
@@ -455,6 +456,18 @@ export function AuthDialog({
                   </button>
                 </div>
               </label>
+
+              <div className="flex items-center justify-between text-xs pt-0.5">
+                <label className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="rounded border-input text-primary focus:ring-primary h-3.5 w-3.5"
+                  />
+                  <span>Remember this device (30 days)</span>
+                </label>
+              </div>
             </>
           )}
 

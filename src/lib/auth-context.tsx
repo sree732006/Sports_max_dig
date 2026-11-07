@@ -7,19 +7,31 @@ import {
   syncAuthToGoogleSheets,
   fetchUserFromGoogleSheet,
 } from "./auth-service";
+import {
+  createSessionToken,
+  verifySessionToken,
+  getStoredSessionToken,
+  setStoredSessionToken,
+  clearStoredSessionToken,
+  getActiveSessionInfo,
+  type ActiveSessionInfo,
+} from "./token-session";
 
-export type { User, DetailedRegistrationData };
+export type { User, DetailedRegistrationData, ActiveSessionInfo };
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  sessionToken: string | null;
+  sessionInfo: ActiveSessionInfo | null;
+  login: (email: string, password?: string, rememberMe?: boolean) => Promise<{ success: boolean; error?: string }>;
   signup: (
     data: DetailedRegistrationData | string,
     email?: string,
     password?: string
   ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
+  refreshSession: () => Promise<void>;
 }
 
 const AUTH_STORAGE_KEY = "smx_auth_user";
@@ -34,14 +46,53 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
+  const [sessionInfo, setSessionInfo] = useState<ActiveSessionInfo | null>(null);
 
-  // Load active session and seed default admin account with hashed password
+  // Validate Token-Based Session on Mount & Seed Accounts
   useEffect(() => {
     (async () => {
       try {
-        const saved = localStorage.getItem(AUTH_STORAGE_KEY);
-        if (saved) {
-          setUser(JSON.parse(saved));
+        const token = getStoredSessionToken();
+        if (token) {
+          const verification = await verifySessionToken(token);
+          if (verification.valid && verification.payload) {
+            setSessionToken(token);
+            const info = await getActiveSessionInfo();
+            setSessionInfo(info);
+
+            // Reconstruct user state from verified token payload
+            const tokenUser: User = {
+              id: verification.payload.userId,
+              name: verification.payload.name,
+              email: verification.payload.email,
+              role: verification.payload.role,
+              organization: verification.payload.organization,
+              createdAt: new Date(verification.payload.issuedAt * 1000).toISOString(),
+            };
+            setUser(tokenUser);
+          } else {
+            // Token expired or invalid
+            console.warn("[Auth Token] Token verification failed:", verification.error);
+            clearStoredSessionToken();
+            localStorage.removeItem(AUTH_STORAGE_KEY);
+            setUser(null);
+            setSessionToken(null);
+            setSessionInfo(null);
+          }
+        } else {
+          // Fallback legacy storage check
+          const saved = localStorage.getItem(AUTH_STORAGE_KEY);
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            setUser(parsed);
+            // Upgrade legacy session to Token
+            const newToken = await createSessionToken(parsed, false);
+            setStoredSessionToken(newToken, false);
+            setSessionToken(newToken);
+            const info = await getActiveSessionInfo();
+            setSessionInfo(info);
+          }
         }
 
         const existingAccounts = localStorage.getItem(ACCOUNTS_STORAGE_KEY);
@@ -76,12 +127,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(seedAccounts));
         }
       } catch (e) {
-        console.error("Failed to restore auth session:", e);
+        console.error("Failed to restore token auth session:", e);
       }
     })();
   }, []);
 
-  const login = async (email: string, password?: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (
+    email: string,
+    password?: string,
+    rememberMe = false
+  ): Promise<{ success: boolean; error?: string }> => {
     const cleanEmail = email.trim().toLowerCase();
     if (!cleanEmail) {
       return { success: false, error: "Please enter your email address." };
@@ -193,17 +248,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         createdAt: match.createdAt,
       };
 
+      // 5. Generate and store cryptographic Session Token
+      const token = await createSessionToken(sessionUser, rememberMe);
+      setStoredSessionToken(token, rememberMe);
+      setSessionToken(token);
+
+      const activeInfo = await getActiveSessionInfo();
+      setSessionInfo(activeInfo);
+
       setUser(sessionUser);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(sessionUser));
 
       // Sync successful login to Google Sheets Login_Logs tab
       syncAuthToGoogleSheets("user_login", {
         userId: sessionUser.id,
+        sessionId: activeInfo?.sessionId || "sess_direct",
         name: sessionUser.name,
         email: sessionUser.email,
         role: sessionUser.role || "Performance Athlete",
         organization: sessionUser.organization || "Independent",
-        status: "SUCCESS",
+        tokenExpiresAt: activeInfo?.expiresAt || "",
+        status: "SUCCESS_TOKEN_ISSUED",
       });
 
       return { success: true };
@@ -296,12 +361,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         createdAt: new Date().toISOString(),
       };
 
+      // 5. Generate and store cryptographic Session Token on registration
+      const token = await createSessionToken(sessionUser, true);
+      setStoredSessionToken(token, true);
+      setSessionToken(token);
+
+      const activeInfo = await getActiveSessionInfo();
+      setSessionInfo(activeInfo);
+
       setUser(sessionUser);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(sessionUser));
 
       // Sync registration record to Google Sheets "Registered_Users" tab with hashed password
       await syncAuthToGoogleSheets("user_registered", {
         userId: accountId,
+        sessionId: activeInfo?.sessionId || "sess_reg",
         name: cleanName,
         email: cleanEmail,
         passwordHash: hash, // Stored as SHA-256 hash (never plain text)
@@ -320,6 +394,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Also log immediate first login session to "Login_Logs" tab
       await syncAuthToGoogleSheets("user_login", {
         userId: accountId,
+        sessionId: activeInfo?.sessionId || "sess_reg",
         name: cleanName,
         email: cleanEmail,
         role: sessionUser.role,
@@ -337,13 +412,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (user) {
       syncAuthToGoogleSheets("user_login", {
         userId: user.id,
+        sessionId: sessionInfo?.sessionId || "sess_logout",
         name: user.name,
         email: user.email,
         status: "LOGOUT",
       });
     }
+    clearStoredSessionToken();
     setUser(null);
+    setSessionToken(null);
+    setSessionInfo(null);
     localStorage.removeItem(AUTH_STORAGE_KEY);
+  };
+
+  const refreshSession = async () => {
+    if (!user) return;
+    try {
+      const refreshedToken = await createSessionToken(user, false);
+      setStoredSessionToken(refreshedToken, false);
+      setSessionToken(refreshedToken);
+      const info = await getActiveSessionInfo();
+      setSessionInfo(info);
+    } catch (e) {
+      console.error("[Session Refresh Failed]:", e);
+    }
   };
 
   return (
@@ -351,9 +443,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         isAuthenticated: !!user,
+        sessionToken,
+        sessionInfo,
         login,
         signup,
         logout,
+        refreshSession,
       }}
     >
       {children}
