@@ -25,6 +25,7 @@ import {
   Gauge,
   Globe,
   Goal,
+  GraduationCap,
   Layers,
   Loader2,
   LogIn,
@@ -661,6 +662,20 @@ export function SiteHeader() {
                     <div>
                       <div className="font-semibold text-xs text-slate-100">National Federations &amp; NOCs</div>
                       <div className="text-[11px] text-slate-400">Multi-sport talent pathways &amp; Olympic podium benchmarks</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/schools-config"
+                    onClick={() => setServeHover(false)}
+                    className="flex items-start gap-2 rounded-lg p-2 hover:bg-white/[0.07] transition"
+                  >
+                    <GraduationCap className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs text-slate-100 flex items-center gap-1.5">
+                        <span>Schools &amp; PE Academies</span>
+                        <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.2 rounded font-mono">Config</span>
+                      </div>
+                      <div className="text-[11px] text-slate-400">Khelo India standards, PE cohorts &amp; parent report cards</div>
                     </div>
                   </Link>
                   <Link

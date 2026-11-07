@@ -31,6 +31,7 @@ const CONFIG = {
     REGISTERED_USERS: "Registered_Users",
     LOGIN_LOGS: "Login_Logs",
     USER_CONFIG: "Sports_User_Config",
+    SCHOOL_CONFIG: "Schools_User_Config",
 
     // Analytics & Telemetry Sheets
     MASTER: "Live_Traffic_Events",
@@ -128,6 +129,43 @@ const HEADERS = {
     "Halftime Auto Report",
     "Injury Risk Sensitivity",
     "Webhook URL",
+    "Last Updated"
+  ],
+
+  // ==========================================================
+  // DEDICATED SCHOOLS USER CONFIG PAGE (MULTI-TAB ACADEMIC PE)
+  // ==========================================================
+  Schools_User_Config: [
+    "User ID",
+    "Email Address",
+    "School / Academy Name",
+    "Board Affiliation",
+    "School Code",
+    "Principal Name",
+    "PE Director Name",
+    "Official Email",
+    "Contact Phone",
+    "City",
+    "State / Region",
+    "Grade Bands",
+    "Total Student Athletes",
+    "Primary Sports Curriculum",
+    "Session Frequency",
+    "Inter-School Participation",
+    "Annual Sports Meet Month",
+    "Facilities Available",
+    "Fitness Standard",
+    "Beep Test Passing Target",
+    "50m Sprint Benchmark",
+    "Sit & Reach Benchmark",
+    "BMI Alerts Active",
+    "Posture Screening Active",
+    "Heat Index Limit",
+    "Auto Report Card PDF",
+    "Parent WhatsApp Sync",
+    "Parent Email Dispatch",
+    "Report Frequency",
+    "Growth Tracking",
     "Last Updated"
   ],
 
@@ -594,6 +632,87 @@ function doPost(e) {
         message: updated
           ? "Sports user configuration updated successfully."
           : "Sports user configuration created successfully."
+      });
+    }
+
+    // =========================================================================
+    // 2C. SCHOOLS USER CONFIG PAGE (MULTI-TAB ACADEMIC PE) PERSISTENCE
+    // =========================================================================
+    if (action === "save_school_config") {
+      const schoolSheet = getOrCreateSheet(
+        ss,
+        CONFIG.SHEETS.SCHOOL_CONFIG,
+        HEADERS.Schools_User_Config
+      );
+
+      const cfg = data.config || {};
+      const queryUserId = String(cfg.userId || "").trim();
+      const queryEmail = String(cfg.userEmail || "").trim().toLowerCase();
+      const timestamp = cfg.updatedAt || new Date().toISOString();
+
+      const newRow = [
+        queryUserId,
+        cfg.userEmail || "",
+        cfg.schoolName || "",
+        cfg.boardAffiliation || "",
+        cfg.schoolCode || "",
+        cfg.principalName || "",
+        cfg.peDirectorName || "",
+        cfg.officialEmail || "",
+        cfg.phone || "",
+        cfg.city || "",
+        cfg.stateRegion || "",
+        cfg.gradeBands || "",
+        cfg.totalStudentAthletes || "",
+        cfg.primarySports || "",
+        cfg.sessionFrequency || "",
+        cfg.interSchoolParticipation || "Yes",
+        cfg.annualSportsMeetMonth || "",
+        cfg.facilitiesAvailable || "",
+        cfg.fitnessStandard || "KHELO_INDIA",
+        cfg.beepTestTarget || "7.0 Shuttle Level",
+        cfg.sprint50mTarget || "8.4s",
+        cfg.sitAndReachTarget || "25.0cm",
+        cfg.bmiAlerts || "Active",
+        cfg.postureScreening || "Active",
+        cfg.heatLimitC || "37.5°C",
+        cfg.autoReportCardPdf || "Yes",
+        cfg.parentWhatsApp || "Enabled",
+        cfg.parentEmail || "Enabled",
+        cfg.reportFrequency || "TERMLY",
+        cfg.growthTracking || "Included",
+        timestamp
+      ];
+
+      let updated = false;
+      const lastRow = schoolSheet.getLastRow();
+      if (lastRow > 1) {
+        const userIds = schoolSheet.getRange(2, 1, lastRow - 1, 2).getValues();
+        for (let r = 0; r < userIds.length; r++) {
+          const rowId = String(userIds[r][0] || "").trim();
+          const rowEmail = String(userIds[r][1] || "").trim().toLowerCase();
+          if ((queryUserId && rowId === queryUserId) || (queryEmail && rowEmail === queryEmail)) {
+            schoolSheet.getRange(r + 2, 1, 1, newRow.length).setValues([newRow]);
+            updated = true;
+            break;
+          }
+        }
+      }
+
+      if (!updated) {
+        schoolSheet.appendRow(newRow);
+      }
+
+      SpreadsheetApp.flush();
+
+      return response({
+        success: true,
+        action: "save_school_config",
+        sheet: CONFIG.SHEETS.SCHOOL_CONFIG,
+        updated: updated,
+        message: updated
+          ? "Schools user configuration updated successfully."
+          : "Schools user configuration created successfully."
       });
     }
 
