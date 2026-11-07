@@ -17,6 +17,7 @@ import { SiteFooter, SiteHeader } from "@/components/site-shell";
 import { DigitalPresenceAssistant } from "@/components/digital-presence-assistant";
 import { AuthProvider } from "@/lib/auth-context";
 import { captureUtmParams } from "@/lib/utm-tracker";
+import { PwaInstallPrompt } from "@/components/pwa-install-prompt";
 
 // IN27-52: Microsoft Clarity Integration — Project ID: yrxe87qisd
 function initMicrosoftClarity() {
@@ -173,6 +174,7 @@ function RootComponent() {
         <main><Outlet /></main>
         <SiteFooter />
         <DigitalPresenceAssistant />
+        <PwaInstallPrompt />
         {/* Vercel Web Analytics — tracks page views on all routes */}
         <Analytics />
       </AuthProvider>
