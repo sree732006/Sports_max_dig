@@ -37,6 +37,13 @@
       "description": "View athlete kinematics and workload",
       "url": "/dashboard",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Physical Config",
+      "short_name": "Physical",
+      "description": "Configure athlete physical baselines & vitals",
+      "url": "/physical-config",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

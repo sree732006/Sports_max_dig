@@ -28,6 +28,7 @@ import { Route as IcpRouteImport } from './routes/icp'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as InstitutionRouteImport } from './routes/institution'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
+import { Route as PhysicalConfigRouteImport } from './routes/physical-config'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -143,6 +144,11 @@ const InstitutionRoute = InstitutionRouteImport.update({
 const LinkedinRoute = LinkedinRouteImport.update({
   id: '/linkedin',
   path: '/linkedin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhysicalConfigRoute = PhysicalConfigRouteImport.update({
+  id: '/physical-config',
+  path: '/physical-config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlatformRoute = PlatformRouteImport.update({
@@ -271,6 +277,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
+  '/physical-config': typeof PhysicalConfigRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -313,6 +320,7 @@ export interface FileRoutesByTo {
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
+  '/physical-config': typeof PhysicalConfigRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -356,6 +364,7 @@ export interface FileRoutesById {
   '/insights': typeof InsightsRoute
   '/institution': typeof InstitutionRoute
   '/linkedin': typeof LinkedinRoute
+  '/physical-config': typeof PhysicalConfigRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -400,6 +409,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/institution'
     | '/linkedin'
+    | '/physical-config'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -442,6 +452,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/institution'
     | '/linkedin'
+    | '/physical-config'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -484,6 +495,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/institution'
     | '/linkedin'
+    | '/physical-config'
     | '/platform'
     | '/pricing'
     | '/privacy'
@@ -527,6 +539,7 @@ export interface RootRouteChildren {
   InsightsRoute: typeof InsightsRoute
   InstitutionRoute: typeof InstitutionRoute
   LinkedinRoute: typeof LinkedinRoute
+  PhysicalConfigRoute: typeof PhysicalConfigRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -683,6 +696,13 @@ declare module '@tanstack/react-router' {
       path: '/linkedin'
       fullPath: '/linkedin'
       preLoaderRoute: typeof LinkedinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/physical-config': {
+      id: '/physical-config'
+      path: '/physical-config'
+      fullPath: '/physical-config'
+      preLoaderRoute: typeof PhysicalConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/platform': {
@@ -855,6 +875,7 @@ const rootRouteChildren: RootRouteChildren = {
   InsightsRoute: InsightsRoute,
   InstitutionRoute: InstitutionRoute,
   LinkedinRoute: LinkedinRoute,
+  PhysicalConfigRoute: PhysicalConfigRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,

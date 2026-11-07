@@ -33,6 +33,7 @@ const CONFIG = {
     USER_CONFIG: "Sports_User_Config",
     SCHOOL_CONFIG: "Schools_User_Config",
     VIDEO_UPLOADS: "PWA_Video_Uploads",
+    PHYSICAL_CONFIG: "PWA_Physical_Config",
 
     // Analytics & Telemetry Sheets
     MASTER: "Live_Traffic_Events",
@@ -193,6 +194,38 @@ const HEADERS = {
     "Estimated Valgus Moment",
     "Keyframes Extracted",
     "Timestamp"
+  ],
+
+  // ==========================================================
+  // PWA MOBILE APP: ATHLETE BASIC PHYSICAL CONFIGURATION
+  // ==========================================================
+  PWA_Physical_Config: [
+    "Athlete ID",
+    "Athlete Name",
+    "Email Address",
+    "Sport",
+    "Position / Event",
+    "Age (Years)",
+    "Gender",
+    "Height",
+    "Weight",
+    "BMI",
+    "Wingspan",
+    "Limb Dominance",
+    "Body Fat %",
+    "Resting Heart Rate",
+    "Max Heart Rate",
+    "Vertical Jump Baseline",
+    "10m Sprint Baseline",
+    "40m Sprint Baseline",
+    "1RM Squat Baseline",
+    "VO2 Max",
+    "Asymmetry Watch Limb",
+    "Max Daily Workload Threshold",
+    "Medical Clearance Status",
+    "Previous Injuries / Notes",
+    "Platform Source",
+    "Last Updated"
   ],
 
   // ==========================================================
@@ -787,6 +820,82 @@ function doPost(e) {
         sheet: CONFIG.SHEETS.VIDEO_UPLOADS,
         uploadId: uploadId,
         message: "PWA Video Upload logged to Google Sheets successfully."
+      });
+    }
+
+    // =========================================================================
+    // 2E. PWA MOBILE APP: ATHLETE BASIC PHYSICAL CONFIGURATION
+    // =========================================================================
+    if (action === "save_physical_config") {
+      const physicalSheet = getOrCreateSheet(
+        ss,
+        CONFIG.SHEETS.PHYSICAL_CONFIG,
+        HEADERS.PWA_Physical_Config
+      );
+
+      const p = data.physical || {};
+      const athleteId = String(p.athleteId || "").trim();
+      const email = String(p.email || "").trim().toLowerCase();
+      const timestamp = p.updatedAt || new Date().toISOString();
+
+      const newRow = [
+        athleteId,
+        p.athleteName || "Athlete",
+        p.email || "",
+        p.sport || "General Athletic",
+        p.positionOrEvent || "All-Round",
+        p.ageYears || 20,
+        p.gender || "MALE",
+        p.heightCm || "",
+        p.weightKg || "",
+        p.bmi || "",
+        p.wingspanCm || "",
+        p.limbDominance || "RIGHT",
+        p.bodyFatPercent || "",
+        p.restingHeartRate || "",
+        p.maxHeartRate || "",
+        p.verticalJump || "",
+        p.sprint10m || "",
+        p.sprint40m || "",
+        p.oneRepMaxSquat || "",
+        p.vo2Max || "",
+        p.asymmetryWatchLimb || "NONE",
+        p.maxDailyWorkloadThreshold || "",
+        p.medicalClearanceStatus || "CLEARED_FULL",
+        p.previousInjuries || "None",
+        p.source || "SportsMax Mobile PWA",
+        timestamp
+      ];
+
+      let updated = false;
+      const lastRow = physicalSheet.getLastRow();
+      if (lastRow > 1) {
+        const ids = physicalSheet.getRange(2, 1, lastRow - 1, 2).getValues();
+        for (let r = 0; r < ids.length; r++) {
+          const rowId = String(ids[r][0] || "").trim();
+          const rowEmail = String(ids[r][1] || "").trim().toLowerCase();
+          if ((athleteId && rowId === athleteId) || (email && rowEmail === email)) {
+            physicalSheet.getRange(r + 2, 1, 1, newRow.length).setValues([newRow]);
+            updated = true;
+            break;
+          }
+        }
+      }
+
+      if (!updated) {
+        physicalSheet.appendRow(newRow);
+      }
+
+      SpreadsheetApp.flush();
+
+      return response({
+        success: true,
+        action: "save_physical_config",
+        sheet: CONFIG.SHEETS.PHYSICAL_CONFIG,
+        updated: updated,
+        message: updated
+          ? "Athlete physical configuration updated in Google Sheets."
+          : "Athlete physical configuration created in Google Sheets."
       });
     }
 
