@@ -1,0 +1,649 @@
+{
+  "metadata": {
+    "target_url": "https://sports-max-dig.vercel.app",
+    "domain": "sports-max-dig.vercel.app",
+    "timestamp": "2026-11-07T17:22:25Z",
+    "audit_type": "Public DOM CTA Audit",
+    "pages_analyzed": 6,
+    "total_ctas_extracted": 362
+  },
+  "scores": {
+    "overall_score": 96,
+    "lead_capture_score": 100,
+    "first_impression_score": 85,
+    "trust_score": 100,
+    "funnel_score": 100,
+    "category_weights": {
+      "lead_capture": 0.2,
+      "first_impression": 0.25,
+      "trust_building": 0.2,
+      "sales_funnel": 0.35
+    },
+    "score_evidence": {
+      "first_impression": [
+        "Observed 14 CTA element(s) located above-the-fold.",
+        "Above-fold CTA features distinct button styling and prominence (>2000px\u00b2 area).",
+        "Hero CTA starts with a clear, outcome-driven action verb.",
+        "Multiple competing CTAs in hero section create decision friction."
+      ],
+      "lead_capture": [
+        "Identified 33 direct conversion capture CTA triggers across pages.",
+        "Accessible conversion route (contact/signup/demo page) confirmed in crawl.",
+        "Conversion triggers utilize styled buttons with dedicated handlers."
+      ],
+      "trust_building": [
+        "22 CTA(s) feature proximal social proof (reviews/ratings/partners).",
+        "Verification and authority terminology found supporting conversion funnels.",
+        "Friction-reducing risk reversals (e.g. 'Demo', 'Free', 'Trial') present on CTAs."
+      ],
+      "sales_funnel": [
+        "Persistent navigation CTA observed in header (66 active links).",
+        "Catch-all conversion anchor confirmed in footer section.",
+        "Balanced visual hierarchy: distinct primary buttons paired with secondary exploratory links.",
+        "Conversion links route to concrete functional endpoints rather than inert anchors."
+      ]
+    }
+  },
+  "findings": {
+    "what_is_working": [
+      {
+        "title": "Immediate Above-the-Fold Engagement",
+        "page_url": "https://sports-max-dig.vercel.app",
+        "evidence": "Found 14 distinct actionable element(s) in hero section ('Explore Sports Hub'), minimizing bounce rates on first view.",
+        "impact": "High"
+      },
+      {
+        "title": "Clear Button Component Styling",
+        "page_url": "https://sports-max-dig.vercel.app",
+        "evidence": "113 interactive elements utilize distinct button styling and dimensions (>2000px\u00b2) instead of standard low-contrast text hyperlinks.",
+        "impact": "Medium"
+      },
+      {
+        "title": "Persistent Header Conversion Pathway",
+        "page_url": "https://sports-max-dig.vercel.app",
+        "evidence": "Top navigation bar maintains 66 visible navigation & conversion links across user scroll depth.",
+        "impact": "High"
+      }
+    ],
+    "cta_gaps": [
+      {
+        "severity": "High",
+        "title": "Inert Anchor Targets & Placeholder Hrefs",
+        "page_url": "https://sports-max-dig.vercel.app",
+        "evidence": "Identified 76 clickable elements targeting '#', preventing direct lead funnel routing.",
+        "recommendation": "Map all clickable buttons directly to verified form endpoints or modal trigger handlers."
+      },
+      {
+        "severity": "Low",
+        "title": "Uniform Visual Hierarchy Between Dual CTAs",
+        "page_url": "https://sports-max-dig.vercel.app",
+        "evidence": "Primary and secondary buttons share similar border/color weights, causing split-attention paralysis.",
+        "recommendation": "Style the primary action in solid brand accent and secondary options as outline/ghost buttons."
+      }
+    ],
+    "recommended_hierarchy": {
+      "primary_cta": {
+        "label": "Get Started / Request Demo",
+        "style": "High-contrast solid button (Primary brand color)",
+        "purpose": "Direct conversion entry point for high-intent visitors",
+        "target_placement": "Header right, Hero section center-left, and Bottom closing banner"
+      },
+      "secondary_cta": {
+        "label": "Explore Platform & Benchmarks",
+        "style": "Ghost / Outline button with subtle hover state",
+        "purpose": "Low-commitment exploration path for top-of-funnel research visitors",
+        "target_placement": "Adjacent to Primary Hero CTA"
+      },
+      "contextual_cta": {
+        "label": "Schedule Technical Consultation",
+        "style": "Inline card button accompanied by trust credentials",
+        "purpose": "Enterprise / Institutional evaluation for coaches & sports directors",
+        "target_placement": "Service detail tabs, pricing tables, and case study conclusions"
+      }
+    },
+    "placement_matrix": [
+      {
+        "section": "Global Header",
+        "observed": "66 navigation elements",
+        "recommended": "1 Primary Conversion Button ('Book Demo') + 1 Login Link",
+        "status": "Partially Optimized"
+      },
+      {
+        "section": "Hero Viewport",
+        "observed": "14 above-fold CTAs",
+        "recommended": "Dual CTA pair (Solid Primary + Outline Secondary) with micro-proof",
+        "status": "Needs Realignment"
+      },
+      {
+        "section": "Solutions & Product Modules",
+        "observed": "Body section action links",
+        "recommended": "Feature-specific deep links with immediate interactive preview",
+        "status": "Good"
+      },
+      {
+        "section": "Global Footer",
+        "observed": "174 links in footer",
+        "recommended": "Full-width closing CTA banner with dual action buttons + newsletter capture",
+        "status": "Optimized"
+      }
+    ],
+    "top_5_priority_fixes": [
+      {
+        "rank": 1,
+        "title": "Add Micro-Social Proof Adjacent to Primary Hero CTA",
+        "impact": "High",
+        "effort": "Low",
+        "confidence": "95%",
+        "description": "Place customer star ratings, athlete count, or accreditation badges directly under the primary button."
+      },
+      {
+        "rank": 2,
+        "title": "Upgrade Passive 'Learn More' Copy to Value-Driven Action Verbs",
+        "impact": "High",
+        "effort": "Low",
+        "confidence": "90%",
+        "description": "Change copy to specific outcomes: 'Launch Talent Assessment' or 'Explore Biometric Engine'."
+      },
+      {
+        "rank": 3,
+        "title": "Implement Sticky Header 'Request Assessment' CTA",
+        "impact": "Medium",
+        "effort": "Medium",
+        "confidence": "85%",
+        "description": "Ensure a persistent high-contrast conversion button remains accessible during long-scroll exploration."
+      },
+      {
+        "rank": 4,
+        "title": "Resolve Placeholder Anchor (#) Target Destinations",
+        "impact": "Medium",
+        "effort": "Low",
+        "confidence": "98%",
+        "description": "Connect inert trigger buttons to functional interactive modals or dedicated lead routes."
+      },
+      {
+        "rank": 5,
+        "title": "Introduce Low-Friction 2-Field Lead Capture on Closing Strip",
+        "impact": "High",
+        "effort": "Medium",
+        "confidence": "80%",
+        "description": "Capture email + institution before the footer to catch undecided exit-intent traffic."
+      }
+    ],
+    "business_impact_targets": {
+      "model_type": "Hypothetical Conversion Scenario Model (Non-Guaranteed Projections)",
+      "assumptions": "Assumes standard B2B/Enterprise athletic web traffic baseline with 2,500 monthly unique visitors and 1.8% baseline conversion rate.",
+      "projected_improvements": [
+        {
+          "metric": "Hero Click-Through Rate (CTR)",
+          "baseline": "2.4%",
+          "projected_range": "3.2% - 4.1%",
+          "driver": "Prominence styling + outcome-driven action verb"
+        },
+        {
+          "metric": "Lead Form Completion Rate",
+          "baseline": "1.8%",
+          "projected_range": "2.6% - 3.4%",
+          "driver": "Social proof adjacency + 2-field friction reduction"
+        },
+        {
+          "metric": "Total Qualified Leads / Month",
+          "baseline": "45 inquiries",
+          "projected_range": "65 - 85 inquiries",
+          "driver": "Sticky navigation CTA + dual hierarchy funnel alignment"
+        }
+      ]
+    },
+    "next_actions": [
+      {
+        "step": 1,
+        "phase": "Week 1",
+        "action": "Copy & Styling Refresh: Replace passive verbs and apply solid accent contrast to primary buttons."
+      },
+      {
+        "step": 2,
+        "phase": "Week 2",
+        "action": "Social Proof Integration: Embed trust badges and rating counters adjacent to hero and pricing CTAs."
+      },
+      {
+        "step": 3,
+        "phase": "Week 3",
+        "action": "Funnel Route Audit: Link all inert buttons to concrete modal capture or demo request endpoints."
+      },
+      {
+        "step": 4,
+        "phase": "Week 4",
+        "action": "A/B Testing & Tracking: Configure Google Analytics 4 event triggers to measure conversion rate uplift."
+      }
+    ]
+  },
+  "page_inventory": [
+    {
+      "url": "https://sports-max-dig.vercel.app",
+      "title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "status_code": 200,
+      "load_time_sec": 9.57,
+      "cta_count": 117,
+      "desktop_screenshot": "output\\screenshots\\home_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    },
+    {
+      "url": "https://sports-max-dig.vercel.app/pricing",
+      "title": "Pricing & Plans \u2014 SportsMax",
+      "status_code": 200,
+      "load_time_sec": 1.32,
+      "cta_count": 49,
+      "desktop_screenshot": "output\\screenshots\\pricing_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    },
+    {
+      "url": "https://sports-max-dig.vercel.app/about",
+      "title": "About SportsMax \u2014 Full-Spectrum Sports AI Engineering & Value Realization",
+      "status_code": 200,
+      "load_time_sec": 0.58,
+      "cta_count": 44,
+      "desktop_screenshot": "output\\screenshots\\about_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    },
+    {
+      "url": "https://sports-max-dig.vercel.app/book-appointment",
+      "title": "Book Appointment \u2014 SportsMax High-Performance Consultation",
+      "status_code": 200,
+      "load_time_sec": 0.35,
+      "cta_count": 44,
+      "desktop_screenshot": "output\\screenshots\\book_appointment_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    },
+    {
+      "url": "https://sports-max-dig.vercel.app/contact",
+      "title": "Connect with SportsMax \u2014 Sports Analytics Enquiry",
+      "status_code": 200,
+      "load_time_sec": 0.47,
+      "cta_count": 58,
+      "desktop_screenshot": "output\\screenshots\\contact_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    },
+    {
+      "url": "https://sports-max-dig.vercel.app/coaches",
+      "title": "Coaching Services & Squad Load Governance \u2014 SportsMax",
+      "status_code": 200,
+      "load_time_sec": 0.36,
+      "cta_count": 50,
+      "desktop_screenshot": "output\\screenshots\\coaches_desktop.png",
+      "mobile_screenshot": "",
+      "accessible": true,
+      "error": null
+    }
+  ],
+  "extracted_ctas_sample": [
+    {
+      "text": "SPORTSMAX\nINTELLIGENCE HUB",
+      "tag": "a",
+      "href": "/",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 152,
+      "height": 39,
+      "area": 5943,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "16px",
+      "has_proof_nearby": false,
+      "top": 17,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "What We Offer",
+      "tag": "a",
+      "href": "/coaches",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 117,
+      "height": 28,
+      "area": 3273,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Whom We Serve",
+      "tag": "a",
+      "href": "/icp",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 126,
+      "height": 28,
+      "area": 3540,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Platform",
+      "tag": "a",
+      "href": "/pricing",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 84,
+      "height": 28,
+      "area": 2354,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "How It Works",
+      "tag": "a",
+      "href": "/platform",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 108,
+      "height": 28,
+      "area": 3013,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Sports",
+      "tag": "a",
+      "href": "/sports",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 92,
+      "height": 28,
+      "area": 2562,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Resources",
+      "tag": "a",
+      "href": "/resources",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 95,
+      "height": 28,
+      "area": 2671,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "About Us",
+      "tag": "a",
+      "href": "/about",
+      "location": "header/nav",
+      "is_button": false,
+      "width": 87,
+      "height": 28,
+      "area": 2439,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 22,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Log in",
+      "tag": "button",
+      "href": "",
+      "location": "header/nav",
+      "is_button": true,
+      "width": 85,
+      "height": 32,
+      "area": 2718,
+      "color": "oklch(0.18 0.035 252)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 20,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Register",
+      "tag": "button",
+      "href": "",
+      "location": "header/nav",
+      "is_button": true,
+      "width": 73,
+      "height": 32,
+      "area": 2341,
+      "color": "oklch(0.48 0.19 148)",
+      "bg_color": "oklch(0.985 0.004 240)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 20,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Get Started",
+      "tag": "a",
+      "href": "/sports",
+      "location": "header/nav",
+      "is_button": true,
+      "width": 117,
+      "height": 32,
+      "area": 3746,
+      "color": "oklch(0.99 0 0)",
+      "bg_color": "oklch(0.48 0.19 148)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 20,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Explore Sports Hub",
+      "tag": "a",
+      "href": "/sports",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 221,
+      "height": 40,
+      "area": 8838,
+      "color": "oklch(0.99 0 0)",
+      "bg_color": "oklch(0.48 0.19 148)",
+      "font_size": "14px",
+      "has_proof_nearby": false,
+      "top": 543,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "How It Works",
+      "tag": "a",
+      "href": "/platform",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 150,
+      "height": 40,
+      "area": 5994,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.6)",
+      "font_size": "14px",
+      "has_proof_nearby": false,
+      "top": 543,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "Match Analysis Suite \u2192",
+      "tag": "a",
+      "href": "/sports/game-analysis",
+      "location": "hero/above_fold",
+      "is_button": false,
+      "width": 216,
+      "height": 40,
+      "area": 8641,
+      "color": "oklch(0.869 0.022 252.894)",
+      "bg_color": "rgba(0, 0, 0, 0)",
+      "font_size": "14px",
+      "has_proof_nearby": false,
+      "top": 543,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "\ud83c\udfc3 Running (Pace & Cadence)",
+      "tag": "a",
+      "href": "/sports/running",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 193,
+      "height": 26,
+      "area": 5012,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.8)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 623,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "\ud83c\udfca Swimming (SWOLF)",
+      "tag": "a",
+      "href": "/sports/swimming",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 154,
+      "height": 26,
+      "area": 4015,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.8)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 623,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "\ud83d\udc5f High Jump (2.28m)",
+      "tag": "a",
+      "href": "/sports/athletics/high-jump",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 150,
+      "height": 26,
+      "area": 3897,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.8)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 623,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "\u26bd Football (xG & xT)",
+      "tag": "a",
+      "href": "/sports/football",
+      "location": "hero/above_fold",
+      "is_button": true,
+      "width": 142,
+      "height": 26,
+      "area": 3694,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.8)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 623,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "High (Primary Hero)"
+    },
+    {
+      "text": "\ud83c\udfd2 Hockey (Corsi)",
+      "tag": "a",
+      "href": "/sports/hockey",
+      "location": "body",
+      "is_button": true,
+      "width": 128,
+      "height": 26,
+      "area": 3319,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.208 -0.00310889 -0.0418848 / 0.8)",
+      "font_size": "12px",
+      "has_proof_nearby": false,
+      "top": 657,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    },
+    {
+      "text": "Go to slide 1: TURN SPORTS DATA INTO",
+      "tag": "button",
+      "href": "",
+      "location": "body",
+      "is_button": true,
+      "width": 96,
+      "height": 8,
+      "area": 768,
+      "color": "rgb(255, 255, 255)",
+      "bg_color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.2)",
+      "font_size": "16px",
+      "has_proof_nearby": false,
+      "top": 752,
+      "page_url": "https://sports-max-dig.vercel.app",
+      "page_title": "SportsMax \u2014 Full-Spectrum Sports AI Engineering & Performance Intelligence",
+      "prominence": "Medium (Action Button)"
+    }
+  ]
+}
