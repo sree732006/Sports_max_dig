@@ -22,10 +22,12 @@ import { PwaInstallPrompt } from "@/components/pwa-install-prompt";
 // IN27-52: Microsoft Clarity Integration — Project ID: yrxe87qisd
 function initMicrosoftClarity() {
   if (typeof window === "undefined") return;
-  // Register PWA Service Worker
-  if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+  // Register PWA Service Worker in browser
+  if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch((err) => {
+      navigator.serviceWorker.register("/sw.js").then((reg) => {
+        console.log("[PWA] Service Worker registered successfully:", reg.scope);
+      }).catch((err) => {
         console.warn("[PWA] Service worker registration ignored:", err);
       });
     });
