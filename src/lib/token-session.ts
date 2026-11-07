@@ -277,3 +277,4 @@ export async function getActiveSessionInfo(): Promise<ActiveSessionInfo | null> 
     device: typeof navigator !== "undefined" ? navigator.userAgent : "Desktop",
   };
 }
+

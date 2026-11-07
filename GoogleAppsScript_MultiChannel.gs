@@ -30,6 +30,7 @@ const CONFIG = {
     // Dedicated Authentication Sheets
     REGISTERED_USERS: "Registered_Users",
     LOGIN_LOGS: "Login_Logs",
+    USER_CONFIG: "Sports_User_Config",
 
     // Analytics & Telemetry Sheets
     MASTER: "Live_Traffic_Events",
@@ -92,6 +93,42 @@ const HEADERS = {
     "User Agent / Device",
     "Referrer Page",
     "Timestamp"
+  ],
+
+  // ==========================================================
+  // DEDICATED SPORTS USER CONFIG FORM (MULTI-TAB PREFERENCES)
+  // ==========================================================
+  Sports_User_Config: [
+    "User ID",
+    "Email Address",
+    "Full Name",
+    "Phone Number",
+    "Role",
+    "Title / Designation",
+    "Country / Region",
+    "Timezone",
+    "Organization / Team",
+    "Institution Type",
+    "Primary Sport",
+    "Secondary Sport",
+    "Squad Size",
+    "Competition Tier",
+    "Season Phase",
+    "Pitch Tracking System",
+    "Camera Setup",
+    "ACWR Corridor",
+    "Valgus Risk Threshold",
+    "GCT Asymmetry Tolerance",
+    "Max Speed Zone",
+    "High Metabolic Distance",
+    "Preferred Units",
+    "Connected Wearables",
+    "Email Alerts",
+    "SMS Alerts",
+    "Halftime Auto Report",
+    "Injury Risk Sensitivity",
+    "Webhook URL",
+    "Last Updated"
   ],
 
   // ==========================================================
@@ -476,6 +513,87 @@ function doPost(e) {
         sheet: CONFIG.SHEETS.LOGIN_LOGS,
         logId: logId,
         message: "Login event logged successfully."
+      });
+    }
+
+    // =========================================================================
+    // 2B. SPORTS USER CONFIG FORM (MULTI-TAB) PERSISTENCE
+    // =========================================================================
+    if (action === "save_user_config") {
+      const configSheet = getOrCreateSheet(
+        ss,
+        CONFIG.SHEETS.USER_CONFIG,
+        HEADERS.Sports_User_Config
+      );
+
+      const cfg = data.config || {};
+      const queryUserId = String(cfg.userId || "").trim();
+      const queryEmail = String(cfg.userEmail || "").trim().toLowerCase();
+      const timestamp = cfg.updatedAt || new Date().toISOString();
+
+      const newRow = [
+        queryUserId,
+        cfg.userEmail || "",
+        cfg.fullName || "",
+        cfg.phone || "",
+        cfg.role || "",
+        cfg.title || "",
+        cfg.country || "",
+        cfg.timezone || "",
+        cfg.organizationName || "",
+        cfg.institutionType || "",
+        cfg.primarySport || "",
+        cfg.secondarySport || "",
+        cfg.squadSize || "",
+        cfg.competitionTier || "",
+        cfg.seasonPhase || "",
+        cfg.pitchTrackingSystem || "",
+        cfg.cameraSetup || "",
+        cfg.acwrCorridor || "0.8 - 1.3",
+        cfg.valgusRiskThreshold || "2.5 Nm/kg",
+        cfg.gctAsymmetryTolerance || "8%",
+        cfg.maxSpeedZone || "25.2 km/h",
+        cfg.highMetabolicDistanceThreshold || "450 m",
+        cfg.preferredUnits || "metric",
+        cfg.connectedWearables || "",
+        cfg.alertEmail || "Yes",
+        cfg.alertSms || "No",
+        cfg.halftimeAutoReport || "Enabled",
+        cfg.injuryRiskAlertLevel || "MEDIUM",
+        cfg.webhookUrl || "None",
+        timestamp
+      ];
+
+      // Check if user already exists to update row instead of duplicating
+      let updated = false;
+      const lastRow = configSheet.getLastRow();
+      if (lastRow > 1) {
+        const userIds = configSheet.getRange(2, 1, lastRow - 1, 2).getValues();
+        for (let r = 0; r < userIds.length; r++) {
+          const rowId = String(userIds[r][0] || "").trim();
+          const rowEmail = String(userIds[r][1] || "").trim().toLowerCase();
+          if ((queryUserId && rowId === queryUserId) || (queryEmail && rowEmail === queryEmail)) {
+            configSheet.getRange(r + 2, 1, 1, newRow.length).setValues([newRow]);
+            updated = true;
+            break;
+          }
+        }
+      }
+
+      if (!updated) {
+        configSheet.appendRow(newRow);
+      }
+
+      SpreadsheetApp.flush();
+
+      return response({
+        success: true,
+        action: "save_user_config",
+        sheet: CONFIG.SHEETS.USER_CONFIG,
+        updated: updated,
+        message: updated
+          ? "Sports user configuration updated successfully."
+          : "Sports user configuration created successfully."
       });
     }
 

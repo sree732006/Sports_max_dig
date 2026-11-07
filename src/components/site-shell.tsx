@@ -37,6 +37,7 @@ import {
   Shield,
   ShieldAlert,
   ShieldCheck,
+  Sliders,
   Sparkles,
   TrendingUp,
   Trophy,
@@ -48,6 +49,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SportsUserConfigFormDialog } from "@/components/sports-user-config-form";
 import {
   Dialog,
   DialogContent,
@@ -1241,6 +1243,7 @@ export function SiteHeader() {
 
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
+              <SportsUserConfigFormDialog />
               <Link
                 to="/dashboard"
                 className="flex items-center gap-2 rounded-lg bg-secondary/80 hover:bg-secondary border border-border px-3 py-1.5 transition text-xs font-medium text-foreground"
