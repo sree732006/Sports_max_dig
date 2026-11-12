@@ -71,7 +71,7 @@ export function Brand() {
       </span>
       <div className="flex flex-col">
         <span className="font-display text-lg font-bold tracking-tight text-foreground">
-          SPORTS<span className="text-primary font-black">MAX</span>
+          SPORTS<span className="text-primary font-black">VECTORS</span>
         </span>
         <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground -mt-1 hidden sm:block">
           Intelligence Hub
