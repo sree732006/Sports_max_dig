@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// SportsMax Reusable Email Brand Module
+// SportsVectors Reusable Email Brand Module
 // High-fidelity, email-client compatible HTML with inline CSS, 600px responsive
 // table layout, full-width branded headers with hero visual, and premium dark footers.
 // Fully tested and compatible with Gmail, Apple Mail, Outlook, and mobile clients.
@@ -7,7 +7,7 @@
 
 /** Palette shared across all branded emails */
 export const BRAND = {
-  primary: "#2563eb",       // SportsMax Royal Blue
+  primary: "#2563eb",       // SportsVectors Royal Blue
   primaryDark: "#1d4ed8",
   primaryDeep: "#0f2b5c",   // Navy base
   cyan: "#06b6d4",          // Cyan accent
@@ -26,16 +26,16 @@ export const BRAND = {
 } as const;
 
 /** Verified public host for assets */
-export const ASSET_HOST = "https://sports-max-dig.vercel.app";
+export const ASSET_HOST = "https://sportsvectors.tech";
 
 /** Sports analytics hero banner image (live bundled asset with static fallback) */
-export const HERO_BANNER_IMG = `${ASSET_HOST}/assets/sportsmax-runner-CSzSy2iA.jpg`;
+export const HERO_BANNER_IMG = `${ASSET_HOST}/assets/sportsvectors-runner-CSzSy2iA.jpg`;
 
 /** Verified social and channel links */
-export const LINKEDIN_URL = "https://www.linkedin.com/company/sportsmax-intelligence";
+export const LINKEDIN_URL = "https://www.linkedin.com/company/sportsvectors-intelligence";
 export const YOUTUBE_URL = `${ASSET_HOST}/youtube`;
 
-/** Navigation links verified against deployed https://sports-max-dig.vercel.app */
+/** Navigation links verified against deployed https://sportsvectors.tech */
 const NAV_LINKS = [
   { label: "Home",     url: `${ASSET_HOST}/` },
   { label: "Sports",   url: `${ASSET_HOST}/sports` },
@@ -114,7 +114,7 @@ export function emailDocClose(): string {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HEADER — Distinct full-width branded header with SportsMax logo,
+// HEADER — Distinct full-width branded header with SportsVectors logo,
 // hero sports analytics visual banner, and "Every Performance Has a Story"
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -138,7 +138,7 @@ footerImageUrl?: string;
 }
 
 export function emailHeader(opts: HeaderOptions): string {
-  const eyebrowText = opts.eyebrow || "SPORTSMAX INTELLIGENCE";
+  const eyebrowText = opts.eyebrow || "SPORTSVECTORS INTELLIGENCE";
   const sublineText = opts.subline || "Every Performance Has a Story";
   const showHero = opts.showHeroImage !== false;
   const heroImgUrl = opts.heroImageUrl || HERO_BANNER_IMG;
@@ -152,7 +152,7 @@ export function emailHeader(opts: HeaderOptions): string {
         <tr>
           <td style="padding:0;background-color:#0b1933;line-height:0;">
             <a href="${ASSET_HOST}/" style="text-decoration:none;display:block;">
-              <img src="${heroImgUrl}" alt="SportsMax Performance Intelligence — Every Performance Has a Story" width="600" style="display:block;width:100%;max-width:600px;height:auto;max-height:220px;object-fit:cover;border:0;color:#ffffff;font-size:13px;line-height:220px;text-align:center;background-color:#0b1933;" />
+              <img src="${heroImgUrl}" alt="SportsVectors Performance Intelligence — Every Performance Has a Story" width="600" style="display:block;width:100%;max-width:600px;height:auto;max-height:220px;object-fit:cover;border:0;color:#ffffff;font-size:13px;line-height:220px;text-align:center;background-color:#0b1933;" />
             </a>
           </td>
         </tr>`
@@ -239,7 +239,7 @@ export function emailFooter(opts: FooterOptions = {}): string {
   ? `<tr>
        <td style="padding:0;line-height:0;background-color:#090d1a;">
          <img src="${escHtml(opts.footerImageUrl)}"
-              alt="SportsMax campaign banner"
+              alt="SportsVectors campaign banner"
               width="600"
               style="display:block;width:100%;max-width:600px;height:auto;border:0;"
          />
@@ -255,7 +255,7 @@ export function emailFooter(opts: FooterOptions = {}): string {
     ? `<tr>
         <td style="padding:0 32px 14px;text-align:center;" class="sm-inner-pad">
           <p style="margin:0;font-size:11px;color:#64748b;line-height:1.6;">
-            You received this communication because you opted in or engaged with SportsMax.
+            You received this communication because you opted in or engaged with SportsVectors.
             <a href="${opts.unsubscribeUrl || `${ASSET_HOST}/contact`}" style="color:#38bdf8;text-decoration:underline;">Manage preferences</a>
             &nbsp;or&nbsp;
             <a href="${opts.unsubscribeUrl || `${ASSET_HOST}/contact`}" style="color:#38bdf8;text-decoration:underline;">Unsubscribe</a> anytime.
@@ -337,13 +337,13 @@ export function emailFooter(opts: FooterOptions = {}): string {
                     <tr>
                       <td style="padding:0 8px;font-size:12px;color:#64748b;text-align:center;">
                         Direct Solutions Desk:
-                        <a href="mailto:hello@sportsmax.ai" style="color:#38bdf8;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>
+                        <a href="mailto:hello@sportsvectors.ai" style="color:#38bdf8;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding-top:4px;font-size:11px;color:#475569;text-align:center;">
                         Official Portal:
-                        <a href="${ASSET_HOST}/" style="color:#94a3b8;text-decoration:none;">sports-max-dig.vercel.app</a>
+                        <a href="${ASSET_HOST}/" style="color:#94a3b8;text-decoration:none;">sportsvectors.tech</a>
                       </td>
                     </tr>
                   </table>
@@ -357,7 +357,7 @@ export function emailFooter(opts: FooterOptions = {}): string {
               <tr>
                 <td align="center" style="border-top:1px solid #141e33;padding-top:18px;">
                   <p style="margin:0;font-size:11px;color:#475569;line-height:1.6;">
-                    &copy; ${YEAR} SportsMax Technologies Inc. All rights reserved.
+                    &copy; ${YEAR} SportsVectors Technologies Inc. All rights reserved.
                     <br>
                     <a href="${ASSET_HOST}/privacy" style="color:#64748b;text-decoration:none;font-weight:600;">Privacy Policy</a>
                     &nbsp;&bull;&nbsp;

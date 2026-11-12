@@ -81,7 +81,7 @@ export function loadLocalPhysicalConfig(athleteId: string, defaultName?: string,
     ...DEFAULT_PHYSICAL_CONFIG,
     athleteId,
     athleteName: defaultName || DEFAULT_PHYSICAL_CONFIG.athleteName,
-    email: defaultEmail || "athlete@sportsmax.org",
+    email: defaultEmail || "athlete@sportsvectors.org",
   };
 
   if (typeof window === "undefined") return fallback;
@@ -149,7 +149,7 @@ export async function syncPhysicalConfigToGoogleSheets(config: AthletePhysicalCo
       maxDailyWorkloadThreshold: `${config.safety.maxDailyWorkloadThresholdAu} AU`,
       medicalClearanceStatus: config.safety.medicalClearanceStatus,
       previousInjuries: config.safety.previousInjuries || "None reported",
-      source: "SportsMax Mobile PWA",
+      source: "SportsVectors Mobile PWA",
       updatedAt: config.updatedAt,
     },
   };

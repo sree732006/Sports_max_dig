@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               passwordHash: hash,
               salt,
               role: "Sports Administrator",
-              organization: "SportsMax Directorate",
+              organization: "SportsVectors Directorate",
               primarySport: "Multi-Sport Athletics",
               institutionType: "Federation / National Body",
               createdAt: new Date().toISOString(),
@@ -114,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             {
               id: "usr_demo",
               name: "Alex Jordan",
-              email: "athlete@sportsmax.ai",
+              email: "athlete@sportsvectors.ai",
               passwordHash: hash,
               salt,
               role: "Performance Analyst",

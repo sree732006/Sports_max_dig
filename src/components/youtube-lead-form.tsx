@@ -54,7 +54,7 @@ export function YouTubeLeadForm({ videoId, videoTitle }: YouTubeLeadFormProps) {
       }
     } catch {
       setStatus("error");
-      setErrorMessage("Network error connecting to SportsMax lead services. Please retry.");
+      setErrorMessage("Network error connecting to SportsVectors lead services. Please retry.");
     }
   };
 
@@ -65,7 +65,7 @@ export function YouTubeLeadForm({ videoId, videoTitle }: YouTubeLeadFormProps) {
           <Youtube className="h-6 w-6" />
         </div>
         <div>
-          <h3 className="text-xl font-bold text-white">Connect with SportsMax</h3>
+          <h3 className="text-xl font-bold text-white">Connect with SportsVectors</h3>
           <p className="text-xs text-slate-400">
             {videoTitle ? `Inquiry regarding: ${videoTitle}` : "Get tailored sports analytics & intelligence briefings"}
           </p>
@@ -143,7 +143,7 @@ export function YouTubeLeadForm({ videoId, videoTitle }: YouTubeLeadFormProps) {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">How can SportsMax assist your team?</label>
+            <label className="block text-xs font-medium text-slate-300 mb-1">How can SportsVectors assist your team?</label>
             <textarea
               rows={3}
               value={requirement}
@@ -166,7 +166,7 @@ export function YouTubeLeadForm({ videoId, videoTitle }: YouTubeLeadFormProps) {
             ) : (
               <>
                 <Send className="h-4 w-4" />
-                Submit Lead to SportsMax
+                Submit Lead to SportsVectors
               </>
             )}
           </button>

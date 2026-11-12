@@ -233,7 +233,7 @@ async function recordContactLeadInAirtable(
       "Name": input.fullName,
       "Email": input.workEmail,
       "Role": input.roleTitle,
-      "Organization": input.organization || "SportsMax Visitor",
+      "Organization": input.organization || "SportsVectors Visitor",
       "Status": "New",
       "Source": leadSource,
       "Message": messageParts.join("\n"),
@@ -377,9 +377,9 @@ async function createJiraIssueWithSubtasks(
     console.warn("[Jira Service] Issue metadata check failed, using default types:", err);
   }
 
-  // Summary required: "New SportsMax Contact Lead - [lead reference]"
+  // Summary required: "New SportsVectors Contact Lead - [lead reference]"
   const summarySourceSuffix = input.source ? ` (${input.source})` : "";
-  const summary = `New SportsMax Contact Lead - [${leadNumber}]${summarySourceSuffix}`;
+  const summary = `New SportsVectors Contact Lead - [${leadNumber}]${summarySourceSuffix}`;
   const submissionUtc = new Date().toISOString();
 
   // Clean, standards-compliant paragraph-based ADF for description
@@ -400,7 +400,7 @@ async function createJiraIssueWithSubtasks(
         content: [
           {
             type: "text",
-            text: "New SportsMax contact lead inquiry submitted via web interface.",
+            text: "New SportsVectors contact lead inquiry submitted via web interface.",
             marks: [{ type: "strong" }],
           },
         ],
@@ -424,7 +424,7 @@ async function createJiraIssueWithSubtasks(
     ],
   };
 
-  const labels = ["sportsmax-lead", "contact-form", "inquiry"];
+  const labels = ["sportsvectors-lead", "contact-form", "inquiry"];
   if (input.utmSource?.toLowerCase().includes("linkedin") || pageUrl.includes("/linkedin")) {
     labels.push("linkedin-lead");
   }
@@ -511,7 +511,7 @@ async function createJiraIssueWithSubtasks(
         parent: { key: parentKey },
         summary: st.summary,
         description: subtaskDescAdf,
-        labels: ["sportsmax-lead", "subtask"],
+        labels: ["sportsvectors-lead", "subtask"],
       },
     };
 
@@ -614,14 +614,14 @@ async function sendAdminLeadEmail(
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>New SportsMax Lead — ${leadNumber}</title>
+  <title>New SportsVectors Lead — ${leadNumber}</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #090d16; color: #f1f5f9; margin: 0; padding: 32px 16px;">
   <div style="max-width: 600px; margin: 0 auto; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
     
     <!-- Header -->
     <div style="background: linear-gradient(135deg, #059669 0%, #0d9488 100%); padding: 24px 28px;">
-      <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #ecfdf5;">SportsMax Intelligence</div>
+      <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #ecfdf5;">SportsVectors Intelligence</div>
       <h1 style="margin: 6px 0 0; font-size: 22px; font-weight: 800; color: #ffffff;">New Contact Inquiry Received</h1>
       <div style="font-size: 13px; color: #d1fae5; margin-top: 4px;">Reference ID: <strong>${leadNumber}</strong></div>
     </div>
@@ -629,7 +629,7 @@ async function sendAdminLeadEmail(
     <!-- Body -->
     <div style="padding: 28px;">
       <p style="margin: 0 0 18px; font-size: 14px; color: #94a3b8; line-height: 1.5;">
-        A prospective partner or athletic organization has submitted their requirement via the SportsMax contact interface.
+        A prospective partner or athletic organization has submitted their requirement via the SportsVectors contact interface.
       </p>
 
       ${jiraHtmlBlock}
@@ -692,7 +692,7 @@ async function sendAdminLeadEmail(
 
       <!-- Action Button -->
       <div style="margin-top: 28px; text-align: center;">
-        <a href="mailto:${input.workEmail}?subject=Re:%20SportsMax%20Inquiry%20(${leadNumber})" style="display: inline-block; background-color: #10b981; color: #022c22; font-weight: 700; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px;">
+        <a href="mailto:${input.workEmail}?subject=Re:%20SportsVectors%20Inquiry%20(${leadNumber})" style="display: inline-block; background-color: #10b981; color: #022c22; font-weight: 700; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px;">
           Reply to ${input.fullName}
         </a>
       </div>
@@ -700,7 +700,7 @@ async function sendAdminLeadEmail(
 
     <!-- Footer -->
     <div style="background-color: #0b1120; border-top: 1px solid #1e293b; padding: 16px 28px; font-size: 11px; color: #64748b; text-align: center;">
-      SportsMax Sports Intelligence Platform · Notification System<br>
+      SportsVectors Sports Intelligence Platform · Notification System<br>
       This email was automatically generated and delivered to <strong>${recipient}</strong>.
     </div>
   </div>
@@ -709,7 +709,7 @@ async function sendAdminLeadEmail(
   `.trim();
 
   const text = `
-New SportsMax Lead Received: ${leadNumber}
+New SportsVectors Lead Received: ${leadNumber}
 ==========================================
 
 Lead ID: ${leadNumber}
@@ -728,7 +728,7 @@ Reply directly: mailto:${input.workEmail}
 
   const result = await sendReportEmail({
     to: recipient,
-    subject: `[SportsMax Lead] ${input.fullName} (${input.organization}) - ${leadNumber}`,
+    subject: `[SportsVectors Lead] ${input.fullName} (${input.organization}) - ${leadNumber}`,
     html,
     text,
   });

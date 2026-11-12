@@ -1,4 +1,4 @@
-// Server-side Email Dispatcher for SportsMax Automated Reports
+// Server-side Email Dispatcher for SportsVectors Automated Reports
 // Supports Resend, SMTP (via direct HTTP/fetch or Nodemailer-compatible endpoints), and simulation fallback.
 
 export interface SendEmailParams {
@@ -30,7 +30,7 @@ export async function sendReportEmail(params: SendEmailParams): Promise<SendEmai
   // 1. Check for Resend API Key
   const resendApiKey = process.env["RESEND_API_KEY"];
   if (resendApiKey) {
-    let fromAddress = from || process.env["RESEND_FROM_EMAIL"] || "SportsMax Reports <onboarding@resend.dev>";
+    let fromAddress = from || process.env["RESEND_FROM_EMAIL"] || "SportsVectors Reports <onboarding@resend.dev>";
     // Trim and sanitize extra quotes if present from .env parsing
     fromAddress = fromAddress.trim().replace(/^["']|["']$/g, "");
 

@@ -27,7 +27,7 @@ import {
 export const Route = createFileRoute("/sports/hockey")({
   head: () => ({
     meta: [
-      { title: "Hockey Intelligence & Shift Analytics — SportsMax" },
+      { title: "Hockey Intelligence & Shift Analytics — SportsVectors" },
       {
         name: "description",
         content:
@@ -75,7 +75,7 @@ export function HockeySportPage() {
         <div className="content-wrap">
           <SectionHead
             eyebrow="Game Summary"
-            title="SportsMax Blades 4 — 2 North Star"
+            title="SportsVectors Blades 4 — 2 North Star"
             text="RFID puck tracking and optical tracking telemetry across 60 minutes of high-tempo hockey."
           />
 
@@ -121,7 +121,7 @@ export function HockeySportPage() {
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
             <LineChartCard
               title="Possession Control (Corsi % by Period)"
-              subtitle="SportsMax Blades sustained high pressure through the 2nd period"
+              subtitle="SportsVectors Blades sustained high pressure through the 2nd period"
               data={shiftPacing}
               keys={["performance"]}
               unit="%"

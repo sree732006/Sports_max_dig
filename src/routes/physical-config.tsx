@@ -5,13 +5,13 @@ import { PwaSportsBasicConfigPhysical } from "@/components/pwa-sports-basic-conf
 export const Route = createFileRoute("/physical-config")({
   head: () => ({
     meta: [
-      { title: "PWA Athlete Basic Physical Configuration — SportsMax" },
+      { title: "PWA Athlete Basic Physical Configuration — SportsVectors" },
       {
         name: "description",
         content:
           "Mobile PWA physical baseline calibration: anthropometrics, vertical jump power, sprint speeds, and injury surveillance.",
       },
-      { property: "og:title", content: "PWA Physical Configuration — SportsMax" },
+      { property: "og:title", content: "PWA Physical Configuration — SportsVectors" },
       {
         property: "og:description",
         content: "Calibrate athlete physical baselines for mobile PWA video intelligence.",

@@ -45,7 +45,7 @@ export const Route = createFileRoute("/platform")({
   },
   head: () => ({
     meta: [
-      { title: "Platform Architecture & Full-Spectrum Sports AI Engineering — SportsMax" },
+      { title: "Platform Architecture & Full-Spectrum Sports AI Engineering — SportsVectors" },
       {
         name: "description",
         content:
@@ -76,7 +76,7 @@ export function PlatformPage() {
       <PageIntro
         eyebrow="Enterprise AI Architecture"
         title="Mission-Critical Sports Intelligence at Millisecond Latency"
-        text="SportsMax unifies edge computer vision, multi-spectral sensor telemetry, kinematic physics modeling, and sovereign athlete data lakes into a single zero-trust enterprise substrate."
+        text="SportsVectors unifies edge computer vision, multi-spectral sensor telemetry, kinematic physics modeling, and sovereign athlete data lakes into a single zero-trust enterprise substrate."
         action={
           <div className="flex flex-col items-end gap-3">
             <DemoBadge />
@@ -156,7 +156,7 @@ export function PlatformPage() {
               <div className="relative overflow-hidden rounded-2xl border border-border shadow-2xl bg-card">
                 <img
                   src={pipelineImage}
-                  alt="SportsMax Enterprise Neural Pipeline Architecture"
+                  alt="SportsVectors Enterprise Neural Pipeline Architecture"
                   className="w-full h-[400px] object-cover object-center filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent flex flex-col justify-end p-6 md:p-8">
@@ -284,7 +284,7 @@ export function PlatformPage() {
                     step: "01",
                     title: "Multi-Source Sensor Synchrony & Calibration",
                     badge: "Ingestion Tier",
-                    desc: "Pitch-side SDI/IP cameras (up to 4K @ 120 FPS), UWB positional beacons, Catapult/Statsports GPS vests, and force plates are ingested simultaneously. SportsMax runs automated extrinsic camera calibration in under 90 seconds using pitch geometry markers.",
+                    desc: "Pitch-side SDI/IP cameras (up to 4K @ 120 FPS), UWB positional beacons, Catapult/Statsports GPS vests, and force plates are ingested simultaneously. SportsVectors runs automated extrinsic camera calibration in under 90 seconds using pitch geometry markers.",
                     specs: ["Hardware PTP (IEEE 1588) microsecond sync", "Sub-pixel lens distortion correction", "4K HDR 10-bit ingest"],
                     icon: Video,
                   },
@@ -300,7 +300,7 @@ export function PlatformPage() {
                     step: "03",
                     title: "Physics-Informed Dynamic Inverse Modeling",
                     badge: "Biomechanics Engine",
-                    desc: "Kinematic data passes into rigid-body dynamics solvers. SportsMax calculates joint angular acceleration, estimated patellar tendon tension, asymmetric lumbar loading, and ground reaction forces without requiring physical force plates.",
+                    desc: "Kinematic data passes into rigid-body dynamics solvers. SportsVectors calculates joint angular acceleration, estimated patellar tendon tension, asymmetric lumbar loading, and ground reaction forces without requiring physical force plates.",
                     specs: ["Newton-Euler equations of motion", "Hamstring eccentric overload indices", "Asymmetry detection <2% threshold"],
                     icon: Gauge,
                   },
@@ -389,7 +389,7 @@ export function PlatformPage() {
                     Multi-Medium Computer Vision & Surface Refraction Solvers
                   </h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
-                    Unlike standard computer vision frameworks that break down under water surface turbulence, extreme lighting glare, or heavy player pileups, SportsMax implements medium-aware optical refraction modeling.
+                    Unlike standard computer vision frameworks that break down under water surface turbulence, extreme lighting glare, or heavy player pileups, SportsVectors implements medium-aware optical refraction modeling.
                   </p>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     Trained across 4.8 million high-speed frames of track, field, court, and aquatic kinetics, our spatio-temporal transformers maintain consistent skeletal joint topologies even when limb extremities are partially submerged or occluded.
@@ -457,7 +457,7 @@ export function PlatformPage() {
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                    Human motion is inherently non-Euclidean. SportsMax treats the human skeleton as an evolving graph where joints are nodes and bones are edges. Temporal convolution layers capture gait cadence, stride asymmetries, and micro-instabilities across multi-second movement windows.
+                    Human motion is inherently non-Euclidean. SportsVectors treats the human skeleton as an evolving graph where joints are nodes and bones are edges. Temporal convolution layers capture gait cadence, stride asymmetries, and micro-instabilities across multi-second movement windows.
                   </p>
                   <ul className="space-y-2 text-xs text-muted-foreground">
                     <li className="flex items-center gap-2">
@@ -509,7 +509,7 @@ export function PlatformPage() {
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                    SportsMax runs fully autonomously on pitch-side ruggedized 2U edge nodes with zero reliance on cloud uplink during live matches. When connection is present, metadata and model checkpoints synchronize seamlessly to central multi-cloud clusters.
+                    SportsVectors runs fully autonomously on pitch-side ruggedized 2U edge nodes with zero reliance on cloud uplink during live matches. When connection is present, metadata and model checkpoints synchronize seamlessly to central multi-cloud clusters.
                   </p>
                   <ul className="space-y-2 text-xs text-muted-foreground">
                     <li className="flex items-center gap-2">
@@ -533,7 +533,7 @@ export function PlatformPage() {
               <SectionHead
                 eyebrow="Open Ecosystem"
                 title="Plug-and-Play Sports Technology Interoperability"
-                text="SportsMax was designed as an open enterprise hub. We ingest data from every leading sports science hardware vendor and push real-time intelligence into broadcast graphics, team databases, and clinical systems."
+                text="SportsVectors was designed as an open enterprise hub. We ingest data from every leading sports science hardware vendor and push real-time intelligence into broadcast graphics, team databases, and clinical systems."
               />
 
               <div className="grid md:grid-cols-3 gap-6">
@@ -611,7 +611,7 @@ export function PlatformPage() {
               <div className="surface-card p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                   <div>
-                    <h3 className="text-lg font-bold text-foreground">SportsMax Real-Time WebSocket & gRPC Stream</h3>
+                    <h3 className="text-lg font-bold text-foreground">SportsVectors Real-Time WebSocket & gRPC Stream</h3>
                     <p className="text-xs text-muted-foreground">Subscribe to 120Hz 3D joint positions and tactical pitch vectors via sub-millisecond streaming RPCs</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -648,14 +648,14 @@ export function PlatformPage() {
               <SectionHead
                 eyebrow="Zero-Trust Sovereign Data"
                 title="Sovereign Athlete Data Governance & Compliance"
-                text="Elite athletic biometric data is regulated medical information. SportsMax implements hardware-enforced cryptographic enclaves, HIPAA/GDPR strict isolation, and differential privacy so your athlete intelligence remains your proprietary competitive edge."
+                text="Elite athletic biometric data is regulated medical information. SportsVectors implements hardware-enforced cryptographic enclaves, HIPAA/GDPR strict isolation, and differential privacy so your athlete intelligence remains your proprietary competitive edge."
               />
 
               {/* Security Centerpiece Image + Explainer */}
               <div className="relative overflow-hidden rounded-2xl border border-border shadow-2xl bg-card">
                 <img
                   src={securityImage}
-                  alt="SportsMax Sovereign Security Operations & Data Vault"
+                  alt="SportsVectors Sovereign Security Operations & Data Vault"
                   className="w-full h-[380px] object-cover object-center filter brightness-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent flex flex-col justify-end p-6 md:p-8">

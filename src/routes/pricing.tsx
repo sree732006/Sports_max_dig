@@ -16,7 +16,7 @@ import { PricingInquiryForm } from "@/components/pricing-inquiry-form";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing & Plans — SportsMax" },
+      { title: "Pricing & Plans — SportsVectors" },
       {
         name: "description",
         content:
@@ -155,7 +155,7 @@ export function PricingPage() {
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> Unlimited athlete & squad capacity</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> 120fps Optical Computer Vision pitch tracking</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> Real-time sub-50ms WebSocket telemetry feeds</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> Dedicated SportsMax sports scientist engineer</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> Dedicated SportsVectors sports scientist engineer</li>
                   <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary shrink-0" /> Custom tactical algorithms & API access</li>
                 </ul>
               </div>
@@ -177,7 +177,7 @@ export function PricingPage() {
                 </span>
                 <h3 className="text-2xl font-bold mt-1">Quantify Your Squad Injury Reduction &amp; Time Savings</h3>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Based on validated clinical studies showing a 42% average reduction in preventable soft-tissue strain with SportsMax ACWR governance.
+                  Based on validated clinical studies showing a 42% average reduction in preventable soft-tissue strain with SportsVectors ACWR governance.
                 </p>
               </div>
               <div className="rounded-xl bg-primary/10 border border-primary/30 px-4 py-3 text-right">
@@ -200,7 +200,7 @@ export function PricingPage() {
               <div className="rounded-xl bg-secondary/40 p-4 border border-border/50">
                 <div className="text-xs font-bold uppercase text-muted-foreground">Staff Video Tagging Hours</div>
                 <div className="text-3xl font-extrabold font-mono mt-1 text-blue-500">620+ Hours</div>
-                <p className="text-[11px] text-muted-foreground mt-2">Automated by SportsMax optical CV ingest</p>
+                <p className="text-[11px] text-muted-foreground mt-2">Automated by SportsVectors optical CV ingest</p>
               </div>
             </div>
           </div>

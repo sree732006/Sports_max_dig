@@ -34,7 +34,7 @@ import {
 export const Route = createFileRoute("/sports/game-analysis")({
   head: () => ({
     meta: [
-      { title: "Game Analysis & Tactical Intelligence Suite — SportsMax" },
+      { title: "Game Analysis & Tactical Intelligence Suite — SportsVectors" },
       {
         name: "description",
         content:
@@ -229,7 +229,7 @@ export function GameAnalysisPage() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  SportsMax synthesizes 25 frames-per-second broadcast feed tracking into synchronized positional coordinates.
+                  SportsVectors synthesizes 25 frames-per-second broadcast feed tracking into synchronized positional coordinates.
                   Algorithms calculate live expected threat (xT), passing vectors, and defensive vulnerability in under 300 milliseconds.
                 </p>
               </div>
@@ -329,7 +329,7 @@ export function GameAnalysisPage() {
           {/* Module 4: Team Comparison */}
           {activeModule === "team-comp" && (
             <div className="surface-card p-6">
-              <h3 className="text-lg font-bold mb-2">Team Benchmark: SportsMax FC vs League Median</h3>
+              <h3 className="text-lg font-bold mb-2">Team Benchmark: SportsVectors FC vs League Median</h3>
               <p className="text-xs text-muted-foreground mb-6">
                 Comparative percentile ranks normalized across 38 regular season fixtures.
               </p>

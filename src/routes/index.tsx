@@ -39,25 +39,25 @@ import { Button } from "@/components/ui/button";
 import { DemoBadge, Eyebrow, InsightCard, SectionHead, Workflow } from "@/components/sports-ui";
 import { insights } from "@/lib/sports-data";
 import { INDIVIDUAL_SPORTS, TEAM_SPORTS, GAME_ANALYSIS_MODULES } from "@/lib/sports-directory";
-import runnerImage from "@/assets/sportsmax-runner.jpg";
+import runnerImage from "@/assets/sportsvectors-runner.jpg";
 import arenaImage from "@/assets/sports_tactical_arena_1792572299956.jpg";
 import labImage from "@/assets/athlete_biometrics_lab_1792572320926.jpg";
 import clusterImage from "@/assets/ai_sports_cluster_1792572342884.jpg";
 import swimImage from "@/assets/swimming_biomechanics_1792572365169.jpg";
 import pipelineImage from "@/assets/platform_pipeline_architecture_1792587658686.jpg";
 import securityImage from "@/assets/platform_security_compliance_1792587680531.jpg";
-import { ConnectWithSportsMax } from "@/components/connect-with-sportsmax";
+import { ConnectWithSportsVectors } from "@/components/connect-with-sportsvectors";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SportsMax — Full-Spectrum Sports AI Engineering & Performance Intelligence" },
+      { title: "SportsVectors — Full-Spectrum Sports AI Engineering & Performance Intelligence" },
       {
         name: "description",
         content:
           "Enterprise-grade sports AI engineering: High-density biomechanical pipelines, computer vision inference, autonomous coaching fleets, and multi-sport telemetry across 24+ disciplines.",
       },
-      { property: "og:title", content: "SportsMax — Full-Spectrum Sports AI & Tactical Engineering" },
+      { property: "og:title", content: "SportsVectors — Full-Spectrum Sports AI & Tactical Engineering" },
       {
         property: "og:description",
         content: "From stadium optical tracking to athlete biometric laboratories, deploy enterprise AI systems designed for human performance.",
@@ -96,7 +96,7 @@ const HERO_SLIDES: HeroSlide[] = [
     title: "TURN SPORTS DATA INTO",
     highlight: "PERFORMANCE INTELLIGENCE",
     description:
-      "SportsMax combines individual athlete biometrics, team tactics, optical computer vision, and automated coaching cues across 24+ certified disciplines with sub-38ms live edge inference.",
+      "SportsVectors combines individual athlete biometrics, team tactics, optical computer vision, and automated coaching cues across 24+ certified disciplines with sub-38ms live edge inference.",
     image: runnerImage,
     primaryHref: "/sports",
     primaryText: "Explore Sports Hub",
@@ -280,7 +280,7 @@ function HomePage() {
       {/* Dynamic Animated Multi-Slide Hero (Precision Motion & GreenNext Style) */}
       <section
         className="relative flex w-full min-h-[min(880px,94vh)] items-center overflow-hidden bg-slate-950 text-white select-none pt-18 border-b border-border/80"
-        aria-label="SportsMax Dynamic AI Infrastructure Showcase"
+        aria-label="SportsVectors Dynamic AI Infrastructure Showcase"
       >
         {/* Layer 1: Background Images with Smooth Crossfade & Ken-Burns Zoom */}
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
@@ -461,7 +461,7 @@ function HomePage() {
                 </div>
 
                 <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
-                  <span>Engine: SportsMax Neural V4.2</span>
+                  <span>Engine: SportsVectors Neural V4.2</span>
                   <span className="text-emerald-400 font-mono font-semibold flex items-center gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                     SUB-38MS LIVE
@@ -1152,7 +1152,7 @@ function HomePage() {
                 Proven Impact Across the <span className="text-primary">Sporting World</span>.
               </h2>
               <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl">
-                See how leading organizations and athletes use SportsMax to gain an unfair advantage.
+                See how leading organizations and athletes use SportsVectors to gain an unfair advantage.
               </p>
             </div>
             <Button asChild variant="outline">
@@ -1185,7 +1185,7 @@ function HomePage() {
                 {/* Solution */}
                 <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
                   <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
-                    The SportsMax Solution
+                    The SportsVectors Solution
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Deployed our single-camera AI tactical analysis module to automatically track all 22 players and the ball, generating pitch-control maps and automated event logs.
@@ -1233,7 +1233,7 @@ function HomePage() {
                 {/* Solution */}
                 <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
                   <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
-                    The SportsMax Solution
+                    The SportsVectors Solution
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Implemented our sensorless pose-estimation engine, allowing coaches to upload standard smartphone video and receive automated reports on stride length, ground contact time, and joint angles.
@@ -1281,7 +1281,7 @@ function HomePage() {
                 {/* Solution */}
                 <div className="mt-3 rounded-lg bg-primary/5 border border-primary/20 p-3">
                   <div className="text-[10px] font-mono uppercase tracking-wider font-bold text-primary mb-1">
-                    The SportsMax Solution
+                    The SportsVectors Solution
                   </div>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Utilized our Automated Highlight &amp; Scouting engine, setting up custom AI triggers for &ldquo;successful defensive closeouts&rdquo; and &ldquo;transition assists.&rdquo;
@@ -1864,7 +1864,7 @@ function HomePage() {
           <SectionHead
             eyebrow="Automated Intelligence"
             title="Diagnostic Signals That Drive Results"
-            text="SportsMax continuously monitors physical telemetry to surface actionable adjustments."
+            text="SportsVectors continuously monitors physical telemetry to surface actionable adjustments."
             action={
               <Button asChild variant="outline">
                 <Link to="/analytics">
@@ -1945,8 +1945,8 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Connect with SportsMax & Assistant Section */}
-      <ConnectWithSportsMax />
+      {/* Connect with SportsVectors & Assistant Section */}
+      <ConnectWithSportsVectors />
     </>
   );
 }

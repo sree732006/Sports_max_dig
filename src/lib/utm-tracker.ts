@@ -8,7 +8,7 @@
  * Standard UTM parameters:
  *   utm_source   — traffic source (e.g., "linkedin", "youtube")
  *   utm_medium   — marketing medium (e.g., "organic_social", "paid_social")
- *   utm_campaign — campaign name (e.g., "sportsmax_launch")
+ *   utm_campaign — campaign name (e.g., "sportsvectors_launch")
  *   utm_content  — specific content (e.g., LinkedIn post ID)
  *   utm_term     — search term (rarely used for social)
  */

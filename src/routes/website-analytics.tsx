@@ -23,13 +23,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/website-analytics")({
   head: () => ({
     meta: [
-      { title: "Website Analytics Report — SportsMax" },
+      { title: "Website Analytics Report — SportsVectors" },
       {
         name: "description",
         content:
           "Full website analytics report: sessions, users, bounce rate, top pages, traffic sources, device breakdown, and geographic distribution.",
       },
-      { property: "og:title", content: "Website Analytics Report — SportsMax" },
+      { property: "og:title", content: "Website Analytics Report — SportsVectors" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/website-analytics" }],
@@ -116,7 +116,7 @@ function WebsiteAnalyticsPage() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `sportsmax-website-analytics-${period.toLowerCase().replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.json`);
+    link.setAttribute("download", `sportsvectors-website-analytics-${period.toLowerCase().replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.json`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

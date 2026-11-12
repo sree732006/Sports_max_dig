@@ -22,13 +22,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/reports")({
   head: () => ({
     meta: [
-      { title: "Sports Performance Reports & Intelligence Benchmarks — SportsMax" },
+      { title: "Sports Performance Reports & Intelligence Benchmarks — SportsVectors" },
       {
         name: "description",
         content:
           "Access executive sports intelligence whitepapers, quarterly biomechanics indexes, and tactical match benchmarks across 24+ individual and team sports.",
       },
-      { property: "og:title", content: "Sports Performance Reports & Intelligence Benchmarks — SportsMax" },
+      { property: "og:title", content: "Sports Performance Reports & Intelligence Benchmarks — SportsVectors" },
       {
         property: "og:description",
         content: "Download verified athletic telemetry benchmarks, injury reduction whitepapers, and tactical xG models.",

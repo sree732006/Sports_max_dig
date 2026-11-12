@@ -34,7 +34,7 @@ export const Route = createFileRoute("/resources")({
   },
   head: () => ({
     meta: [
-      { title: "Resources, Research & Documentation — SportsMax" },
+      { title: "Resources, Research & Documentation — SportsVectors" },
       {
         name: "description",
         content:
@@ -124,7 +124,7 @@ const successStories = [
     athlete: "Elena Rostova (Marathon / 10,000m)",
     badge: "World Championships Finalist",
     metric: "2h 19m 40s (PR -2m 15s)",
-    quote: "SportsMax ACWR and live biomechanical fatigue detection showed my coach exactly when my ground contact time became asymmetrical in kilometer 32.",
+    quote: "SportsVectors ACWR and live biomechanical fatigue detection showed my coach exactly when my ground contact time became asymmetrical in kilometer 32.",
     delta: "Ground contact symmetry balanced from 48/52 to 50.1/49.9",
     tags: ["Running", "ACWR Load", "GPS Telemetry", "Plantar Force"]
   },
@@ -286,11 +286,11 @@ export function ResourcesPage() {
               <div className="p-6 lg:p-8 flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-primary">
-                    <Sparkles className="h-3.5 w-3.5" /> Peer-Reviewed Science · SportsMax Labs
+                    <Sparkles className="h-3.5 w-3.5" /> Peer-Reviewed Science · SportsVectors Labs
                   </div>
                   <h3 className="mt-1 text-xl font-bold tracking-tight">Enterprise Deployments &amp; Verified Case Evidence</h3>
                   <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                    Explore empirical outcomes from National Olympic Centers, Premier League clubs, and European Athletics Federations implementing SportsMax computer vision and acute load governance.
+                    Explore empirical outcomes from National Olympic Centers, Premier League clubs, and European Athletics Federations implementing SportsVectors computer vision and acute load governance.
                   </p>
                 </div>
                 <div className="grid grid-cols-3 gap-3 border-t border-border/60 pt-4">
@@ -383,7 +383,7 @@ export function ResourcesPage() {
                   { label: "Elite Athletes", value: "1,800+", sub: "Active Users" },
                   { label: "Avg PR Improvement", value: "+3.6%", sub: "Performance Gain" },
                   { label: "Injury Season Lost", value: "–58 days", sub: "Per Athlete/yr" },
-                  { label: "Championship Golds", value: "47", sub: "SportsMax Athletes" },
+                  { label: "Championship Golds", value: "47", sub: "SportsVectors Athletes" },
                 ].map((s) => (
                   <div key={s.label} className="surface-card p-4 text-center border border-border/60">
                     <div className="text-2xl font-black font-mono text-primary">{s.value}</div>
@@ -423,7 +423,7 @@ export function ResourcesPage() {
               <div className="surface-card p-8 border border-amber-500/20 bg-amber-500/5">
                 <div className="text-xs font-mono uppercase tracking-wider text-amber-500 mb-3">Featured Testimonial</div>
                 <blockquote className="text-lg font-semibold text-foreground italic leading-relaxed max-w-3xl">
-                  "No other platform gave us submillisecond biometric latency, WADA compliance out of the box, and a coach dashboard that works offline. SportsMax changed how national programs prepare."
+                  "No other platform gave us submillisecond biometric latency, WADA compliance out of the box, and a coach dashboard that works offline. SportsVectors changed how national programs prepare."
                 </blockquote>
                 <div className="mt-4 text-xs text-muted-foreground">
                   — Head of High-Performance, <span className="text-foreground font-bold">European Athletics Federation</span>
@@ -513,7 +513,7 @@ export function ResourcesPage() {
                 {[
                   { cat: "Biomechanics", tag: "Research", title: "Ground Reaction Force Asymmetry as a Sprint Injury Predictor", excerpt: "Multi-season analysis of 620 sprinters reveals a >4% left-right GRF imbalance increases hamstring risk by 3.1× over the following 28 days.", author: "Dr. K. Müller", time: "8 min", badge: "BJSM Featured" },
                   { cat: "Load Management", tag: "Clinical", title: "ACWR Sweet Spot: How Elite Programs Govern Acute-to-Chronic Ratios", excerpt: "Detailed breakdown of EWMA vs rolling-window calculations, monotony avoidance, and how 0.8–1.3 zone enforcement reduced soft-tissue incidents by 38%.", author: "Prof. L. Bangsbo", time: "10 min", badge: "Editor's Pick" },
-                  { cat: "Computer Vision", tag: "Technology", title: "120 FPS Optical Tracking vs IMU: Accuracy Comparison at Top Speed", excerpt: "Controlled field test comparing SportsMax optical pipeline against 9-axis IMU at 10.6 m/s sprint. Velocity error: 0.08 m/s optical vs 0.34 m/s IMU.", author: "SportsMax Labs", time: "6 min", badge: "Lab Report" },
+                  { cat: "Computer Vision", tag: "Technology", title: "120 FPS Optical Tracking vs IMU: Accuracy Comparison at Top Speed", excerpt: "Controlled field test comparing SportsVectors optical pipeline against 9-axis IMU at 10.6 m/s sprint. Velocity error: 0.08 m/s optical vs 0.34 m/s IMU.", author: "SportsVectors Labs", time: "6 min", badge: "Lab Report" },
                   { cat: "Swim Science", tag: "Research", title: "SWOLF Profiling for Olympic 400m Medley Relay Selection", excerpt: "Stroke-by-stroke SWOLF scoring used in final 8 weeks of Olympic qualifying to separate three technically identical candidates with 0.4s split margins.", author: "Dr. A. Popov", time: "7 min", badge: "Case Study" },
                   { cat: "Tactical Analysis", tag: "Game Intelligence", title: "Voronoi Dominance Maps: Quantifying Spatial Superiority in Possession Play", excerpt: "How Premier League analysts use dynamic Voronoi tessellation over 120,000 frame datasets to identify press-resistant corridor occupancy advantages.", author: "Analytics Desk", time: "9 min", badge: "Methodology" },
                   { cat: "Recovery Science", tag: "Wellness", title: "HRV-Gated Sleep Staging for Load Readiness Scoring", excerpt: "Four-week double-blind study correlating WHOOP-sourced overnight HRV coefficient with morning CTL drift and next-day session RPE outputs.", author: "Dr. S. Buchheit", time: "11 min", badge: "Peer-Reviewed" },
@@ -559,14 +559,14 @@ export function ResourcesPage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
-                  { q: "How is SWOLF calculated and interpreted?", a: "SWOLF = swim time (seconds) + stroke count per length. Lower scores indicate greater hydrodynamic efficiency. Elite competitive swimmers target SWOLF 30–38 in 50m pools. SportsMax tracks SWOLF trend over mesocycles to quantify technical gains independent of fitness improvements." },
-                  { q: "What constitutes the ACWR safe zone?", a: "The acute-to-chronic workload ratio sweet spot is 0.8–1.3. Ratios above 1.5 increase soft-tissue injury risk by 2–4× based on Gabbett (2016) and cross-validated SportsMax field data across 640 professional athletes across 3 seasons." },
-                  { q: "How does Ground Contact Time (GCT) affect performance?", a: "GCT under 120ms is characteristic of sub-10s sprinters. Asymmetries >4% between left and right GCT are strong predictors of hamstring and plantar fascia overuse. SportsMax raises real-time flags when GCT L/R delta exceeds user-configurable thresholds." },
-                  { q: "What is CTL, ATL, and TSB in the training model?", a: "Chronic Training Load (CTL) = 42-day EWMA of daily load. Acute Training Load (ATL) = 7-day EWMA. Training Stress Balance (TSB) = CTL − ATL, indicating form. Positive TSB (>+5) = rested and peaking. SportsMax computes all three with sub-1hr refresh." },
-                  { q: "How is Voronoi dominance used in tactical analysis?", a: "Voronoi tessellation assigns each field position to the nearest player, quantifying spatial dominance. SportsMax runs 50,000 Delaunay triangulations per session at 25 FPS, producing real-time Dominant Area Coverage (DAC) scores that predict press efficiency and transition vulnerability." },
-                  { q: "What wearables and sensors integrate with SportsMax?", a: "Native integrations: Catapult Vector, STATSports Apex, Garmin HRM-Pro, Polar Vantage, WHOOP 4.0, Polar H10, Firstbeat Analytics, Wahoo ELEMNT. Raw CSV/JSON/FIT uploads supported for 140+ additional sensor types via the open ingest API." },
+                  { q: "How is SWOLF calculated and interpreted?", a: "SWOLF = swim time (seconds) + stroke count per length. Lower scores indicate greater hydrodynamic efficiency. Elite competitive swimmers target SWOLF 30–38 in 50m pools. SportsVectors tracks SWOLF trend over mesocycles to quantify technical gains independent of fitness improvements." },
+                  { q: "What constitutes the ACWR safe zone?", a: "The acute-to-chronic workload ratio sweet spot is 0.8–1.3. Ratios above 1.5 increase soft-tissue injury risk by 2–4× based on Gabbett (2016) and cross-validated SportsVectors field data across 640 professional athletes across 3 seasons." },
+                  { q: "How does Ground Contact Time (GCT) affect performance?", a: "GCT under 120ms is characteristic of sub-10s sprinters. Asymmetries >4% between left and right GCT are strong predictors of hamstring and plantar fascia overuse. SportsVectors raises real-time flags when GCT L/R delta exceeds user-configurable thresholds." },
+                  { q: "What is CTL, ATL, and TSB in the training model?", a: "Chronic Training Load (CTL) = 42-day EWMA of daily load. Acute Training Load (ATL) = 7-day EWMA. Training Stress Balance (TSB) = CTL − ATL, indicating form. Positive TSB (>+5) = rested and peaking. SportsVectors computes all three with sub-1hr refresh." },
+                  { q: "How is Voronoi dominance used in tactical analysis?", a: "Voronoi tessellation assigns each field position to the nearest player, quantifying spatial dominance. SportsVectors runs 50,000 Delaunay triangulations per session at 25 FPS, producing real-time Dominant Area Coverage (DAC) scores that predict press efficiency and transition vulnerability." },
+                  { q: "What wearables and sensors integrate with SportsVectors?", a: "Native integrations: Catapult Vector, STATSports Apex, Garmin HRM-Pro, Polar Vantage, WHOOP 4.0, Polar H10, Firstbeat Analytics, Wahoo ELEMNT. Raw CSV/JSON/FIT uploads supported for 140+ additional sensor types via the open ingest API." },
                   { q: "How does the biometric data vault achieve HIPAA/WADA compliance?", a: "Data is AES-256 encrypted at rest and TLS 1.3 in transit. Athlete records are pseudonymized at ingest using rotating SHA-256 identifiers. Vault audit logs meet HIPAA §164.312(b) and WADA ISTI Article 5.7.3 chain-of-custody requirements. SOC 2 Type II certified." },
-                  { q: "How accurate is the 120 FPS computer vision tracking?", a: "In controlled ISO-8855 benchmarks, SportsMax optical tracking achieves position accuracy of ±1.2 cm and velocity accuracy of ±0.08 m/s at speeds up to 12 m/s. Multi-camera occlusion recovery maintains identity continuity in >99.4% of frames tested." },
+                  { q: "How accurate is the 120 FPS computer vision tracking?", a: "In controlled ISO-8855 benchmarks, SportsVectors optical tracking achieves position accuracy of ±1.2 cm and velocity accuracy of ±0.08 m/s at speeds up to 12 m/s. Multi-camera occlusion recovery maintains identity continuity in >99.4% of frames tested." },
                 ].map((item) => (
                   <div key={item.q} className="border border-border rounded-xl p-5 bg-secondary/20 hover:border-primary/40 transition">
                     <h4 className="font-bold text-sm text-foreground flex items-start gap-2">
@@ -647,7 +647,7 @@ export function ResourcesPage() {
                 <div className="surface-card overflow-hidden lg:col-span-2">
                   <div className="border-b border-border/60 px-5 py-3 flex items-center gap-3">
                     <span className="rounded bg-purple-500/15 text-purple-600 dark:text-purple-400 text-[10px] font-bold px-2 py-0.5">WS</span>
-                    <span className="font-mono text-xs text-foreground">wss://stream.sportsmax.io/v2/live/:sessionId</span>
+                    <span className="font-mono text-xs text-foreground">wss://stream.sportsvectors.io/v2/live/:sessionId</span>
                   </div>
                   <div className="p-5">
                     <p className="text-xs text-muted-foreground mb-3">Real-time bidirectional WebSocket stream. Push sensor frames every 8ms, receive processed telemetry events, alerts, and coach cue triggers with P99 latency under 18ms.</p>

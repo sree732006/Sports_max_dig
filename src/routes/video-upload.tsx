@@ -5,13 +5,13 @@ import { PwaVideoUploadManager } from "@/components/pwa-video-upload-manager";
 export const Route = createFileRoute("/video-upload")({
   head: () => ({
     meta: [
-      { title: "PWA Mobile Video Upload & Biomechanics — SportsMax" },
+      { title: "PWA Mobile Video Upload & Biomechanics — SportsVectors" },
       {
         name: "description",
         content:
           "High-performance Progressive Web App (PWA) video capture and AI pose estimation upload for athletes and coaching staff.",
       },
-      { property: "og:title", content: "PWA Mobile Video Upload — SportsMax" },
+      { property: "og:title", content: "PWA Mobile Video Upload — SportsVectors" },
       {
         property: "og:description",
         content: "Sensorless mobile video upload with instant kinematic pose analysis.",

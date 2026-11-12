@@ -32,7 +32,7 @@ import { progression, runTrend, weekly } from "@/lib/sports-data";
 export const Route = createFileRoute("/sports/running")({
   head: () => ({
     meta: [
-      { title: "Running Intelligence & Telemetry — SportsMax" },
+      { title: "Running Intelligence & Telemetry — SportsVectors" },
       {
         name: "description",
         content:
@@ -62,7 +62,7 @@ const hrZones = [
   { zone: "Zone 5: Maximum", range: "> 175 bpm", time: "00:00", pct: "0%" },
 ];
 
-import runnerImage from "@/assets/sportsmax-runner.jpg";
+import runnerImage from "@/assets/sportsvectors-runner.jpg";
 
 export function RunningSportPage() {
   const [period, setPeriod] = useState("4 weeks");

@@ -5,7 +5,7 @@ import { YouTubeAdminDashboard } from "@/components/youtube-admin";
 export const Route = createFileRoute("/youtube-admin")({
   head: () => ({
     meta: [
-      { title: "YouTube Automation & Management — SportsMax" },
+      { title: "YouTube Automation & Management — SportsVectors" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

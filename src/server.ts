@@ -182,9 +182,9 @@ export default {
           const user = body.user || {
             userId: body.userId || `usr_${Date.now().toString(36)}`,
             userName: body.userName || body.name || "Enterprise User",
-            userEmail: body.userEmail || body.email || "user@sportsmax.org",
+            userEmail: body.userEmail || body.email || "user@sportsvectors.org",
             userRole: body.userRole || body.role || "Performance Athlete",
-            organization: body.organization || "SportsMax Academy",
+            organization: body.organization || "SportsVectors Academy",
             device: body.device || request.headers.get("user-agent") || "Browser Client",
             browser: body.browser || "Web Browser",
             ipAddress: request.headers.get("x-forwarded-for") || "127.0.0.1",

@@ -6,7 +6,7 @@ import { PageIntro } from "@/components/sports-ui";
 
 export const Route = createFileRoute("/help")({
   head: () => ({
-    meta: [{ title: "Help Center & Support — SportsMax" }],
+    meta: [{ title: "Help Center & Support — SportsVectors" }],
   }),
   component: HelpPage,
 });
@@ -16,7 +16,7 @@ function HelpPage() {
     <>
       <PageIntro
         eyebrow="Support & FAQ"
-        title="SportsMax Help Center"
+        title="SportsVectors Help Center"
         text="Everything you need to know about setting up sensors, syncing team rosters, and analyzing tactical feeds."
       />
       <section className="py-12 bg-background">

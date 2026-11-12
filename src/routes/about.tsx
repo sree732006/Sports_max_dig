@@ -7,13 +7,13 @@ import arenaImage from "@/assets/sports_tactical_arena_1792572299956.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About SportsMax — Full-Spectrum Sports AI Engineering & Value Realization" },
+      { title: "About SportsVectors — Full-Spectrum Sports AI Engineering & Value Realization" },
       {
         name: "description",
         content:
           "Bridging high-performance sports science, multi-modal sensor ingestion, and autonomous tactical fleets for modern sports organizations.",
       },
-      { property: "og:title", content: "About SportsMax — Full-Spectrum Sports AI" },
+      { property: "og:title", content: "About SportsVectors — Full-Spectrum Sports AI" },
       {
         property: "og:description",
         content: "Making sports data meaningful and accountable across athletes, coaches, and sports institutions.",
@@ -30,9 +30,9 @@ function About() {
   return (
     <>
       <PageIntro
-        eyebrow="About SportsMax"
+        eyebrow="About SportsVectors"
         title="Full-Spectrum AI Engineering for Human Athletic Performance"
-        text="SportsMax is an enterprise sports AI engineering operating company. We bridge the critical gap between heavy wearable investments and hands-on pitch-side tactical execution across 24+ sporting disciplines."
+        text="SportsVectors is an enterprise sports AI engineering operating company. We bridge the critical gap between heavy wearable investments and hands-on pitch-side tactical execution across 24+ sporting disciplines."
         action={<DemoBadge />}
       />
 
@@ -80,7 +80,7 @@ function About() {
               <div className="relative h-80 w-full bg-muted">
                 <img
                   src={arenaImage}
-                  alt="SportsMax stadium tactical operations room"
+                  alt="SportsVectors stadium tactical operations room"
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />

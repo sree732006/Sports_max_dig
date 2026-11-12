@@ -3,7 +3,7 @@ import { PageIntro } from "@/components/sports-ui";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
-    meta: [{ title: "Terms of Service — SportsMax" }],
+    meta: [{ title: "Terms of Service — SportsVectors" }],
   }),
   component: TermsPage,
 });
@@ -14,7 +14,7 @@ function TermsPage() {
       <PageIntro
         eyebrow="Legal & Governance"
         title="Terms of Service"
-        text="The terms and standards governing use of the SportsMax intelligence platform."
+        text="The terms and standards governing use of the SportsVectors intelligence platform."
       />
       <section className="py-12 bg-background">
         <div className="content-wrap max-w-3xl">
@@ -22,7 +22,7 @@ function TermsPage() {
             <div>
               <h2 className="text-lg font-bold text-foreground mb-2">1. Athletic Guidance Disclaimer</h2>
               <p>
-                SportsMax provides performance analytics and training suggestions based on sensor inputs and statistical models. It does not replace certified sports medicine advice or clinical cardiology diagnostics. Athletes should consult qualified medical personnel for any physical symptoms.
+                SportsVectors provides performance analytics and training suggestions based on sensor inputs and statistical models. It does not replace certified sports medicine advice or clinical cardiology diagnostics. Athletes should consult qualified medical personnel for any physical symptoms.
               </p>
             </div>
             <div>

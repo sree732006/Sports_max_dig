@@ -12,8 +12,8 @@ import {
   BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ConnectWithSportsMaxForm } from "@/components/connect-with-sportsmax";
-import { downloadSportsMaxEbook } from "@/lib/download-ebook";
+import { ConnectWithSportsVectorsForm } from "@/components/connect-with-sportsvectors";
+import { downloadSportsVectorsEbook } from "@/lib/download-ebook";
 
 // Utility: Time-based greeting
 function getTimeBasedGreeting() {
@@ -35,7 +35,7 @@ const SUGGESTION_MAP: Record<string, { next: string; text: string }> = {
 };
 
 function getNavigationSuggestion(currentPath: string) {
-  return SUGGESTION_MAP[currentPath] || { next: "/", text: "Want to explore another SportsMax feature?" };
+  return SUGGESTION_MAP[currentPath] || { next: "/", text: "Want to explore another SportsVectors feature?" };
 }
 
 // Format path for display
@@ -81,7 +81,7 @@ export function DigitalPresenceAssistant() {
     // Feature 1 & 2: Time-based & New/Returning Greeting
     if (!hasGreetedSession.current) {
       const timeGreeting = getTimeBasedGreeting();
-      const userGreeting = isNew ? "Welcome to SportsMax!" : "Welcome back!";
+      const userGreeting = isNew ? "Welcome to SportsVectors!" : "Welcome back!";
       
       setPopupMsg({
         title: timeGreeting,
@@ -217,7 +217,7 @@ export function DigitalPresenceAssistant() {
         <div className="fixed bottom-24 right-6 z-50 w-88 max-w-[calc(100vw-2rem)] bg-card border border-border shadow-2xl rounded-2xl overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col">
           <div className="bg-primary p-4 text-primary-foreground flex justify-between items-center shrink-0">
             <h3 className="font-semibold flex items-center gap-2 text-sm">
-              <MessageCircle className="w-5 h-5" /> SportsMax AI Copilot
+              <MessageCircle className="w-5 h-5" /> SportsVectors AI Copilot
             </h3>
             <button onClick={() => setIsOpen(false)} className="hover:opacity-80 p-1" aria-label="Close Chat">
               <X className="w-5 h-5" />
@@ -226,7 +226,7 @@ export function DigitalPresenceAssistant() {
 
           <div className="p-4 bg-muted/30 max-h-[420px] overflow-y-auto flex flex-col gap-3">
             <div className="bg-background border border-border rounded-xl p-3 text-xs shadow-xs">
-              {timeGreeting} 👋 {visitorState.isNew ? "Welcome to SportsMax!" : "Welcome back!"}{" "}
+              {timeGreeting} 👋 {visitorState.isNew ? "Welcome to SportsVectors!" : "Welcome back!"}{" "}
               You are exploring <strong>{formatPathName(currentPath)}</strong>.
             </div>
 
@@ -234,7 +234,7 @@ export function DigitalPresenceAssistant() {
             <div className="rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-950/40 via-slate-900/40 to-slate-950/40 p-3 space-y-2 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="text-[11px] font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
-                  <BookOpen className="w-3.5 h-3.5" /> Official SportsMax E-Book
+                  <BookOpen className="w-3.5 h-3.5" /> Official SportsVectors E-Book
                 </div>
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
                   45 Pages · PDF
@@ -248,7 +248,7 @@ export function DigitalPresenceAssistant() {
                 className="w-full text-xs h-8 font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md flex items-center justify-center gap-2"
                 onClick={() => {
                   trackEvent("ebook_download_clicked", { source: "digital_presence_chatbot" });
-                  downloadSportsMaxEbook({ source: "chatbot" });
+                  downloadSportsVectorsEbook({ source: "chatbot" });
                 }}
               >
                 <Download className="w-3.5 h-3.5" /> Download Full E-Book (PDF)
@@ -267,7 +267,7 @@ export function DigitalPresenceAssistant() {
                   1. How does the School & College Institution hierarchy work?
                 </div>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
-                  SportsMax organizes educational athletics across 3 tiers: <strong>Tier 1: Institution</strong> (Schools/Colleges), <strong>Tier 2: Coaches</strong> (upload match videos & tactical forms), and <strong>Tier 3: Students</strong> (individual analytics dashboards).
+                  SportsVectors organizes educational athletics across 3 tiers: <strong>Tier 1: Institution</strong> (Schools/Colleges), <strong>Tier 2: Coaches</strong> (upload match videos & tactical forms), and <strong>Tier 3: Students</strong> (individual analytics dashboards).
                 </p>
                 <Button
                   size="sm"
@@ -339,7 +339,7 @@ export function DigitalPresenceAssistant() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Connect with SportsMax Form"
+          aria-label="Connect with SportsVectors Form"
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200"
         >
           <div className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl p-2 sm:p-3 animate-in zoom-in-95 duration-200">
@@ -353,7 +353,7 @@ export function DigitalPresenceAssistant() {
             </button>
 
             {/* Embedded Sports Analytics Inquiry Form */}
-            <ConnectWithSportsMaxForm onClose={() => setIsFormOpen(false)} />
+            <ConnectWithSportsVectorsForm onClose={() => setIsFormOpen(false)} />
           </div>
         </div>
       )}
@@ -361,11 +361,11 @@ export function DigitalPresenceAssistant() {
       {/* Floating Download E-Book FAB (Positioned ABOVE the Form button) */}
       <button
         type="button"
-        id="floating-sportsmax-ebook-button"
-        aria-label="Download SportsMax E-Book (PDF)"
+        id="floating-sportsvectors-ebook-button"
+        aria-label="Download SportsVectors E-Book (PDF)"
         onClick={() => {
           trackEvent("ebook_download_clicked", { source: "floating_fab" });
-          downloadSportsMaxEbook({ source: "fab" });
+          downloadSportsVectorsEbook({ source: "fab" });
         }}
         className="fixed bottom-38 right-6 z-50 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 hover:from-blue-500 hover:to-sky-400 text-white p-3.5 rounded-full shadow-xl hover:shadow-blue-500/30 hover:scale-105 transition-all duration-200 flex items-center justify-center group"
       >
@@ -373,14 +373,14 @@ export function DigitalPresenceAssistant() {
 
         {/* Hover Tooltip */}
         <span className="hidden group-hover:block absolute right-14 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 whitespace-nowrap shadow-xl pointer-events-none">
-          Download SportsMax E-Book (45 Pages PDF)
+          Download SportsVectors E-Book (45 Pages PDF)
         </span>
       </button>
 
       {/* Floating Form Button (Positioned ABOVE the Chatbot button) */}
       <button
         type="button"
-        id="floating-sportsmax-form-button"
+        id="floating-sportsvectors-form-button"
         aria-label="Open Sports Analytics Inquiry Form"
         onClick={() => {
           setIsFormOpen((prev) => !prev);
@@ -396,7 +396,7 @@ export function DigitalPresenceAssistant() {
 
         {/* Hover Tooltip */}
         <span className="hidden group-hover:block absolute right-14 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 whitespace-nowrap shadow-xl pointer-events-none">
-          Connect with SportsMax (Form)
+          Connect with SportsVectors (Form)
         </span>
       </button>
 
@@ -415,7 +415,7 @@ export function DigitalPresenceAssistant() {
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
         <span className="hidden group-hover:block absolute right-16 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-700 whitespace-nowrap shadow-xl pointer-events-none">
-          SportsMax Assistant
+          SportsVectors Assistant
         </span>
       </button>
     </>

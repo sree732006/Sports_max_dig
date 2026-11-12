@@ -9,23 +9,23 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { ConnectWithSportsMax } from "@/components/connect-with-sportsmax";
+import { ConnectWithSportsVectors } from "@/components/connect-with-sportsvectors";
 import { Eyebrow, PageIntro } from "@/components/sports-ui";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Connect with SportsMax — Sports Analytics Enquiry" },
+      { title: "Connect with SportsVectors — Sports Analytics Enquiry" },
       {
         name: "description",
         content:
-          "Connect with the SportsMax sports intelligence team. Discuss athlete performance analytics, team telemetry, tactical computer vision, and partnership opportunities.",
+          "Connect with the SportsVectors sports intelligence team. Discuss athlete performance analytics, team telemetry, tactical computer vision, and partnership opportunities.",
       },
-      { property: "og:title", content: "Connect with SportsMax" },
+      { property: "og:title", content: "Connect with SportsVectors" },
       {
         property: "og:description",
         content:
-          "Start a conversation about smarter sports performance intelligence and interact with the SportsMax Assistant.",
+          "Start a conversation about smarter sports performance intelligence and interact with the SportsVectors Assistant.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -65,7 +65,7 @@ function ContactPage() {
     <>
       <PageIntro
         eyebrow="Direct Inquiry & AI Assistant"
-        title="Connect with SportsMax"
+        title="Connect with SportsVectors"
         text="Tell us about your athletes, sports organization, or analytical goals. Our solutions team will review your requirement and follow up promptly."
       />
 
@@ -83,8 +83,8 @@ function ContactPage() {
         </div>
       </section>
 
-      {/* Main Connect with SportsMax Form + Assistant Chatbot */}
-      <ConnectWithSportsMax />
+      {/* Main Connect with SportsVectors Form + Assistant Chatbot */}
+      <ConnectWithSportsVectors />
 
       {/* Additional Support & Signals */}
       <section className="py-14 bg-background border-t border-border">
@@ -113,8 +113,8 @@ function ContactPage() {
                 <h4 className="text-xs font-bold text-foreground">Need immediate direct contact?</h4>
                 <p className="text-xs text-muted-foreground">
                   Email our solutions desk directly at{" "}
-                  <a href="mailto:hello@sportsmax.ai" className="text-primary font-semibold hover:underline">
-                    hello@sportsmax.ai
+                  <a href="mailto:hello@sportsvectors.ai" className="text-primary font-semibold hover:underline">
+                    hello@sportsvectors.ai
                   </a>
                 </p>
               </div>

@@ -12,5 +12,5 @@ test("generatePkcePair creates valid verifier and sha256 challenge", () => {
 test("getGoogleOAuthEnv defaults to canonical production redirect URI", () => {
   delete process.env["YOUTUBE_REDIRECT_URI"];
   const env = getGoogleOAuthEnv();
-  assert.equal(env.redirectUri, "https://sports-max-dig.vercel.app/api/youtube/oauth/callback");
+  assert.equal(env.redirectUri, "https://sportsvectors.tech/api/youtube/oauth/callback");
 });

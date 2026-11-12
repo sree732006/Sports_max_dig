@@ -1,7 +1,7 @@
 export {
-  ConnectWithSportsMax,
-  ConnectWithSportsMaxForm as ConnectForm,
-  SportsMaxAssistantPanel,
+  ConnectWithSportsVectors,
+  ConnectWithSportsVectorsForm as ConnectForm,
+  SportsVectorsAssistantPanel,
   SPORT_OPTIONS,
   REQUIREMENT_OPTIONS,
-} from "./connect-with-sportsmax";
+} from "./connect-with-sportsvectors";

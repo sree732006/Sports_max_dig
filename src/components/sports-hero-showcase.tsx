@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DemoBadge } from "@/components/sports-ui";
-import runnerImage from "@/assets/sportsmax-runner.jpg";
+import runnerImage from "@/assets/sportsvectors-runner.jpg";
 
 export interface HeroSlide {
   id: string;
@@ -50,7 +50,7 @@ const SLIDES: HeroSlide[] = [
     headline: "Turn Sports Data Into",
     highlightText: "Performance Intelligence",
     description:
-      "SportsMax combines individual athlete biometrics, team tactics, optical computer vision, and automated coaching cues across 24+ sports.",
+      "SportsVectors combines individual athlete biometrics, team tactics, optical computer vision, and automated coaching cues across 24+ sports.",
     primaryCtaText: "Explore Sports Hub",
     primaryCtaLink: "/sports",
     secondaryCtaText: "Tactical Analysis Suite",
@@ -200,7 +200,7 @@ export function SportsHeroShowcase() {
   return (
     <section
       className="relative min-h-[min(880px,94vh)] overflow-hidden border-b border-border pt-18 bg-background select-none"
-      aria-label="SportsMax Telemetry & Performance Showcase"
+      aria-label="SportsVectors Telemetry & Performance Showcase"
     >
       {/* Background Graphic with Subtle Dynamic Glow */}
       <img
@@ -401,7 +401,7 @@ export function SportsHeroShowcase() {
         </div>
 
         <div className="mt-3 flex items-center justify-between pt-2 border-t border-border/50 text-[10px] text-muted-foreground font-mono">
-          <span>Engine: SportsMax Vision 4.2</span>
+          <span>Engine: SportsVectors Vision 4.2</span>
           <span className="text-primary font-semibold">Sub-second Sync</span>
         </div>
       </div>

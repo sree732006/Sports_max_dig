@@ -52,7 +52,7 @@ export const Route = createFileRoute("/analytics")({
   },
   head: () => ({
     meta: [
-      { title: "Enterprise Sports Analytics & Machine Learning Models — SportsMax" },
+      { title: "Enterprise Sports Analytics & Machine Learning Models — SportsVectors" },
       {
         name: "description",
         content:
@@ -156,7 +156,7 @@ export function AnalyticsSuitePage() {
               <div className="relative overflow-hidden rounded-2xl border border-border shadow-xl bg-card">
                 <img
                   src={labImage}
-                  alt="SportsMax Biomechanics Diagnostic Facility"
+                  alt="SportsVectors Biomechanics Diagnostic Facility"
                   className="w-full h-[320px] object-cover object-center filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent flex flex-col justify-end p-6 md:p-8">

@@ -1,5 +1,5 @@
 /**
- * SportsMax e-book generation & trigger client utility.
+ * SportsVectors e-book generation & trigger client utility.
  * Allows instant direct download of the generated PDF from the frontend.
  */
 
@@ -8,9 +8,9 @@ export interface EbookDownloadOptions {
   source?: string;
 }
 
-export function downloadSportsMaxEbook(options: EbookDownloadOptions = {}) {
-  const filename = options.filename || "SportsMax_AI_Engineering_Performance_Intelligence_EBook.pdf";
-  const pdfUrl = "/SportsMax_AI_Engineering_Performance_Intelligence_EBook.pdf";
+export function downloadSportsVectorsEbook(options: EbookDownloadOptions = {}) {
+  const filename = options.filename || "SportsVectors_AI_Engineering_Performance_Intelligence_EBook.pdf";
+  const pdfUrl = "/SportsVectors_AI_Engineering_Performance_Intelligence_EBook.pdf";
 
   // Trigger browser download directly from the public asset
   const link = document.createElement("a");

@@ -65,7 +65,7 @@ import { useAuth } from "@/lib/auth-context";
 
 export function Brand() {
   return (
-    <Link to="/" className="flex shrink-0 items-center gap-2.5 group" aria-label="SportsMax home">
+    <Link to="/" className="flex shrink-0 items-center gap-2.5 group" aria-label="SportsVectors home">
       <span className="grid h-9 w-9 place-items-center rounded-lg bg-primary text-primary-foreground shadow-sm transition-transform group-hover:scale-105">
         <Activity className="h-5 w-5" />
       </span>
@@ -196,7 +196,7 @@ export function AuthDialog({
             <Activity className="h-6 w-6" />
           </div>
           <DialogTitle className="text-center text-xl font-bold">
-            {mode === "login" ? "Welcome back to SportsMax" : "Create your SportsMax account"}
+            {mode === "login" ? "Welcome back to SportsVectors" : "Create your SportsVectors account"}
           </DialogTitle>
           <DialogDescription className="text-center text-sm text-muted-foreground">
             {mode === "login"
@@ -419,7 +419,7 @@ export function AuthDialog({
               <div className="rounded-lg bg-primary/5 border border-primary/20 p-2.5 text-[11px] text-muted-foreground flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
                 <span>
-                  Passwords are encrypted with <strong>SHA-256 + Salt</strong> before storage. Registration syncs directly to the SportsMax Google Sheet.
+                  Passwords are encrypted with <strong>SHA-256 + Salt</strong> before storage. Registration syncs directly to the SportsVectors Google Sheet.
                 </span>
               </div>
             </>
@@ -432,7 +432,7 @@ export function AuthDialog({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="athlete@sportsmax.ai"
+                  placeholder="athlete@sportsvectors.ai"
                   className="bg-background"
                   disabled={loading}
                 />
@@ -782,7 +782,7 @@ export function SiteHeader() {
                       <BarChart3 className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
                       <div>
                         <div className="font-semibold text-xs text-foreground flex items-center gap-1">
-                          SportsMax Match Suite™
+                          SportsVectors Match Suite™
                           <span className="rounded bg-primary/15 text-primary text-[8px] font-bold px-1 py-0.2">Core</span>
                         </div>
                         <div className="text-[10px] text-slate-400">120 FPS optical tracking &amp; pitch control</div>
@@ -1686,7 +1686,7 @@ export function SiteFooter() {
               </span>
             </div>
             <p className="mt-8 text-xs text-muted-foreground">
-              &copy; 2026 SportsMax Technologies Inc. All rights reserved.
+              &copy; 2026 SportsVectors Technologies Inc. All rights reserved.
             </p>
           </div>
 

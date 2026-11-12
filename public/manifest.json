@@ -1,7 +1,7 @@
 {
-  "id": "com.sportsmax.olympic.pwa",
-  "name": "SportsMax Olympic AI Intelligence",
-  "short_name": "SportsMax",
+  "id": "com.sportsvectors.olympic.pwa",
+  "name": "SportsVectors Olympic AI Intelligence",
+  "short_name": "SportsVectors",
   "description": "High-Performance Mobile Biomechanics & Video AI Telemetry",
   "start_url": "/video-upload",
   "scope": "/",

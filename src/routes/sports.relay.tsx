@@ -27,7 +27,7 @@ import {
 export const Route = createFileRoute("/sports/relay")({
   head: () => ({
     meta: [
-      { title: "Relay & Combined Events Analytics — SportsMax" },
+      { title: "Relay & Combined Events Analytics — SportsVectors" },
       {
         name: "description",
         content:

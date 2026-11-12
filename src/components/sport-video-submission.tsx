@@ -141,7 +141,7 @@ export function SportVideoSubmission({
           </div>
           <h4 className="text-lg font-bold text-foreground">Video Uploaded Successfully!</h4>
           <p className="mt-1 text-sm text-muted-foreground max-w-md mx-auto">
-            Your footage for <strong>{sportName}</strong> has been ingested into the SportsMax pipeline.
+            Your footage for <strong>{sportName}</strong> has been ingested into the SportsVectors pipeline.
             AI optical tracking models are extracting player tracking polygons, kinematic speeds, and tactical tag markers.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -258,7 +258,7 @@ export function SportVideoSubmission({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="coach@sportsmax.ai"
+                placeholder="coach@sportsvectors.ai"
                 className="bg-background text-xs"
               />
             </div>

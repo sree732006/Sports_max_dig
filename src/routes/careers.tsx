@@ -5,7 +5,7 @@ import { PageIntro } from "@/components/sports-ui";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
-    meta: [{ title: "Careers — SportsMax Technologies" }],
+    meta: [{ title: "Careers — SportsVectors Technologies" }],
   }),
   component: CareersPage,
 });

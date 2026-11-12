@@ -126,7 +126,7 @@ export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: R
                   </span>
                 </DialogTitle>
                 <DialogDescription className="text-xs text-muted-foreground">
-                  Hierarchical Redis session tree <code className="font-mono text-foreground">sportsmax:session:*</code> with automated TTL expiration.
+                  Hierarchical Redis session tree <code className="font-mono text-foreground">sportsvectors:session:*</code> with automated TTL expiration.
                 </DialogDescription>
               </div>
             </div>
@@ -163,7 +163,7 @@ export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: R
 
           <div className="p-3 rounded-lg border border-border bg-secondary/20">
             <div className="text-[10px] uppercase font-bold text-muted-foreground">Key Schema Pattern</div>
-            <div className="text-xs font-mono font-semibold text-foreground mt-0.5">sportsmax:token:*</div>
+            <div className="text-xs font-mono font-semibold text-foreground mt-0.5">sportsvectors:token:*</div>
             <div className="text-[10px] text-muted-foreground mt-0.5">JWT (HS256) + Session Key</div>
           </div>
         </div>
@@ -225,7 +225,7 @@ export function RedisSessionManagerDialog({ triggerButton }: { triggerButton?: R
                         </div>
 
                         <div className="flex items-center gap-3 text-[10px] text-muted-foreground font-mono mt-1">
-                          <span>Key: sportsmax:token:{sess.jti || sess.sessionId}</span>
+                          <span>Key: sportsvectors:token:{sess.jti || sess.sessionId}</span>
                           <span>•</span>
                           <span className="text-emerald-500 font-sans font-medium">JWT HS256 Verified</span>
                           <span>•</span>

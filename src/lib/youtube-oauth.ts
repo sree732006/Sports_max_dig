@@ -29,7 +29,7 @@ export function getGoogleOAuthEnv() {
   const clientSecret = process.env["YOUTUBE_CLIENT_SECRET"];
   const redirectUri =
     process.env["YOUTUBE_REDIRECT_URI"] ||
-    "https://sports-max-dig.vercel.app/api/youtube/oauth/callback";
+    "https://sportsvectors.tech/api/youtube/oauth/callback";
 
   return { clientId, clientSecret, redirectUri };
 }

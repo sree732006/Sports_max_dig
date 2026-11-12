@@ -26,7 +26,7 @@ import {
 } from "@/components/sports-ui";
 import { athletes, leaderboard, progression, runTrend, weekly } from "@/lib/sports-data";
 
-import runnerImage from "@/assets/sportsmax-runner.jpg";
+import runnerImage from "@/assets/sportsvectors-runner.jpg";
 
 type AthleteTab = "dashboard" | "profiles" | "goals" | "consistency" | "bests";
 
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/athletes")({
   },
   head: () => ({
     meta: [
-      { title: "Athletes Hub & Personal Intelligence — SportsMax" },
+      { title: "Athletes Hub & Personal Intelligence — SportsVectors" },
       {
         name: "description",
         content:
@@ -200,7 +200,7 @@ export function AthletesPage() {
                     </span>
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    SportsMax Athletics Club · Active Goal: Sub-44 minute 10K road race
+                    SportsVectors Athletics Club · Active Goal: Sub-44 minute 10K road race
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-6 text-right">

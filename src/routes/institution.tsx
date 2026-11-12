@@ -42,7 +42,7 @@ export const Route = createFileRoute("/institution")({
   },
   head: () => ({
     meta: [
-      { title: "Institution Intelligence Hub (School & College) — SportsMax" },
+      { title: "Institution Intelligence Hub (School & College) — SportsVectors" },
       {
         name: "description",
         content:

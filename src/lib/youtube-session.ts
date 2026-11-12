@@ -145,7 +145,7 @@ export function validateCsrfOrigin(req: Request): boolean {
   try {
     const parsed = new URL(checkUrl);
     if (host && parsed.host === host) return true;
-    if (parsed.hostname === "sports-max-dig.vercel.app" || parsed.hostname === "localhost") return true;
+    if (parsed.hostname === "sportsvectors.tech" || parsed.hostname === "localhost") return true;
     return false;
   } catch {
     return false;

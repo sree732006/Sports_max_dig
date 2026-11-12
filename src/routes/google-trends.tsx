@@ -16,13 +16,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/google-trends")({
   head: () => ({
     meta: [
-      { title: "Google Trends — SportsMax" },
+      { title: "Google Trends — SportsVectors" },
       {
         name: "description",
         content:
           "Explore live Google Trends data for sports topics, compare search interest over time, and discover emerging regional trends in athletics and performance.",
       },
-      { property: "og:title", content: "Google Trends — SportsMax" },
+      { property: "og:title", content: "Google Trends — SportsVectors" },
       { property: "og:description", content: "Real-time sports search trend intelligence powered by Google Trends." },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -61,7 +61,7 @@ const TOPICS: TopicItem[] = [
   { label: "Cycling", kw: "cycling sport" },
   { label: "Tennis", kw: "tennis" },
   { label: "Rugby", kw: "rugby" },
-  { label: "SportsMax", kw: "SportsMax analytics" },
+  { label: "SportsVectors", kw: "SportsVectors analytics" },
 ];
 
 const REGIONS: RegionItem[] = [

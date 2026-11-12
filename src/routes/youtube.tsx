@@ -6,11 +6,11 @@ import { YouTubeLeadForm } from "@/components/youtube-lead-form";
 export const Route = createFileRoute("/youtube")({
   head: () => ({
     meta: [
-      { title: "YouTube Sports Analysis & Intelligence Hub — SportsMax" },
+      { title: "YouTube Sports Analysis & Intelligence Hub — SportsVectors" },
       {
         name: "description",
         content:
-          "Watch exclusive SportsMax sports tactical breakdowns, data engineering video series, and connect with our team directly.",
+          "Watch exclusive SportsVectors sports tactical breakdowns, data engineering video series, and connect with our team directly.",
       },
     ],
   }),
@@ -21,7 +21,7 @@ function YouTubePublicPage() {
   return (
     <>
       <PageIntro
-        eyebrow="SportsMax Video Hub"
+        eyebrow="SportsVectors Video Hub"
         title="Tactical Breakdown & Athlete Intelligence on YouTube"
         text="Explore deep performance breakdowns, athlete movement telemetry, and modern sports engineering insights."
       />
@@ -46,7 +46,7 @@ function YouTubePublicPage() {
                 <div className="flex items-center gap-3 text-red-500 mb-4">
                   <Youtube className="h-6 w-6" />
                   <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                    Official SportsMax YouTube Channel
+                    Official SportsVectors YouTube Channel
                   </span>
                 </div>
                 <div className="relative aspect-video rounded-xl bg-slate-950 flex flex-col items-center justify-center border border-slate-800/80 p-6 text-center">

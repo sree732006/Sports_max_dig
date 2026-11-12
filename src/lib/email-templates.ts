@@ -1,4 +1,4 @@
-// Professional Email Templates for SportsMax Automated Reports
+// Professional Email Templates for SportsVectors Automated Reports
 // High-fidelity, email-client compatible HTML with inline CSS, responsive layout, dark footer, and plain-text fallbacks.
 
 import {
@@ -57,7 +57,7 @@ export interface RenderedEmail {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const COLORS = {
-  primary: "#2563eb",       // SportsMax Royal Blue
+  primary: "#2563eb",       // SportsVectors Royal Blue
   primaryDark: "#1d4ed8",
   emerald: "#059669",       // High conversion / success green
   emeraldLight: "#d1fae5",
@@ -116,7 +116,7 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
     .filter((e) => e.event === "contact_lead" || e.event === "contact_form_submitted")
     .slice(0, 4);
 
-  const subject = `[SportsMax] Daily Performance Report — ${dateStr}`;
+  const subject = `[SportsVectors] Daily Performance Report — ${dateStr}`;
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -139,7 +139,7 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
                 <tr>
                   <td>
                     <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #93c5fd; margin-bottom: 6px;">
-                      SPORTSMAX ANALYTICS · AUTOMATED INTELLIGENCE
+                      SPORTSVECTORS ANALYTICS · AUTOMATED INTELLIGENCE
                     </div>
                     <h1 style="margin: 0; font-size: 26px; font-weight: 800; line-height: 1.2; color: #ffffff;">
                       Daily Performance Report
@@ -218,7 +218,7 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
                     <td align="right" style="padding: 10px 12px; color: #64748b;">${calcPct(contactFormCta, ctaClicks)}</td>
                   </tr>
                   <tr style="border-bottom: 1px solid #f1f5f9;">
-                    <td style="padding: 10px 12px; font-weight: 600;">SportsMax Assistant / Chatbot</td>
+                    <td style="padding: 10px 12px; font-weight: 600;">SportsVectors Assistant / Chatbot</td>
                     <td align="right" style="padding: 10px 12px; font-weight: 700; color: #2563eb;">${formatNum(chatbotCta)}</td>
                     <td align="right" style="padding: 10px 12px; color: #64748b;">${calcPct(chatbotCta, ctaClicks)}</td>
                   </tr>
@@ -310,7 +310,7 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
           <!-- CTA to Dashboard -->
           <tr>
             <td align="center" style="padding: 0 32px 32px 32px;">
-              <a href="https://sportsmax.io/cta-report" target="_blank" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);">
+              <a href="https://sportsvectors.io/cta-report" target="_blank" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);">
                 View Full Live CTA Report →
               </a>
             </td>
@@ -322,14 +322,14 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                   <td>
-                    <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsMax Intelligence Hub</div>
+                    <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsVectors Intelligence Hub</div>
                     <div>Automated Daily Reporting Daemon · Environment: Production (Vercel)</div>
                     <div style="margin-top: 8px; color: #64748b;">
                       Recipient: <strong style="color: #cbd5e1;">sreevarthini2006@gmail.com</strong>
                     </div>
                   </td>
                   <td align="right" valign="top">
-                    <a href="https://sportsmax.io" style="color: #60a5fa; text-decoration: none; font-weight: 600;">sportsmax.io</a>
+                    <a href="https://sportsvectors.io" style="color: #60a5fa; text-decoration: none; font-weight: 600;">sportsvectors.io</a>
                   </td>
                 </tr>
               </table>
@@ -343,7 +343,7 @@ export function renderDailyReport(data: AnalyticsDataset, generatedDate: Date = 
 </body>
 </html>`;
 
-  const text = `SPORTSMAX DAILY PERFORMANCE REPORT
+  const text = `SPORTSVECTORS DAILY PERFORMANCE REPORT
 Date: ${dateStr}
 Reporting Period: ${periodStr}
 
@@ -370,9 +370,9 @@ TOP HIGH-INTENT PAGES
 =======================================
 ${top5Pages.map((p, i) => `${i + 1}. ${p.page || "/"} — ${formatNum(p.count)} views (${calcPct(p.count, pageViews)})`).join("\n")}
 
-Live Dashboard: https://sportsmax.io/cta-report
+Live Dashboard: https://sportsvectors.io/cta-report
 Recipient: sreevarthini2006@gmail.com
-Generated by SportsMax Automated Intelligence Daemon.`;
+Generated by SportsVectors Automated Intelligence Daemon.`;
 
   return { subject, html, text };
 }
@@ -404,7 +404,7 @@ export function renderWeeklyReport(data: AnalyticsDataset, generatedDate: Date =
 
   const topPages = (data.pages || []).slice(0, 5);
 
-  const subject = `[SportsMax] Weekly Analytics Brief — Week ending ${dateStr}`;
+  const subject = `[SportsVectors] Weekly Analytics Brief — Week ending ${dateStr}`;
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -518,7 +518,7 @@ export function renderWeeklyReport(data: AnalyticsDataset, generatedDate: Date =
           <!-- CTA to Hub -->
           <tr>
             <td align="center" style="padding: 0 32px 32px 32px;">
-              <a href="https://sportsmax.io/website-analytics" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">
+              <a href="https://sportsvectors.io/website-analytics" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);">
                 Open Weekly Analytics Suite →
               </a>
             </td>
@@ -527,7 +527,7 @@ export function renderWeeklyReport(data: AnalyticsDataset, generatedDate: Date =
           <!-- Dark Footer -->
           <tr>
             <td style="background-color: #0f172a; padding: 28px 32px; color: #94a3b8; font-size: 12px; line-height: 1.6; border-top: 1px solid #1e293b;">
-              <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsMax Weekly Briefing</div>
+              <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsVectors Weekly Briefing</div>
               <div>Delivered via Vercel Cron Daemon · Dispatch target: <strong style="color: #cbd5e1;">sreevarthini2006@gmail.com</strong></div>
             </td>
           </tr>
@@ -539,7 +539,7 @@ export function renderWeeklyReport(data: AnalyticsDataset, generatedDate: Date =
 </body>
 </html>`;
 
-  const text = `SPORTSMAX WEEKLY ANALYTICS BRIEF
+  const text = `SPORTSVECTORS WEEKLY ANALYTICS BRIEF
 Week Ending: ${dateStr}
 Reporting Period: ${periodStr}
 
@@ -562,7 +562,7 @@ TOP HIGH-INTENT PAGES
 ${topPages.map((p, i) => `${i + 1}. ${p.page || "/"} — ${formatNum(p.count)} views`).join("\n")}
 
 Recipient: sreevarthini2006@gmail.com
-Live Analytics: https://sportsmax.io/website-analytics`;
+Live Analytics: https://sportsvectors.io/website-analytics`;
 
   return { subject, html, text };
 }
@@ -587,7 +587,7 @@ export function renderMonthlyReport(data: AnalyticsDataset, generatedDate: Date 
   const ctaConverted = ctaClicks;
   const submittedLeads = leads;
 
-  const subject = `[SportsMax] Monthly Executive Analytics Report — ${monthName}`;
+  const subject = `[SportsVectors] Monthly Executive Analytics Report — ${monthName}`;
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -731,7 +731,7 @@ export function renderMonthlyReport(data: AnalyticsDataset, generatedDate: Date 
           <!-- CTA to Executive Report -->
           <tr>
             <td align="center" style="padding: 0 32px 32px 32px;">
-              <a href="https://sportsmax.io/cta-report" target="_blank" style="display: inline-block; background-color: #7c3aed; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);">
+              <a href="https://sportsvectors.io/cta-report" target="_blank" style="display: inline-block; background-color: #7c3aed; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-weight: 700; font-size: 14px; box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);">
                 Review Full Executive Dashboard →
               </a>
             </td>
@@ -740,7 +740,7 @@ export function renderMonthlyReport(data: AnalyticsDataset, generatedDate: Date 
           <!-- Dark Footer -->
           <tr>
             <td style="background-color: #0f172a; padding: 28px 32px; color: #94a3b8; font-size: 12px; line-height: 1.6; border-top: 1px solid #1e293b;">
-              <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsMax Executive Intelligence</div>
+              <div style="font-weight: 800; font-size: 14px; color: #f8fafc; margin-bottom: 4px;">SportsVectors Executive Intelligence</div>
               <div>Monthly Scheduled Governance Report · Dispatched to: <strong style="color: #cbd5e1;">sreevarthini2006@gmail.com</strong></div>
             </td>
           </tr>
@@ -752,7 +752,7 @@ export function renderMonthlyReport(data: AnalyticsDataset, generatedDate: Date 
 </body>
 </html>`;
 
-  const text = `SPORTSMAX MONTHLY EXECUTIVE ANALYTICS REPORT
+  const text = `SPORTSVECTORS MONTHLY EXECUTIVE ANALYTICS REPORT
 Period: ${monthName}
 Reporting Cycle: ${periodStr}
 
@@ -779,7 +779,7 @@ PIPELINE OPPORTUNITY (ESTIMATE)
 * Projected Pipeline: ~$${((leads * 0.15) * 1800).toLocaleString()} (Estimate)
 
 Recipient: sreevarthini2006@gmail.com
-Live Dashboard: https://sportsmax.io/cta-report`;
+Live Dashboard: https://sportsvectors.io/cta-report`;
 
   return { subject, html, text };
 }
@@ -803,7 +803,7 @@ export interface LeadAckInput {
 
 export function renderLeadAcknowledgement(input: LeadAckInput): RenderedEmail {
   const firstName = input.fullName.trim().split(/\s+/)[0] || "Valued Colleague";
-  const subject = `Enquiry Confirmed [${input.leadNumber}] — SportsMax Intelligence`;
+  const subject = `Enquiry Confirmed [${input.leadNumber}] — SportsVectors Intelligence`;
   const sportsFormatted = input.sports && input.sports.length > 0 ? input.sports.join(", ") : "Multi-Sport / Platform";
 
   const infoRows: [string, string][] = [
@@ -819,9 +819,9 @@ export function renderLeadAcknowledgement(input: LeadAckInput): RenderedEmail {
 
   const html =
     emailDocOpen({
-      title: `SportsMax — Enquiry Received [${input.leadNumber}]`,
+      title: `SportsVectors — Enquiry Received [${input.leadNumber}]`,
       theme: "light",
-      previewText: `Thank you ${firstName}. Your enquiry [${input.leadNumber}] has been received by SportsMax Intelligence.`,
+      previewText: `Thank you ${firstName}. Your enquiry [${input.leadNumber}] has been received by SportsVectors Intelligence.`,
     }) +
     emailHeader({
       accent: "cyan",
@@ -838,7 +838,7 @@ export function renderLeadAcknowledgement(input: LeadAckInput): RenderedEmail {
       </div>
 
       <p style="margin:0 0 18px;font-size:14px;color:#334155;line-height:1.7;">
-        Thank you for connecting with <strong style="color:#0284c7;">SportsMax Intelligence</strong>.
+        Thank you for connecting with <strong style="color:#0284c7;">SportsVectors Intelligence</strong>.
         We have safely logged your enquiry for <strong style="color:#0f172a;">${escHtml(input.organization)}</strong>.
         Our sports analytics solutions team has initiated review of your requirements and will reach out with tailored performance metrics within <strong style="color:#0f172a;">1–2 business days</strong>.
       </p>
@@ -893,18 +893,18 @@ export function renderLeadAcknowledgement(input: LeadAckInput): RenderedEmail {
       )}
 
       <!-- Primary Action CTA -->
-      ${emailButton("Explore the SportsMax Platform", "https://sports-max-dig.vercel.app/", "blue")}
+      ${emailButton("Explore the SportsVectors Platform", "https://sportsvectors.tech/", "blue")}
 
       <!-- Secondary Help Contact -->
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Have an immediate question regarding this enquiry? Reply directly to this email or reach us at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: false }) +
     emailDocClose();
 
-  const text = `Thank you for contacting SportsMax Intelligence!
+  const text = `Thank you for contacting SportsVectors Intelligence!
 
 Reference ID: ${input.leadNumber}
 Status: In Review
@@ -921,14 +921,14 @@ Submission Summary:
 • Sport Discipline(s): ${sportsFormatted}
 • Requirement: ${input.requirement}${input.phone ? `\n• Phone: ${input.phone}` : ""}${input.additionalDetails ? `\n• Notes: ${input.additionalDetails}` : ""}
 
-Explore SportsMax: https://sports-max-dig.vercel.app/
-Questions? Email hello@sportsmax.ai
+Explore SportsVectors: https://sportsvectors.tech/
+Questions? Email hello@sportsvectors.ai
 
 —
-SportsMax Intelligence Hub
+SportsVectors Intelligence Hub
 Every Performance Has a Story
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Privacy Policy: https://sports-max-dig.vercel.app/privacy`;
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Privacy Policy: https://sportsvectors.tech/privacy`;
 
   return { subject, html, text };
 }
@@ -948,20 +948,20 @@ export interface PartnerOutreachInput {
 
 export function renderPartnerOutreachEmail(input: PartnerOutreachInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Colleague";
-  const subject = `Partnership Opportunity — SportsMax × ${input.recipientOrganization}`;
+  const subject = `Partnership Opportunity — SportsVectors × ${input.recipientOrganization}`;
   const industry = input.industry ? ` in the ${escHtml(input.industry)} sector` : "";
-  const sender = input.senderName || "The SportsMax Solutions Team";
+  const sender = input.senderName || "The SportsVectors Solutions Team";
 
   const html =
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Partnership exploration between SportsMax and ${input.recipientOrganization}.`,
+      previewText: `Partnership exploration between SportsVectors and ${input.recipientOrganization}.`,
     }) +
     emailHeader({
       accent: "cyan",
       eyebrow: "Partnership Exploration",
-      headline: `SportsMax &times; ${escHtml(input.recipientOrganization)}`,
+      headline: `SportsVectors &times; ${escHtml(input.recipientOrganization)}`,
       subline: "Every Performance Has a Story. Empowering sports organisations with data.",
       badge: "Partnership",
       showHeroImage: true,
@@ -972,7 +972,7 @@ export function renderPartnerOutreachEmail(input: PartnerOutreachInput): Rendere
       </div>
 
       <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
-        I'm reaching out from <strong style="color:#0284c7;">SportsMax Intelligence</strong> &mdash; a dedicated sports performance and analytics platform designed to empower teams, federations, and sports enterprises${industry}.
+        I'm reaching out from <strong style="color:#0284c7;">SportsVectors Intelligence</strong> &mdash; a dedicated sports performance and analytics platform designed to empower teams, federations, and sports enterprises${industry}.
       </p>
 
       ${input.customMessage
@@ -984,7 +984,7 @@ export function renderPartnerOutreachEmail(input: PartnerOutreachInput): Rendere
       </p>
 
       ${emailCallout(
-        "Why Partner With SportsMax?",
+        "Why Partner With SportsVectors?",
         `<ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
           <li><strong>Sub-50ms Telemetry:</strong> Live optical computer vision &amp; biometric ingest.</li>
           <li><strong>Multi-Sport Ready:</strong> Tailored analytics models for running, football, swimming, athletics, and more.</li>
@@ -998,12 +998,12 @@ export function renderPartnerOutreachEmail(input: PartnerOutreachInput): Rendere
         I would welcome a brief 20-minute exploratory conversation to understand your current performance initiatives at <strong>${escHtml(input.recipientOrganization)}</strong>.
       </p>
 
-      ${emailButton("Schedule a Discovery Call", "https://sports-max-dig.vercel.app/contact", "blue")}
+      ${emailButton("Schedule a Discovery Call", "https://sportsvectors.tech/contact", "blue")}
 
       <div style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e2e8f0;font-size:13px;color:#475569;line-height:1.6;">
         Warm regards,<br>
         <strong style="color:#0f172a;">${escHtml(sender)}</strong><br>
-        SportsMax Intelligence &bull; <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;">hello@sportsmax.ai</a>
+        SportsVectors Intelligence &bull; <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;">hello@sportsvectors.ai</a>
       </div>
     `, "#ffffff") +
     emailFooter({
@@ -1014,25 +1014,25 @@ export function renderPartnerOutreachEmail(input: PartnerOutreachInput): Rendere
 
   const text = `Dear ${firstName},
 
-I am reaching out from SportsMax Intelligence — a performance intelligence platform designed for sports organisations${input.industry ? ` in the ${input.industry} space` : ""}.
+I am reaching out from SportsVectors Intelligence — a performance intelligence platform designed for sports organisations${input.industry ? ` in the ${input.industry} space` : ""}.
 
 ${input.customMessage || "We help athletic organisations turn wearable telemetry, tactical tracking, and match data into competitive advantage."}
 
-Why SportsMax:
+Why SportsVectors:
 • Sub-50ms live telemetry & optical tracking
 • 24+ supported sport disciplines
 • Enterprise APIs & custom federation reporting
 
-I would welcome a brief 20-minute conversation to explore how SportsMax can create value for ${input.recipientOrganization}.
+I would welcome a brief 20-minute conversation to explore how SportsVectors can create value for ${input.recipientOrganization}.
 
-Schedule a discovery call: https://sports-max-dig.vercel.app/contact
+Schedule a discovery call: https://sportsvectors.tech/contact
 
 Warm regards,
 ${sender}
-SportsMax Intelligence
-Direct: hello@sportsmax.ai
-Website: https://sports-max-dig.vercel.app/
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.`;
+SportsVectors Intelligence
+Direct: hello@sportsvectors.ai
+Website: https://sportsvectors.tech/
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.`;
 
   return { subject, html, text };
 }
@@ -1053,8 +1053,8 @@ export interface DemoInviteInput {
 
 export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Colleague";
-  const subject = `SportsMax Platform Demo — ${input.recipientOrganization}`;
-  const host = input.hostName || "The SportsMax Engineering Team";
+  const subject = `SportsVectors Platform Demo — ${input.recipientOrganization}`;
+  const host = input.hostName || "The SportsVectors Engineering Team";
 
   const schedulingBlock = (input.proposedDate || input.proposedTime)
     ? emailCallout(
@@ -1072,12 +1072,12 @@ export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Personalised SportsMax demo invitation for ${input.recipientOrganization}.`,
+      previewText: `Personalised SportsVectors demo invitation for ${input.recipientOrganization}.`,
     }) +
     emailHeader({
       accent: "emerald",
       eyebrow: "You're Invited · Interactive Walkthrough",
-      headline: `SportsMax Platform Demo`,
+      headline: `SportsVectors Platform Demo`,
       subline: `Tailored live session for ${escHtml(input.recipientOrganization)}`,
       badge: "Demo",
       showHeroImage: true,
@@ -1088,7 +1088,7 @@ export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
       </div>
 
       <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
-        Thank you for your interest in <strong style="color:#0284c7;">SportsMax Intelligence</strong>.
+        Thank you for your interest in <strong style="color:#0284c7;">SportsVectors Intelligence</strong>.
         We would be delighted to host you for a private <strong style="color:#059669;">30-minute platform demo</strong> configured specifically around the requirements of <strong style="color:#0f172a;">${escHtml(input.recipientOrganization)}</strong>.
       </p>
 
@@ -1108,13 +1108,13 @@ export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
 
       ${input.meetingLink
         ? emailButton("Join Video Meeting", input.meetingLink, "emerald")
-        : emailButton("Confirm or Reschedule Demo Slot", "https://sports-max-dig.vercel.app/contact", "emerald")
+        : emailButton("Confirm or Reschedule Demo Slot", "https://sportsvectors.tech/contact", "emerald")
       }
 
       <div style="margin:24px 0 0;padding-top:16px;border-top:1px solid #e2e8f0;font-size:13px;color:#475569;line-height:1.6;">
         Looking forward to speaking with you,<br>
         <strong style="color:#0f172a;">${escHtml(host)}</strong><br>
-        SportsMax Intelligence &bull; <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;">hello@sportsmax.ai</a>
+        SportsVectors Intelligence &bull; <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;">hello@sportsvectors.ai</a>
       </div>
       ${input.leadNumber ? `<p style="margin:10px 0 0;font-size:11px;color:#94a3b8;font-family:monospace;">Enquiry Ref: ${escHtml(input.leadNumber)}</p>` : ""}
     `, "#ffffff") +
@@ -1123,7 +1123,7 @@ export function renderDemoInviteEmail(input: DemoInviteInput): RenderedEmail {
 
   const text = `Dear ${firstName},
 
-You are invited to a personalised SportsMax platform demo for ${input.recipientOrganization}.
+You are invited to a personalised SportsVectors platform demo for ${input.recipientOrganization}.
 ${input.proposedDate ? `\nProposed Date: ${input.proposedDate}` : ""}${input.proposedTime ? `\nTime: ${input.proposedTime}` : ""}${input.meetingLink ? `\nMeeting Link: ${input.meetingLink}` : ""}
 
 What we will cover:
@@ -1132,13 +1132,13 @@ What we will cover:
 • ACWR workload & injury governance models
 • Enterprise integrations & automated reporting
 
-Book or reschedule: https://sports-max-dig.vercel.app/contact
+Book or reschedule: https://sportsvectors.tech/contact
 
 Best regards,
 ${host}
-SportsMax Intelligence
-Direct: hello@sportsmax.ai
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.`;
+SportsVectors Intelligence
+Direct: hello@sportsvectors.ai
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.`;
 
   return { subject, html, text };
 }
@@ -1161,8 +1161,8 @@ export interface ServicePromoInput {
 
 export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
-  const subject = `Introducing ${input.serviceName} — SportsMax Intelligence`;
-  const ctaUrl  = input.ctaUrl || "https://sports-max-dig.vercel.app/pricing";
+  const subject = `Introducing ${input.serviceName} — SportsVectors Intelligence`;
+  const ctaUrl  = input.ctaUrl || "https://sportsvectors.tech/pricing";
   const ctaLabel = input.ctaLabel || "Explore Plan & Capabilities";
 
   const promoBadge = input.promoCode
@@ -1182,11 +1182,11 @@ export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Introducing ${input.serviceName} from SportsMax Intelligence.`,
+      previewText: `Introducing ${input.serviceName} from SportsVectors Intelligence.`,
     }) +
     emailHeader({
       accent: "cyan",
-      eyebrow: "Product Announcement · SportsMax",
+      eyebrow: "Product Announcement · SportsVectors",
       headline: input.serviceName,
       subline: input.serviceDescription,
       badge: "Feature",
@@ -1214,8 +1214,8 @@ export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Questions about plan tiers or team licenses? Consult our solutions desk at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>
-        or visit our <a href="https://sports-max-dig.vercel.app/pricing" style="color:#0284c7;text-decoration:none;font-weight:600;">Pricing Hub</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>
+        or visit our <a href="https://sportsvectors.tech/pricing" style="color:#0284c7;text-decoration:none;font-weight:600;">Pricing Hub</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
@@ -1223,7 +1223,7 @@ export function renderServicePromoEmail(input: ServicePromoInput): RenderedEmail
 
   const text = `Hello ${firstName},
 
-We're excited to introduce ${input.serviceName} from SportsMax Intelligence!
+We're excited to introduce ${input.serviceName} from SportsVectors Intelligence!
 
 ${input.serviceDescription}
 
@@ -1233,13 +1233,13 @@ ${input.promoCode ? `\nPromo Code: ${input.promoCode}${input.expiryDate ? ` (Val
 
 Explore full capabilities: ${ctaUrl}
 
-Questions? Email hello@sportsmax.ai
+Questions? Email hello@sportsvectors.ai
 
 —
-SportsMax Intelligence Hub
+SportsVectors Intelligence Hub
 Every Performance Has a Story
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe / Preferences: https://sports-max-dig.vercel.app/contact`;
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe / Preferences: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1263,18 +1263,18 @@ export interface WelcomeEmailInput {
 
 export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
-  const subject = `Welcome to SportsMax Intelligence — Every Performance Has a Story`;
-  const dashboardUrl = input.dashboardUrl || "https://sports-max-dig.vercel.app/dashboard";
+  const subject = `Welcome to SportsVectors Intelligence — Every Performance Has a Story`;
+  const dashboardUrl = input.dashboardUrl || "https://sportsvectors.tech/dashboard";
 
   const html =
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Welcome to SportsMax ${firstName}. Your access to athletic intelligence is ready.`,
+      previewText: `Welcome to SportsVectors ${firstName}. Your access to athletic intelligence is ready.`,
     }) +
     emailHeader({
       accent: "cyan",
-      eyebrow: "Welcome to SportsMax",
+      eyebrow: "Welcome to SportsVectors",
       headline: `Welcome Aboard, ${escHtml(firstName)}!`,
       subline: "Every Performance Has a Story. Let's turn your athletic data into intelligence.",
       badge: "Welcome",
@@ -1283,11 +1283,11 @@ export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
     }) +
     emailBody(`
       <div style="font-size:16px;font-weight:700;color:#0f172a;margin-bottom:12px;">
-        Welcome to the SportsMax Intelligence Community, ${escHtml(firstName)}!
+        Welcome to the SportsVectors Intelligence Community, ${escHtml(firstName)}!
       </div>
 
       <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
-        Whether you are analyzing split-second sprint mechanics, tracking squad workload ratios, or breaking down match footage, SportsMax brings the precision of elite sports science directly to your fingertips.
+        Whether you are analyzing split-second sprint mechanics, tracking squad workload ratios, or breaking down match footage, SportsVectors brings the precision of elite sports science directly to your fingertips.
       </p>
 
       ${emailCallout(
@@ -1309,18 +1309,18 @@ export function renderWelcomeEmail(input: WelcomeEmailInput): RenderedEmail {
         "blue"
       )}
 
-      ${emailButton("Launch SportsMax Dashboard", dashboardUrl, "blue")}
+      ${emailButton("Launch SportsVectors Dashboard", dashboardUrl, "blue")}
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Need onboarding assistance? Reply directly to this email or reach our engineers at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/01-welcome-footer.png`,
     }) +
     emailDocClose();
 
-  const text = `Welcome to SportsMax Intelligence, ${firstName}!
+  const text = `Welcome to SportsVectors Intelligence, ${firstName}!
 
 Every Performance Has a Story. Let's turn your athletic data into intelligence.
 
@@ -1331,9 +1331,9 @@ Every Performance Has a Story. Let's turn your athletic data into intelligence.
 
 Launch your dashboard: ${dashboardUrl}
 
-Questions? Email hello@sportsmax.ai
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+Questions? Email hello@sportsvectors.ai
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1348,14 +1348,14 @@ export interface ReengagementEmailInput {
 
 export function renderReengagementEmail(input: ReengagementEmailInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Athlete";
-  const subject = `We Miss You on the Field — New SportsMax Updates Inside`;
+  const subject = `We Miss You on the Field — New SportsVectors Updates Inside`;
   const updateText = input.featuredUpdate || "We've rolled out optical video tracking, ACWR injury-risk flags, and updated multi-sport telemetry dashboards.";
 
   const html =
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Check out what's new on SportsMax Intelligence, ${firstName}.`,
+      previewText: `Check out what's new on SportsVectors Intelligence, ${firstName}.`,
     }) +
     emailHeader({
       accent: "cyan",
@@ -1372,11 +1372,11 @@ export function renderReengagementEmail(input: ReengagementEmailInput): Rendered
       </div>
 
       <p style="margin:0 0 16px;font-size:14px;color:#334155;line-height:1.7;">
-        It has been a little while since your last session on <strong style="color:#0284c7;">SportsMax Intelligence</strong>. Our engineering and sports science team has been busy shipping major enhancements designed to save your staff hours of manual analysis.
+        It has been a little while since your last session on <strong style="color:#0284c7;">SportsVectors Intelligence</strong>. Our engineering and sports science team has been busy shipping major enhancements designed to save your staff hours of manual analysis.
       </p>
 
       ${emailCallout(
-        "What's New on SportsMax",
+        "What's New on SportsVectors",
         `<p style="margin:0 0 10px;font-size:13px;color:#0c4a6e;line-height:1.6;">${escHtml(updateText)}</p>
         <ul style="margin:0;padding-left:18px;color:#0c4a6e;line-height:1.8;font-size:13px;">
           <li><strong>Sub-50ms Telemetry:</strong> Instant speed &amp; cardiac drift analytics.</li>
@@ -1386,11 +1386,11 @@ export function renderReengagementEmail(input: ReengagementEmailInput): Rendered
         "blue"
       )}
 
-      ${emailButton("Reactivate Your Session", "https://sports-max-dig.vercel.app/dashboard", "blue")}
+      ${emailButton("Reactivate Your Session", "https://sportsvectors.tech/dashboard", "blue")}
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Want a personal refresher tour? Connect with our desk at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/02-reengagement-footer.png` }) +
@@ -1398,7 +1398,7 @@ export function renderReengagementEmail(input: ReengagementEmailInput): Rendered
 
   const text = `Hello ${firstName},
 
-We miss you on the SportsMax Intelligence platform!
+We miss you on the SportsVectors Intelligence platform!
 
 ${updateText}
 
@@ -1407,9 +1407,9 @@ What's New:
 • Institution & squad hierarchy
 • Automated reporting digests
 
-Reactivate your session: https://sports-max-dig.vercel.app/dashboard
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+Reactivate your session: https://sportsvectors.tech/dashboard
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1425,19 +1425,19 @@ export interface AdvertisementEmailInput {
 
 export function renderAdvertisementEmail(input: AdvertisementEmailInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Coach";
-  const subject = `${input.campaignHeadline} — SportsMax Intelligence`;
-  const ctaUrl = input.ctaUrl || "https://sports-max-dig.vercel.app/pricing";
+  const subject = `${input.campaignHeadline} — SportsVectors Intelligence`;
+  const ctaUrl = input.ctaUrl || "https://sportsvectors.tech/pricing";
   const ctaText = input.ctaText || "Claim Exclusive Access";
 
   const html =
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `${input.campaignHeadline} — Exclusive offer from SportsMax Intelligence.`,
+      previewText: `${input.campaignHeadline} — Exclusive offer from SportsVectors Intelligence.`,
     }) +
     emailHeader({
       accent: "cyan",
-      eyebrow: "Special Announcement · SportsMax",
+      eyebrow: "Special Announcement · SportsVectors",
       headline: input.campaignHeadline,
       subline: "Every Performance Has a Story. Empower your roster with high-precision telemetry.",
       badge: "Featured",
@@ -1454,7 +1454,7 @@ export function renderAdvertisementEmail(input: AdvertisementEmailInput): Render
       </p>
 
       ${emailCallout(
-        "Why Coaching Staffs Choose SportsMax",
+        "Why Coaching Staffs Choose SportsVectors",
         `<ul style="margin:0;padding-left:18px;color:#064e3b;line-height:1.8;font-size:13px;">
           <li><strong>24+ Supported Disciplines:</strong> Dedicated sport models for football, swimming, track, and more.</li>
           <li><strong>Workload Governance:</strong> Acute-to-Chronic Workload Ratio (ACWR) tracking to manage training intensity.</li>
@@ -1467,7 +1467,7 @@ export function renderAdvertisementEmail(input: AdvertisementEmailInput): Render
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Questions about our team packages? Inquire with our solutions team at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true, footerImageUrl: `${ASSET_HOST}/email-banners/03-advertisement-footer.png` }) +
@@ -1478,14 +1478,14 @@ export function renderAdvertisementEmail(input: AdvertisementEmailInput): Render
 Special opportunity for ${firstName}:
 ${input.offerDetails}
 
-Why SportsMax:
+Why SportsVectors:
 • 24+ sports disciplines supported
 • ACWR workload governance & tracking
 • Enterprise APIs & automated reporting
 
 Claim offer: ${ctaUrl}
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1500,14 +1500,14 @@ export interface BusinessValueEmailInput {
 
 export function renderBusinessValueEmail(input: BusinessValueEmailInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Executive";
-  const subject = `Quantifying Athletic Value & Workload Management — SportsMax × ${input.recipientOrganization}`;
+  const subject = `Quantifying Athletic Value & Workload Management — SportsVectors × ${input.recipientOrganization}`;
   const metric = input.targetMetric || "Centralized load management, sub-50ms pitch telemetry, and streamlined video analysis workflows";
 
   const html =
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `How SportsMax delivers measurable athletic value for ${input.recipientOrganization}.`,
+      previewText: `How SportsVectors delivers measurable athletic value for ${input.recipientOrganization}.`,
     }) +
     emailHeader({
       accent: "cyan",
@@ -1530,7 +1530,7 @@ export function renderBusinessValueEmail(input: BusinessValueEmailInput): Render
       ${emailCallout(
         "Platform Performance Focus",
         `<p style="margin:0 0 8px;font-size:14px;font-weight:700;color:#0c4a6e;">
-          SportsMax enables athletic organizations to achieve:
+          SportsVectors enables athletic organizations to achieve:
         </p>
         <p style="margin:0;font-size:13px;color:#0c4a6e;line-height:1.6;font-style:italic;">
           &ldquo;${escHtml(metric)}&rdquo;
@@ -1542,11 +1542,11 @@ export function renderBusinessValueEmail(input: BusinessValueEmailInput): Render
         ${input.caseStudyHighlight || "By linking wearable load metrics with real-time video tracking, coaches eliminate guesswork, streamline tactical briefings, and support athlete longevity on matchday."}
       </p>
 
-      ${emailButton("Schedule an Executive Briefing", "https://sports-max-dig.vercel.app/contact", "blue")}
+      ${emailButton("Schedule an Executive Briefing", "https://sportsvectors.tech/contact", "blue")}
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Consult our sports science leadership at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
@@ -1556,14 +1556,14 @@ export function renderBusinessValueEmail(input: BusinessValueEmailInput): Render
 
 Dear ${firstName},
 
-Modern athletic operations require quantified outcomes. SportsMax delivers:
+Modern athletic operations require quantified outcomes. SportsVectors delivers:
 "${metric}"
 
 ${input.caseStudyHighlight || "Unify wearable load metrics with tactical video tracking to keep star athletes healthy."}
 
-Schedule an executive briefing: https://sports-max-dig.vercel.app/contact
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+Schedule an executive briefing: https://sportsvectors.tech/contact
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1616,11 +1616,11 @@ export function renderLeadGenerationEmail(input: LeadGenerationEmailInput): Rend
         "blue"
       )}
 
-      ${emailButton("Download Your Complimentary Guide", "https://sports-max-dig.vercel.app/platform", "blue")}
+      ${emailButton("Download Your Complimentary Guide", "https://sportsvectors.tech/platform", "blue")}
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Want to discuss applying these models to your roster? Email our analysts at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
@@ -1636,9 +1636,9 @@ We've compiled actionable insights across 24+ sports disciplines into our 2026 B
 • Biomechanical baseline calibration
 • Wearable GPS integration
 
-Download the blueprint: https://sports-max-dig.vercel.app/platform
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+Download the blueprint: https://sportsvectors.tech/platform
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }
@@ -1654,8 +1654,8 @@ export interface ProductHighlightEmailInput {
 
 export function renderProductHighlightEmail(input: ProductHighlightEmailInput): RenderedEmail {
   const firstName = input.recipientName.trim().split(/\s+/)[0] || "Performance Analyst";
-  const subject = `Deep Dive: ${input.featureName} on SportsMax Intelligence`;
-  const ctaUrl = input.ctaUrl || "https://sports-max-dig.vercel.app/platform";
+  const subject = `Deep Dive: ${input.featureName} on SportsVectors Intelligence`;
+  const ctaUrl = input.ctaUrl || "https://sportsvectors.tech/platform";
 
   const capabilitiesHtml = input.capabilities
     .map((c) => `<li style="padding:4px 0;color:#064e3b;font-size:13px;line-height:1.6;">${escHtml(c)}</li>`)
@@ -1665,11 +1665,11 @@ export function renderProductHighlightEmail(input: ProductHighlightEmailInput): 
     emailDocOpen({
       title: subject,
       theme: "light",
-      previewText: `Deep dive into ${input.featureName} on SportsMax Intelligence.`,
+      previewText: `Deep dive into ${input.featureName} on SportsVectors Intelligence.`,
     }) +
     emailHeader({
       accent: "cyan",
-      eyebrow: "Product Deep Dive · SportsMax Platform",
+      eyebrow: "Product Deep Dive · SportsVectors Platform",
       headline: input.featureName,
       subline: input.featureSummary,
       badge: "Spotlight",
@@ -1695,13 +1695,13 @@ export function renderProductHighlightEmail(input: ProductHighlightEmailInput): 
 
       <p style="margin:20px 0 0;font-size:12px;color:#64748b;line-height:1.6;text-align:center;">
         Want a live demonstration tailored to your athletes? Email us at
-        <a href="mailto:hello@sportsmax.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsmax.ai</a>.
+        <a href="mailto:hello@sportsvectors.ai" style="color:#0284c7;text-decoration:none;font-weight:600;">hello@sportsvectors.ai</a>.
       </p>
     `, "#ffffff") +
     emailFooter({ showUnsubscribe: true }) +
     emailDocClose();
 
-  const text = `Deep Dive: ${input.featureName} on SportsMax Intelligence
+  const text = `Deep Dive: ${input.featureName} on SportsVectors Intelligence
 
 Hello ${firstName},
 
@@ -1711,8 +1711,8 @@ Core Capabilities:
 ${input.capabilities.map((c) => `• ${c}`).join("\n")}
 
 Explore feature: ${ctaUrl}
-© ${new Date().getFullYear()} SportsMax Technologies Inc. All rights reserved.
-Unsubscribe: https://sports-max-dig.vercel.app/contact`;
+© ${new Date().getFullYear()} SportsVectors Technologies Inc. All rights reserved.
+Unsubscribe: https://sportsvectors.tech/contact`;
 
   return { subject, html, text };
 }

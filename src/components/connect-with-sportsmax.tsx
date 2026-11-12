@@ -114,7 +114,7 @@ function trackAnalytics(
   const analyticsUrl = import.meta.env["VITE_ANALYTICS_URL"] as string | undefined;
 
   // Safe debug log (NO personal data)
-  console.log(`[SportsMax Analytics] ${eventName}`, {
+  console.log(`[SportsVectors Analytics] ${eventName}`, {
     event: eventName,
     page,
     ...data,
@@ -262,10 +262,10 @@ async function submitContactLead(
         keepalive: true,
       });
       directSheetsSuccess = true;
-      console.log(`[SportsMax Contact] Lead transmission dispatched to Google Apps Script (${leadNumber})`);
+      console.log(`[SportsVectors Contact] Lead transmission dispatched to Google Apps Script (${leadNumber})`);
     } catch (err: unknown) {
       directSheetsError = err instanceof Error ? err.message : String(err);
-      console.warn("[SportsMax Analytics] Client-side fetch to Apps Script failed:", err);
+      console.warn("[SportsVectors Analytics] Client-side fetch to Apps Script failed:", err);
     }
   }
 
@@ -304,10 +304,10 @@ async function submitContactLead(
       serverWorkflowResult = await serverRes.json();
     } else {
       const errText = await serverRes.text();
-      console.error(`[SportsMax Contact] Server lead endpoint error (${serverRes.status}):`, errText);
+      console.error(`[SportsVectors Contact] Server lead endpoint error (${serverRes.status}):`, errText);
     }
   } catch (err) {
-    console.warn("[SportsMax Contact] Could not reach server lead endpoint:", err);
+    console.warn("[SportsVectors Contact] Could not reach server lead endpoint:", err);
   }
 
   return {
@@ -335,7 +335,7 @@ interface ChatMessage {
 const QUICK_PROMPTS = [
   {
     q: "What sports are supported?",
-    a: "SportsMax currently delivers high-precision telemetry, GPS kinematic models, and video tactical analytics for 24+ individual and team disciplines including Football, Athletics, Swimming, Basketball, Cricket, and Rugby.",
+    a: "SportsVectors currently delivers high-precision telemetry, GPS kinematic models, and video tactical analytics for 24+ individual and team disciplines including Football, Athletics, Swimming, Basketball, Cricket, and Rugby.",
     link: { href: "/sports", label: "Browse 24+ Sports Directory" },
   },
   {
@@ -345,16 +345,16 @@ const QUICK_PROMPTS = [
   },
   {
     q: "Can coaches manage acute workload?",
-    a: "Yes! SportsMax automatically compiles Acute:Chronic Workload Ratio (ACWR), heart rate zones, and session RPE to flag injury risks before matches.",
+    a: "Yes! SportsVectors automatically compiles Acute:Chronic Workload Ratio (ACWR), heart rate zones, and session RPE to flag injury risks before matches.",
     link: { href: "/run-analytics", label: "View Analytics Workload" },
   },
   {
     q: "Can I request custom enterprise API access?",
-    a: "Absolutely. Fill out the 'Connect with SportsMax' form on the left with 'Partnership' or 'Demo' selected, and our solutions engineers will set up sandbox access.",
+    a: "Absolutely. Fill out the 'Connect with SportsVectors' form on the left with 'Partnership' or 'Demo' selected, and our solutions engineers will set up sandbox access.",
   },
 ];
 
-export function SportsMaxAssistantPanel() {
+export function SportsVectorsAssistantPanel() {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -362,7 +362,7 @@ export function SportsMaxAssistantPanel() {
     {
       id: "m_welcome",
       sender: "bot",
-      text: "👋 Welcome to SportsMax! I'm your AI sports performance & analytics copilot. How can I help you accelerate athlete telemetry or team tactical intelligence?",
+      text: "👋 Welcome to SportsVectors! I'm your AI sports performance & analytics copilot. How can I help you accelerate athlete telemetry or team tactical intelligence?",
       time: "Just now",
     },
   ]);
@@ -427,7 +427,7 @@ export function SportsMaxAssistantPanel() {
         botLink = { href: "/pricing", label: "View Pricing Overview" };
       } else if (/sensor|wearable|garmin|gps/i.test(trimmed)) {
         botResponse =
-          "SportsMax connects with Catapult, Polar, Garmin, and optical tracking cameras via open REST APIs and WebSockets.";
+          "SportsVectors connects with Catapult, Polar, Garmin, and optical tracking cameras via open REST APIs and WebSockets.";
         botLink = { href: "/platform", label: "Read Platform Architecture" };
       }
 
@@ -447,7 +447,7 @@ export function SportsMaxAssistantPanel() {
 
   return (
     <div
-      id="sportsmax-assistant-panel"
+      id="sportsvectors-assistant-panel"
       className="flex flex-col h-full rounded-2xl border border-slate-800 bg-slate-900/95 shadow-xl overflow-hidden text-slate-100"
     >
       {/* Assistant Header */}
@@ -463,7 +463,7 @@ export function SportsMaxAssistantPanel() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-display text-base font-bold text-white tracking-tight">
-                SportsMax Assistant
+                SportsVectors Assistant
               </h3>
               <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
                 AI Copilot
@@ -519,7 +519,7 @@ export function SportsMaxAssistantPanel() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-bounce" />
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:0.2s]" />
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:0.4s]" />
-            <span className="ml-1 text-[11px]">SportsMax AI is thinking…</span>
+            <span className="ml-1 text-[11px]">SportsVectors AI is thinking…</span>
           </div>
         )}
       </div>
@@ -555,7 +555,7 @@ export function SportsMaxAssistantPanel() {
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="Ask SportsMax Assistant a question…"
+          placeholder="Ask SportsVectors Assistant a question…"
           className="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-400"
         />
         <button
@@ -573,7 +573,7 @@ export function SportsMaxAssistantPanel() {
 
 // ─── Lead Capture Form Component (Left Column) ────────────────────────────────
 
-export function ConnectWithSportsMaxForm({
+export function ConnectWithSportsVectorsForm({
   onClose,
 }: {
   onClose?: () => void;
@@ -605,7 +605,7 @@ export function ConnectWithSportsMaxForm({
   useEffect(() => {
     trackAnalytics(
       "contact_form_viewed",
-      { form: "connect_with_sportsmax", path: currentPath },
+      { form: "connect_with_sportsvectors", path: currentPath },
       currentPath,
       visitorId.current,
       sessionId.current,
@@ -703,7 +703,7 @@ export function ConnectWithSportsMaxForm({
       trackAnalytics(
         "contact_form_submitted",
         {
-          form: "connect_with_sportsmax",
+          form: "connect_with_sportsvectors",
           sportsCount: values.sports.length,
           requirement: values.requirement,
           leadNumber: result.leadNumber,
@@ -729,7 +729,7 @@ export function ConnectWithSportsMaxForm({
       setSubmitError(msg);
       trackAnalytics(
         "contact_form_submission_failed",
-        { form: "connect_with_sportsmax" },
+        { form: "connect_with_sportsvectors" },
         currentPath,
         visitorId.current,
         sessionId.current,
@@ -763,10 +763,10 @@ export function ConnectWithSportsMaxForm({
 
   if (isSuccess && submissionResult) {
     const mailtoSubject = encodeURIComponent(
-      `[SportsMax Lead ${submissionResult.leadNumber}] Inquiry from ${values.fullName} (${values.organization})`,
+      `[SportsVectors Lead ${submissionResult.leadNumber}] Inquiry from ${values.fullName} (${values.organization})`,
     );
     const mailtoBody = encodeURIComponent(
-      `SportsMax Analytics Lead Details:\n\n` +
+      `SportsVectors Analytics Lead Details:\n\n` +
         `Lead Reference: ${submissionResult.leadNumber}\n` +
         `Full Name: ${values.fullName}\n` +
         `Work Email: ${values.workEmail}\n` +
@@ -958,7 +958,7 @@ export function ConnectWithSportsMaxForm({
 
   return (
     <form
-      id="connect-with-sportsmax-form"
+      id="connect-with-sportsvectors-form"
       onSubmit={handleSubmit}
       noValidate
       className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 sm:p-8 shadow-xl text-slate-100 flex flex-col gap-5"
@@ -974,7 +974,7 @@ export function ConnectWithSportsMaxForm({
           </span>
         </div>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          Connect with SportsMax
+          Connect with SportsVectors
         </h2>
         <p className="mt-1 text-xs sm:text-sm text-slate-400">
           Tell us about your sports analytics needs and our team will get in touch.
@@ -1243,12 +1243,12 @@ export function ConnectWithSportsMaxForm({
       {/* Submit Button */}
       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
         <p className="text-[11px] text-slate-400 leading-relaxed text-center sm:text-left">
-          <span className="text-emerald-400 font-semibold">Admin Alert:</span> Form details are securely recorded and emailed directly to the SportsMax administrator ({adminEmail}).
+          <span className="text-emerald-400 font-semibold">Admin Alert:</span> Form details are securely recorded and emailed directly to the SportsVectors administrator ({adminEmail}).
         </p>
 
         <button
           type="submit"
-          id="connect-with-sportsmax-btn"
+          id="connect-with-sportsvectors-btn"
           disabled={isSubmitting || hasSubmitted}
           className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-bold px-7 py-3 text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
         >
@@ -1259,7 +1259,7 @@ export function ConnectWithSportsMaxForm({
             </>
           ) : (
             <>
-              Connect with SportsMax
+              Connect with SportsVectors
               <ArrowRight className="h-4 w-4" />
             </>
           )}
@@ -1271,10 +1271,10 @@ export function ConnectWithSportsMaxForm({
 
 // ─── Main Section Component: Side-by-Side Desktop / Stacked Mobile ─────────────
 
-export function ConnectWithSportsMax() {
+export function ConnectWithSportsVectors() {
   return (
     <section
-      id="connect-with-sportsmax"
+      id="connect-with-sportsvectors"
       className="relative overflow-hidden py-16 sm:py-24 bg-slate-950 text-white border-t border-slate-800"
     >
       {/* Background aesthetics: sport-grid & radial ambient glow */}
@@ -1288,7 +1288,7 @@ export function ConnectWithSportsMax() {
             <Sparkles className="h-3.5 w-3.5" /> Intelligence Hub Engagement
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-            Connect with SportsMax & Explore Assistant
+            Connect with SportsVectors & Explore Assistant
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
             Discuss athlete kinematic telemetry, workload analytics, and tactical computer-vision models
@@ -1298,14 +1298,14 @@ export function ConnectWithSportsMax() {
 
         {/* Desktop Side-by-Side (7 cols Form, 5 cols Assistant) / Mobile Stacked */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Left: Connect with SportsMax Form */}
+          {/* Left: Connect with SportsVectors Form */}
           <div className="lg:col-span-7">
-            <ConnectWithSportsMaxForm />
+            <ConnectWithSportsVectorsForm />
           </div>
 
-          {/* Right: SportsMax Assistant Chatbot Panel */}
+          {/* Right: SportsVectors Assistant Chatbot Panel */}
           <div className="lg:col-span-5 flex flex-col">
-            <SportsMaxAssistantPanel />
+            <SportsVectorsAssistantPanel />
           </div>
         </div>
       </div>

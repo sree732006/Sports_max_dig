@@ -75,7 +75,7 @@ export const DEFAULT_USER_CONFIG: Omit<SportsUserConfig, "userId" | "userEmail">
     bio: "Olympic and elite team performance telemetry director.",
   },
   program: {
-    organizationName: "SportsMax Elite Academy",
+    organizationName: "SportsVectors Elite Academy",
     institutionType: "Professional Club / Franchise",
     primarySport: "Football / Soccer",
     secondarySport: "Athletics / Track & Field",

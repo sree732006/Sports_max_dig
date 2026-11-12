@@ -47,7 +47,7 @@ const DEFAULT_SESSION_DURATION_SEC = 8 * 60 * 60; // 8 hours
 const EXTENDED_SESSION_DURATION_SEC = 30 * 24 * 60 * 60; // 30 days for "remember me"
 
 // Client-side fallback signing secret (Server env secret takes priority if configured)
-const FALLBACK_HMAC_SECRET = "sportsmax_secure_enterprise_token_secret_2026_x7a9";
+const FALLBACK_HMAC_SECRET = "sportsvectors_secure_enterprise_token_secret_2026_x7a9";
 
 /**
  * Base64URL encoding/decoding utilities (RFC 7515)

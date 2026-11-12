@@ -414,7 +414,7 @@ export function SportsUserConfigForm({ onSaved }: SportsUserConfigFormProps) {
                     program: { ...config.program, organizationName: e.target.value },
                   })
                 }
-                placeholder="SportsMax Olympic Training Institute"
+                placeholder="SportsVectors Olympic Training Institute"
               />
             </div>
 
@@ -527,7 +527,7 @@ export function SportsUserConfigForm({ onSaved }: SportsUserConfigFormProps) {
                     program: { ...config.program, pitchTrackingSystem: e.target.value },
                   })
                 }
-                placeholder="SportsMax VisionAI 4K / TRACAB / Second Spectrum"
+                placeholder="SportsVectors VisionAI 4K / TRACAB / Second Spectrum"
               />
             </div>
 

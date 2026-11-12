@@ -99,7 +99,7 @@ export function PwaInstallPrompt() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                <span>SportsMax Mobile App</span>
+                <span>SportsVectors Mobile App</span>
                 <span className="text-[9px] bg-primary/20 text-primary px-1.5 py-0.2 rounded font-mono font-bold">PWA</span>
               </span>
               <button

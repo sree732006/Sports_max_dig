@@ -18,9 +18,9 @@ export interface RedisSessionData {
   jti?: string;
 }
 
-const REDIS_SESSION_PREFIX = "sportsmax:session:";
-const REDIS_TOKEN_PREFIX = "sportsmax:token:";
-const REDIS_VISITOR_SESSIONS_KEY = "sportsmax:visitor-sessions";
+const REDIS_SESSION_PREFIX = "sportsvectors:session:";
+const REDIS_TOKEN_PREFIX = "sportsvectors:token:";
+const REDIS_VISITOR_SESSIONS_KEY = "sportsvectors:visitor-sessions";
 const DEFAULT_SESSION_TTL_SECONDS = 8 * 3600; // 8 hours
 
 // In-memory fallback cache when Redis server has no password configured or is offline
@@ -31,7 +31,7 @@ const inMemoryFallbackSessions = new Map<string, RedisSessionData>([
       sessionId: "ses_sm_admin_84920a",
       userId: "user_sm_001",
       userName: "Marcus Vance",
-      userEmail: "marcus.vance@sportsmax-academy.org",
+      userEmail: "marcus.vance@sportsvectors-academy.org",
       userRole: "Head Coach",
       device: "MacBook Pro M3",
       browser: "Chrome 124.0",
@@ -48,7 +48,7 @@ const inMemoryFallbackSessions = new Map<string, RedisSessionData>([
       sessionId: "ses_sm_analyst_38b1f7",
       userId: "user_sm_003",
       userName: "David Chen",
-      userEmail: "david.chen@sportsmax-academy.org",
+      userEmail: "david.chen@sportsvectors-academy.org",
       userRole: "Performance Analyst",
       device: "Dell XPS 15",
       browser: "Firefox 125.0",
@@ -62,8 +62,8 @@ const inMemoryFallbackSessions = new Map<string, RedisSessionData>([
 ]);
 
 /**
- * Stores or updates a session in Redis DB with key pattern `sportsmax:session:<sessionId>`.
- * Also mirrors to `sportsmax:token:<jti>` if jwtToken or jti is provided.
+ * Stores or updates a session in Redis DB with key pattern `sportsvectors:session:<sessionId>`.
+ * Also mirrors to `sportsvectors:token:<jti>` if jwtToken or jti is provided.
  */
 export async function setRedisSession(
   session: RedisSessionData,
@@ -248,7 +248,7 @@ export async function listActiveRedisSessions(): Promise<{
 }> {
   try {
     const client = await getRedisClient();
-    // Scan for all keys matching sportsmax:session:*
+    // Scan for all keys matching sportsvectors:session:*
     const keys = await client.keys(`${REDIS_SESSION_PREFIX}*`);
     const sessions: RedisSessionData[] = [];
 

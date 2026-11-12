@@ -22,8 +22,8 @@ export interface JwtPayload {
   jti: string;            // JWT Unique ID (Session ID)
   iat: number;            // Issued At (Unix timestamp seconds)
   exp: number;            // Expiration Time (Unix timestamp seconds)
-  iss?: string;           // Issuer ("sportsmax-auth-service")
-  aud?: string;           // Audience ("sportsmax-api")
+  iss?: string;           // Issuer ("sportsvectors-auth-service")
+  aud?: string;           // Audience ("sportsvectors-api")
   device?: string;        // Client Device Info
   [key: string]: any;
 }
@@ -37,7 +37,7 @@ export interface JwtVerificationResult {
 // Server & Fallback Secret
 export const JWT_SECRET =
   (typeof process !== "undefined" && process.env?.["JWT_SECRET"]) ||
-  "sportsmax_enterprise_jwt_secret_hmac_sha256_key_2026";
+  "sportsvectors_enterprise_jwt_secret_hmac_sha256_key_2026";
 
 /**
  * Base64URL string helpers (RFC 7515)
@@ -146,8 +146,8 @@ export async function signJwt(
 
   const payload: JwtPayload = {
     ...payloadData,
-    iss: "sportsmax-auth-service",
-    aud: "sportsmax-api",
+    iss: "sportsvectors-auth-service",
+    aud: "sportsvectors-api",
     jti,
     iat: payloadData.iat ?? now,
     exp: payloadData.exp ?? now + expiresInSeconds,
@@ -211,3 +211,4 @@ export async function verifyJwt(
 
   return { valid: true, payload };
 }
+

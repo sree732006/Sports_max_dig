@@ -32,7 +32,7 @@ import { SportVideoSubmission } from "@/components/sport-video-submission";
 export const Route = createFileRoute("/sports/football")({
   head: () => ({
     meta: [
-      { title: "Football / Soccer Tactical Intelligence — SportsMax" },
+      { title: "Football / Soccer Tactical Intelligence — SportsVectors" },
       {
         name: "description",
         content:
@@ -53,11 +53,11 @@ const xGProgression = [
 ];
 
 const matchEvents = [
-  { minute: "14'", event: "Shot on Target", player: "M. Sterling", xG: "0.24", team: "SportsMax FC", type: "threat" },
-  { minute: "32'", event: "High Press Turnover", player: "K. De Jong", xG: "—", team: "SportsMax FC", type: "defense" },
-  { minute: "41'", event: "GOAL (Header)", player: "L. Martinez", xG: "0.54", team: "SportsMax FC", type: "goal" },
+  { minute: "14'", event: "Shot on Target", player: "M. Sterling", xG: "0.24", team: "SportsVectors FC", type: "threat" },
+  { minute: "32'", event: "High Press Turnover", player: "K. De Jong", xG: "—", team: "SportsVectors FC", type: "defense" },
+  { minute: "41'", event: "GOAL (Header)", player: "L. Martinez", xG: "0.54", team: "SportsVectors FC", type: "goal" },
   { minute: "58'", event: "Counter-Attack Shot", player: "Opponent Fwd", xG: "0.38", team: "Opponent", type: "opponent" },
-  { minute: "72'", event: "GOAL (Open Play)", player: "E. Fernandez", xG: "0.71", team: "SportsMax FC", type: "goal" },
+  { minute: "72'", event: "GOAL (Open Play)", player: "E. Fernandez", xG: "0.71", team: "SportsVectors FC", type: "goal" },
 ];
 
 export function FootballSportPage() {
@@ -87,7 +87,7 @@ export function FootballSportPage() {
           {/* Match Scoreboard and KPIs */}
           <SectionHead
             eyebrow="Match Analysis"
-            title="SportsMax FC 2 — 0 Capital City"
+            title="SportsVectors FC 2 — 0 Capital City"
             text="Premier League Division 1 · Opta & Computer Vision Synchronized Feeds"
             action={
               <Button asChild size="sm">
@@ -265,7 +265,7 @@ export function FootballSportPage() {
             {/* xG Cumulative Line Chart */}
             <LineChartCard
               title="Cumulative Expected Goals (xG)"
-              subtitle="SportsMax FC (Green) vs Capital City (Blue)"
+              subtitle="SportsVectors FC (Green) vs Capital City (Blue)"
               data={xGProgression}
               keys={["performance", "consistency"]}
               unit=" xG"

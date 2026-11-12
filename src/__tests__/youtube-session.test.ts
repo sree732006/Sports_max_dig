@@ -32,20 +32,20 @@ test("validateAdminPassword uses constant time check", () => {
 });
 
 test("validateCsrfOrigin validates origin matching host", () => {
-  const validReq = new Request("https://sports-max-dig.vercel.app/api/youtube/auth/login", {
+  const validReq = new Request("https://sportsvectors.tech/api/youtube/auth/login", {
     method: "POST",
     headers: {
-      origin: "https://sports-max-dig.vercel.app",
-      host: "sports-max-dig.vercel.app",
+      origin: "https://sportsvectors.tech",
+      host: "sportsvectors.tech",
     },
   });
   assert.equal(validateCsrfOrigin(validReq), true);
 
-  const maliciousReq = new Request("https://sports-max-dig.vercel.app/api/youtube/auth/login", {
+  const maliciousReq = new Request("https://sportsvectors.tech/api/youtube/auth/login", {
     method: "POST",
     headers: {
       origin: "https://evil-hacker.com",
-      host: "sports-max-dig.vercel.app",
+      host: "sportsvectors.tech",
     },
   });
   assert.equal(validateCsrfOrigin(maliciousReq), false);

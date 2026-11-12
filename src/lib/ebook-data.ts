@@ -1,16 +1,16 @@
 /**
- * SportsMax e-book metadata and chapter structure
+ * SportsVectors e-book metadata and chapter structure
  */
 
 export const EBOOK_META = {
-  title: "SportsMax: Full-Spectrum Sports AI Engineering & Performance Intelligence",
+  title: "SportsVectors: Full-Spectrum Sports AI Engineering & Performance Intelligence",
   subtitle: "Architectural Foundations, Computer Vision Kinematics, Predictive Biometrics, and Enterprise Sports Tech",
   edition: "2026 Reference Edition · Comprehensive 45-Page Technical Treatise",
-  author: "SportsMax Engineering Labs & Sports Science Directorate",
-  organization: "SportsMax Performance Systems",
+  author: "SportsVectors Engineering Labs & Sports Science Directorate",
+  organization: "SportsVectors Performance Systems",
   publicationDate: "November 2026",
   license: "Enterprise Technical Whitepaper & Field Guide",
-  url: "https://sports-max-dig.vercel.app/",
+  url: "https://sportsvectors.tech/",
   targetPages: "40-50 Pages",
   formatting: {
     font: "Times New Roman (Standard Adobe Type-1 Times-Roman / Times-Bold / Times-Italic)",

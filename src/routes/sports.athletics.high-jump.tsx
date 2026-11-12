@@ -28,7 +28,7 @@ import {
 export const Route = createFileRoute("/sports/athletics/high-jump")({
   head: () => ({
     meta: [
-      { title: "High Jump & Athletics Intelligence — SportsMax" },
+      { title: "High Jump & Athletics Intelligence — SportsVectors" },
       {
         name: "description",
         content:

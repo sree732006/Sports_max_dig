@@ -55,7 +55,7 @@ export const Route = createFileRoute("/sports/")({
   },
   head: () => ({
     meta: [
-      { title: "All Sports Directory & Intelligence — SportsMax" },
+      { title: "All Sports Directory & Intelligence — SportsVectors" },
       {
         name: "description",
         content:

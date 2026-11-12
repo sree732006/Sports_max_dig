@@ -46,7 +46,7 @@ export const Route = createFileRoute("/coaches")({
   },
   head: () => ({
     meta: [
-      { title: "Coaching Services & Squad Load Governance — SportsMax" },
+      { title: "Coaching Services & Squad Load Governance — SportsVectors" },
       {
         name: "description",
         content:
@@ -159,7 +159,7 @@ export function CoachesPage() {
               <div className="relative overflow-hidden rounded-2xl border border-border shadow-xl bg-card">
                 <img
                   src={arenaImage}
-                  alt="SportsMax Tactical Arena and Squad Management"
+                  alt="SportsVectors Tactical Arena and Squad Management"
                   className="w-full h-[320px] object-cover object-center filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent flex flex-col justify-end p-6 md:p-8">
@@ -402,7 +402,7 @@ export function CoachesPage() {
                 Explore Olympic &amp; Elite National Programs
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Discover how National Olympic Committees and elite academies scale SportsMax across multi-sport quadrennials.
+                Discover how National Olympic Committees and elite academies scale SportsVectors across multi-sport quadrennials.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Button size="lg" asChild>

@@ -5,13 +5,13 @@ import { CustomerJourneyMap } from "@/components/customer-journey-map";
 export const Route = createFileRoute("/customer-journey")({
   head: () => ({
     meta: [
-      { title: "Customer Journey & Funnel Map — SportsMax" },
+      { title: "Customer Journey & Funnel Map — SportsVectors" },
       {
         name: "description",
         content:
           "End-to-end customer journey lifecycle mapping for elite sports clubs, NCAA programs, national Olympic federations, and schools.",
       },
-      { property: "og:title", content: "Customer Journey — SportsMax" },
+      { property: "og:title", content: "Customer Journey — SportsVectors" },
       {
         property: "og:description",
         content: "Interactive customer lifecycle and conversion funnel mapping.",
@@ -27,7 +27,7 @@ function CustomerJourneyPage() {
     <>
       <PageIntro
         eyebrow="Commercial & Telemetry Lifecycle"
-        title="SportsMax Customer Journey."
+        title="SportsVectors Customer Journey."
         text="Follow the 6-stage lifecycle from initial awareness and SPICED segment evaluation to technical PWA trial, enterprise activation, and long-term Olympic impact."
       />
       <section className="py-10">

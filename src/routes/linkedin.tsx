@@ -16,19 +16,19 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { ConnectWithSportsMax } from "@/components/connect-with-sportsmax";
+import { ConnectWithSportsVectors } from "@/components/connect-with-sportsvectors";
 import { Eyebrow, PageIntro } from "@/components/sports-ui";
 
 export const Route = createFileRoute("/linkedin")({
   head: () => ({
     meta: [
-      { title: "SportsMax — Sports Intelligence for Your Organization" },
+      { title: "SportsVectors — Sports Intelligence for Your Organization" },
       {
         name: "description",
         content:
-          "Connect with SportsMax to unlock advanced sports analytics, athlete performance tracking, tactical analysis, and data-driven coaching intelligence for your team or federation.",
+          "Connect with SportsVectors to unlock advanced sports analytics, athlete performance tracking, tactical analysis, and data-driven coaching intelligence for your team or federation.",
       },
-      { property: "og:title", content: "SportsMax — Sports Intelligence Platform" },
+      { property: "og:title", content: "SportsVectors — Sports Intelligence Platform" },
       {
         property: "og:description",
         content:
@@ -95,7 +95,7 @@ function LinkedInLandingPage() {
       <PageIntro
         eyebrow="Welcome from LinkedIn"
         title="Sports Intelligence, Engineered for Performance"
-        text="You're here because performance matters. SportsMax delivers AI-powered analytics, biomechanical insights, and tactical intelligence trusted by coaches, federations, and sports organizations worldwide."
+        text="You're here because performance matters. SportsVectors delivers AI-powered analytics, biomechanical insights, and tactical intelligence trusted by coaches, federations, and sports organizations worldwide."
       />
 
       {/* Trust Metrics Bar */}
@@ -141,12 +141,12 @@ function LinkedInLandingPage() {
       {/* Capabilities Grid */}
       <section className="py-14 bg-background">
         <div className="content-wrap">
-          <Eyebrow>What SportsMax Delivers</Eyebrow>
+          <Eyebrow>What SportsVectors Delivers</Eyebrow>
           <h2 className="text-balance text-2xl font-semibold sm:text-3xl text-foreground mb-3">
             End-to-End Sports Intelligence Platform
           </h2>
           <p className="max-w-2xl text-sm leading-6 text-muted-foreground mb-10">
-            From wearable sensor data to tactical video analysis, SportsMax integrates every performance signal into a unified intelligence layer.
+            From wearable sensor data to tactical video analysis, SportsVectors integrates every performance signal into a unified intelligence layer.
           </p>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -199,7 +199,7 @@ function LinkedInLandingPage() {
 
       {/* Main Lead Capture Form — Reuses existing component */}
       <div id="connect-form">
-        <ConnectWithSportsMax />
+        <ConnectWithSportsVectors />
       </div>
 
       {/* Trust & Compliance Section */}
@@ -232,7 +232,7 @@ function LinkedInLandingPage() {
               </span>
               <h3 className="font-display font-bold text-base text-foreground mt-2">Tailored Solutions</h3>
               <p className="text-xs leading-relaxed text-muted-foreground">
-                Whether you're an individual coach, a university program, or a professional sports franchise — we configure SportsMax to your exact requirements.
+                Whether you're an individual coach, a university program, or a professional sports franchise — we configure SportsVectors to your exact requirements.
               </p>
             </div>
           </div>
@@ -243,14 +243,14 @@ function LinkedInLandingPage() {
                 <Linkedin className="h-4 w-4" />
               </span>
               <div>
-                <h4 className="text-xs font-bold text-foreground">Follow SportsMax on LinkedIn</h4>
+                <h4 className="text-xs font-bold text-foreground">Follow SportsVectors on LinkedIn</h4>
                 <p className="text-xs text-muted-foreground">
                   Stay updated with the latest in sports intelligence, product updates, and industry insights.
                 </p>
               </div>
             </div>
             <a
-              href="https://www.linkedin.com/company/sportsmax-intelligence"
+              href="https://www.linkedin.com/company/sportsvectors-intelligence"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border border-[#0A66C2]/20 bg-[#0A66C2]/10 px-4 py-2 text-xs font-semibold text-[#0A66C2] hover:bg-[#0A66C2]/20 transition-colors"

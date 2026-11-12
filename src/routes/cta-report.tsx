@@ -33,13 +33,13 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/cta-report")({
   head: () => ({
     meta: [
-      { title: "CTA Reports Hub — SportsMax" },
+      { title: "CTA Reports Hub — SportsVectors" },
       {
         name: "description",
         content:
-          "Consolidated CTA Reports hub: Quick Form submissions, Long Form contact leads, supporting documents, Airtable reports, and Jira task-tracking records for SportsMax.",
+          "Consolidated CTA Reports hub: Quick Form submissions, Long Form contact leads, supporting documents, Airtable reports, and Jira task-tracking records for SportsVectors.",
       },
-      { property: "og:title", content: "CTA Reports Hub — SportsMax" },
+      { property: "og:title", content: "CTA Reports Hub — SportsVectors" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/cta-report" }],
@@ -284,7 +284,7 @@ function LongFormSection({ sheetsData, sheetsState }: { sheetsData: SheetsDashbo
           <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
           <p className="text-xs text-muted-foreground leading-relaxed">
             CTA Long Form submissions are contact inquiries filled via the{" "}
-            <strong className="text-foreground">Connect with SportsMax</strong> form (Name, Email, Organisation, Sport, Requirement).
+            <strong className="text-foreground">Connect with SportsVectors</strong> form (Name, Email, Organisation, Sport, Requirement).
             Each submission lands in the <strong className="text-foreground">Contact_Leads</strong> tab with a unique{" "}
             <code className="font-mono text-[11px] bg-secondary px-1 rounded">LD-xxxxxx</code> lead number.
             Individual records are not shown here to protect personal data; use Google Sheets directly to review leads.
@@ -460,7 +460,7 @@ function JiraSection({ onDataLoaded }: { onDataLoaded?: (data: JiraResult | null
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `sportsmax-jira-${new Date().toISOString().split("T")[0]}.csv`;
+    a.download = `sportsvectors-jira-${new Date().toISOString().split("T")[0]}.csv`;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };

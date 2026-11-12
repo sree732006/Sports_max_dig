@@ -39,7 +39,7 @@ export const Route = createFileRoute("/ecosystem")({
   },
   head: () => ({
     meta: [
-      { title: "Olympic Programs & Full-Spectrum Sports Ecosystem — SportsMax" },
+      { title: "Olympic Programs & Full-Spectrum Sports Ecosystem — SportsVectors" },
       {
         name: "description",
         content:
@@ -65,7 +65,7 @@ export function EcosystemPage() {
       <PageIntro
         eyebrow="Solutions · Olympic &amp; Elite Programs"
         title="Unifying the Global High-Performance Sporting Ecosystem"
-        text="From Olympic podium trajectories and national governing federations down to coaching staffs and community runners, SportsMax establishes a sovereign, high-precision performance currency."
+        text="From Olympic podium trajectories and national governing federations down to coaching staffs and community runners, SportsVectors establishes a sovereign, high-precision performance currency."
         action={
           <div className="flex flex-col items-end gap-3">
             <DemoBadge />

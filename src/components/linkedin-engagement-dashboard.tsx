@@ -39,25 +39,25 @@ export interface LinkedInEngagementRecord {
 }
 
 const DEFAULT_POST_URL =
-  "https://www.linkedin.com/posts/sportsanalytics_sportsmax-sportsanalytics-sportstech-activity-7515635590776750080-yFT_";
+  "https://www.linkedin.com/posts/sportsanalytics_sportsvectors-sportsanalytics-sportstech-activity-7515635590776750080-yFT_";
 
 const INITIAL_RECORDS: LinkedInEngagementRecord[] = [
   {
     id: "li_rec_1",
-    postTitle: "SportsMax AI Telemetry & Tactical Intelligence Launch",
+    postTitle: "SportsVectors AI Telemetry & Tactical Intelligence Launch",
     postUrl: DEFAULT_POST_URL,
     date: "2026-10-14",
     totalLikes: 14,
     impressions: 480,
     commenterName: "David Sterling",
     commenterProfileUrl: "https://www.linkedin.com/in/david-sterling-analytics",
-    commentText: "Impressive kinematic models! Can SportsMax track sprint speed profiles from broadcast camera feeds?",
+    commentText: "Impressive kinematic models! Can SportsVectors track sprint speed profiles from broadcast camera feeds?",
     commentLikes: 3,
     commentDate: "2026-10-14",
   },
   {
     id: "li_rec_2",
-    postTitle: "SportsMax AI Telemetry & Tactical Intelligence Launch",
+    postTitle: "SportsVectors AI Telemetry & Tactical Intelligence Launch",
     postUrl: DEFAULT_POST_URL,
     date: "2026-10-14",
     totalLikes: 14,
@@ -77,7 +77,7 @@ export function LinkedInEngagementDashboard() {
   const [syncStatus, setSyncStatus] = useState<{ success: boolean; message: string } | null>(null);
 
   // Form Fields
-  const [postTitle, setPostTitle] = useState("SportsMax Launch — Sports Analytics & Intelligence");
+  const [postTitle, setPostTitle] = useState("SportsVectors Launch — Sports Analytics & Intelligence");
   const [postUrl, setPostUrl] = useState(DEFAULT_POST_URL);
   const [totalLikes, setTotalLikes] = useState("14");
   const [impressions, setImpressions] = useState("480");

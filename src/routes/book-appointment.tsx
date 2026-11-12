@@ -6,11 +6,11 @@ import { DemoBadge, PageIntro } from "@/components/sports-ui";
 export const Route = createFileRoute("/book-appointment")({
   head: () => ({
     meta: [
-      { title: "Book Appointment — SportsMax High-Performance Consultation" },
+      { title: "Book Appointment — SportsVectors High-Performance Consultation" },
       {
         name: "description",
         content:
-          "Schedule a 1-on-1 performance consultation with SportsMax sports scientists and tactical analysts.",
+          "Schedule a 1-on-1 performance consultation with SportsVectors sports scientists and tactical analysts.",
       },
     ],
   }),

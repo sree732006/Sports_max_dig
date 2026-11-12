@@ -1,6 +1,6 @@
 
 /**
- * SportsMax Security Controller
+ * SportsVectors Security Controller
  * Shared security helpers for server-side API endpoints.
  */
 

@@ -9,7 +9,7 @@ import {
 export const Route = createFileRoute("/icp")({
   head: () => ({
     meta: [
-      { title: "ICP & Solutions — SportsMax Intelligence Hub" },
+      { title: "ICP & Solutions — SportsVectors Intelligence Hub" },
       { name: "description", content: "SPICED-framework solutions for Elite Clubs, NCAA programs, National Federations, Elite Athletes, and Broadcasters." },
     ],
   }),
@@ -30,7 +30,7 @@ const ICP_DATA = [
       pain: { icon: AlertTriangle, label: "Pain", color: "text-amber-400", heading: "Your rivals are seeing what you're missing.", body: "Without automated biomechanical tracking, you're guessing at soft-tissue load — and the guesses are expensive. Every sprint miscounted is a hamstring waiting to tear. Manual review can't scale to multi-camera setups, and wearable data is siloed, incomplete, and GDPR-constrained." },
       impact: { icon: TrendingUp, label: "Impact", color: "text-red-400", heading: "The cost of inaction compounds every match week.", body: "One avoidable ACL injury costs a club €500K–€2M in wages, treatment, and squad disruption — per incident. Clubs that rely on manual analysis fall 12–18 months behind peers who automate — a gap that shows up directly in league table position and transfer market valuation." },
       critical: { icon: Timer, label: "Critical Event", color: "text-orange-400", heading: "Transfer windows and pre-season camps won't wait.", body: "The January window opens in 8 weeks. Squad validation decisions must be backed by verified performance metrics, not gut feel. Pre-season infrastructure must be locked in before the first session. Teams that delay onboarding miss 6–8 weeks of baseline data that shapes the entire season model." },
-      decision: { icon: CheckCircle2, label: "Decision", color: "text-emerald-400", heading: "Activate SportsMax Match Suite™ this week.", body: "SportsMax ingests your existing camera feeds — no new hardware — and delivers automated pitch control models, ACWR load scores, passing network maps, and injury-risk alerts within 24 hours of each session. Onboarding takes 48 hours. ROI is measurable by week 3.", cta: { label: "Book a Club Demo", href: "/book-appointment" } },
+      decision: { icon: CheckCircle2, label: "Decision", color: "text-emerald-400", heading: "Activate SportsVectors Match Suite™ this week.", body: "SportsVectors ingests your existing camera feeds — no new hardware — and delivers automated pitch control models, ACWR load scores, passing network maps, and injury-risk alerts within 24 hours of each session. Onboarding takes 48 hours. ROI is measurable by week 3.", cta: { label: "Book a Club Demo", href: "/book-appointment" } },
     },
     outcomes: [
       { metric: "70%", desc: "Reduction in analyst prep time" },
@@ -52,7 +52,7 @@ const ICP_DATA = [
       pain: { icon: AlertTriangle, label: "Pain", color: "text-amber-400", heading: "You're recruiting blind and recovering slow.", body: "Recruiting film analysis is manual and subjective. Objective metrics — sprint velocity, deceleration signatures, jump kinematics — are unavailable without expensive hardware your budget won't allow. Athlete recovery decisions are based on feel, not data." },
       impact: { icon: TrendingUp, label: "Impact", color: "text-red-400", heading: "Lost scholarships, lost seasons, lost recruits.", body: "A single misidentified recruit costs $100K+ in scholarship over four years. Programs that can't show objective performance metrics to blue-chip recruits lose them to data-equipped rivals. Injury-driven roster gaps average 2.3 athletes per team per season." },
       critical: { icon: Timer, label: "Critical Event", color: "text-orange-400", heading: "Early signing period and fall camp converge in 60 days.", body: "The early signing window opens alongside fall camp evaluations. You need objective performance baselines for current athletes and verifiable film metrics for prospects simultaneously. Programs that enter this window with AI-verified data close 40% more verbal commits." },
-      decision: { icon: CheckCircle2, label: "Decision", color: "text-blue-400", heading: "Deploy SportsMax Collegiate Edition before fall camp.", body: "SportsMax Collegiate Edition connects to any existing camera setup — even standard iPhone rigs — to deliver automated sprint tracking, joint-angle biomechanics, and recruit comparison profiles. No hardware purchase. Full activation in 72 hours.", cta: { label: "Request NCAA Pricing", href: "/pricing" } },
+      decision: { icon: CheckCircle2, label: "Decision", color: "text-blue-400", heading: "Deploy SportsVectors Collegiate Edition before fall camp.", body: "SportsVectors Collegiate Edition connects to any existing camera setup — even standard iPhone rigs — to deliver automated sprint tracking, joint-angle biomechanics, and recruit comparison profiles. No hardware purchase. Full activation in 72 hours.", cta: { label: "Request NCAA Pricing", href: "/pricing" } },
     },
     outcomes: [
       { metric: "40%", desc: "Improvement in recruit commit rate" },
@@ -74,7 +74,7 @@ const ICP_DATA = [
       pain: { icon: AlertTriangle, label: "Pain", color: "text-red-400", heading: "Olympic cycle windows close before your data arrives.", body: "Building a 4-year athlete development plan requires longitudinal biomechanical and load data. Without it, selection decisions rely on coaching committees and political pressure rather than merit. WADA compliance documentation is manual and audit-prone." },
       impact: { icon: TrendingUp, label: "Impact", color: "text-red-400", heading: "Medals lost to data gaps your rivals have already closed.", body: "Nations with centralised performance data systems win 2.7× more medals per athlete compared to fragmented systems (Oxford Sports Analytics, 2023). Every 4-year cycle without a data platform is a generation of athletes developed below their ceiling." },
       critical: { icon: Timer, label: "Critical Event", color: "text-orange-400", heading: "LA 2028 qualification windows open in 18 months.", body: "Olympic qualification periods for LA 2028 begin in early 2027. Athletes competing in qualification events need longitudinal baseline data established now to demonstrate performance trajectory. Federations that begin now will have 3 full competitive seasons of evidence." },
-      decision: { icon: CheckCircle2, label: "Decision", color: "text-amber-400", heading: "Deploy SportsMax Federation Edition across your affiliated clubs.", body: "SportsMax Federation Edition provides a centralised dashboard for your high-performance directorate while giving affiliated clubs an autonomous local view. One platform. 12+ sports modules. WADA ADAMS ledger integration. GDPR-sovereign data enclave.", cta: { label: "Schedule Federation Briefing", href: "/book-appointment" } },
+      decision: { icon: CheckCircle2, label: "Decision", color: "text-amber-400", heading: "Deploy SportsVectors Federation Edition across your affiliated clubs.", body: "SportsVectors Federation Edition provides a centralised dashboard for your high-performance directorate while giving affiliated clubs an autonomous local view. One platform. 12+ sports modules. WADA ADAMS ledger integration. GDPR-sovereign data enclave.", cta: { label: "Schedule Federation Briefing", href: "/book-appointment" } },
     },
     outcomes: [
       { metric: "2.7x", desc: "More medals per athlete in centralised data systems" },
@@ -96,7 +96,7 @@ const ICP_DATA = [
       pain: { icon: AlertTriangle, label: "Pain", color: "text-amber-400", heading: "Your career value disappears when you leave a club.", body: "When a player transfers, their performance data stays with the selling club. The buying club runs their own tests — often undervaluing players who don't perform optimally on evaluation day. Post-injury return timelines are disputed because there's no objective biomechanical baseline." },
       impact: { icon: TrendingUp, label: "Impact", color: "text-red-400", heading: "Millions left on the table. Recoveries delayed by guesswork.", body: "Players with portable, verified performance profiles command 12–22% higher transfer fees. Without injury-baseline data, insurance claims and return-to-play disputes add 4–8 weeks to recovery timelines — $250K+ in lost earnings per incident, plus reputational cost." },
       critical: { icon: Timer, label: "Critical Event", color: "text-orange-400", heading: "Your contract window is open — and closes in 6 months.", body: "Whether you're pre-transfer, mid-season, or approaching free agency, the window to establish a verified performance baseline is now. Data collected over a 3-month continuous period creates a statistically defensible performance profile that wins negotiations." },
-      decision: { icon: CheckCircle2, label: "Decision", color: "text-emerald-400", heading: "Claim your SportsMax Athlete Passport™ today.", body: "SportsMax Athlete Passport™ is your personal, portable, club-independent performance profile — continuously updated from video, verified by AI, and timestamped on an immutable data ledger. Share it with any club, agent, federation, or insurer instantly.", cta: { label: "Claim Your Athlete Passport", href: "/athletes" } },
+      decision: { icon: CheckCircle2, label: "Decision", color: "text-emerald-400", heading: "Claim your SportsVectors Athlete Passport™ today.", body: "SportsVectors Athlete Passport™ is your personal, portable, club-independent performance profile — continuously updated from video, verified by AI, and timestamped on an immutable data ledger. Share it with any club, agent, federation, or insurer instantly.", cta: { label: "Claim Your Athlete Passport", href: "/athletes" } },
     },
     outcomes: [
       { metric: "22%", desc: "Higher transfer fees for data-profiled athletes" },
@@ -118,7 +118,7 @@ const ICP_DATA = [
       pain: { icon: AlertTriangle, label: "Pain", color: "text-amber-400", heading: "Flat viewership, dropping dwell time, rising rights costs.", body: "Average dwell time on linear sports broadcasts has dropped 19% in 4 years (Nielsen, 2024). Without interactive data layers — real-time xG, heat maps, win probability, player speed overlays — audiences switch to platforms that offer them. Manual highlight production takes 4–6 hours, missing the peak social sharing window." },
       impact: { icon: TrendingUp, label: "Impact", color: "text-red-400", heading: "Lower CPM, churn risk, and sponsor dissatisfaction.", body: "Sponsor retention hinges on audience engagement metrics. A 20% drop in dwell time translates directly to reduced CPM rates and sponsor fee renegotiations. OTT churn accelerates when subscribers can't get the second-screen data experience they pay for." },
       critical: { icon: Timer, label: "Critical Event", color: "text-orange-400", heading: "New season broadcast rights renew in Q1 — sponsors want proof.", body: "Rights-holders and title sponsors are requesting data-augmented broadcast commitments in contract renewals. Platforms that cannot demonstrate AI-enriched content pipelines are losing preferred partner status. The new season is 12 weeks away." },
-      decision: { icon: CheckCircle2, label: "Decision", color: "text-purple-400", heading: "Integrate SportsMax Broadcast Intelligence API™.", body: "SportsMax Broadcast Intelligence API™ plugs directly into your existing production stack — OBS, Vizrt, AWS Elemental — to stream real-time AI overlays: player tracking, xG, win probability, formation maps. Highlight clips auto-generated within 90 seconds of each key event.", cta: { label: "Request Broadcast API Access", href: "/book-appointment" } },
+      decision: { icon: CheckCircle2, label: "Decision", color: "text-purple-400", heading: "Integrate SportsVectors Broadcast Intelligence API™.", body: "SportsVectors Broadcast Intelligence API™ plugs directly into your existing production stack — OBS, Vizrt, AWS Elemental — to stream real-time AI overlays: player tracking, xG, win probability, formation maps. Highlight clips auto-generated within 90 seconds of each key event.", cta: { label: "Request Broadcast API Access", href: "/book-appointment" } },
     },
     outcomes: [
       { metric: "90 sec", desc: "Auto-generated highlight clips post-event" },
@@ -175,7 +175,7 @@ export function ICPPage() {
             <span className="block text-emerald-400">Not the sport in general.</span>
           </h1>
           <p className="text-slate-400 text-lg max-w-2xl mb-10">
-            Every customer segment faces a distinct situation, distinct pain, and distinct urgency. Select your profile below to see exactly how SportsMax delivers measurable value for your role, your constraints, and your timeline.
+            Every customer segment faces a distinct situation, distinct pain, and distinct urgency. Select your profile below to see exactly how SportsVectors delivers measurable value for your role, your constraints, and your timeline.
           </p>
           <div className="flex flex-wrap gap-2">
             {ICP_DATA.map((item, i) => {
@@ -326,7 +326,7 @@ export function ICPPage() {
               <div className="flex-1">
                 <div className="text-xs font-bold text-white mb-1">Not sure which solution fits?</div>
                 <div className="text-xs text-slate-400">
-                  Book a 30-minute discovery call. We&apos;ll map the right SportsMax module to your specific workflow, budget, and timeline — no sales pitch, just signal.
+                  Book a 30-minute discovery call. We&apos;ll map the right SportsVectors module to your specific workflow, budget, and timeline — no sales pitch, just signal.
                 </div>
               </div>
               <Link

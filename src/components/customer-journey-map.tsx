@@ -57,7 +57,7 @@ export function CustomerJourneyMap() {
       stage,
       action,
       touchpoint,
-      source: "SportsMax Interactive Map",
+      source: "SportsVectors Interactive Map",
       timeSpentSeconds: Math.floor(Math.random() * 240) + 60,
       dropOffRisk: stage === "Decision" ? "Moderate" : "Low",
       timestamp: new Date().toISOString(),
@@ -81,7 +81,7 @@ export function CustomerJourneyMap() {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base font-bold text-foreground">
-                  SportsMax Customer Journey Lifecycle
+                  SportsVectors Customer Journey Lifecycle
                 </h2>
                 <span className="text-[10px] font-mono uppercase bg-primary/15 text-primary border border-primary/30 px-2 py-0.5 rounded-full font-bold">
                   6-Stage Architecture

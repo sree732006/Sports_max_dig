@@ -32,7 +32,7 @@ export function PwaSportsBasicConfigPhysical() {
   const { user } = useAuth();
   const athleteId = user?.id || "athlete_mobile_user";
   const athleteName = user?.name || "Olympic Athlete";
-  const email = user?.email || "athlete@sportsmax.org";
+  const email = user?.email || "athlete@sportsvectors.org";
 
   const [activeTab, setActiveTab] = useState("anthropometrics");
   const [config, setConfig] = useState<AthletePhysicalConfig>(() =>

@@ -27,7 +27,7 @@ import {
 export const Route = createFileRoute("/sports/swimming")({
   head: () => ({
     meta: [
-      { title: "Swimming Analytics & SWOLF Telemetry — SportsMax" },
+      { title: "Swimming Analytics & SWOLF Telemetry — SportsVectors" },
       {
         name: "description",
         content:
@@ -66,7 +66,7 @@ export function SwimmingSportPage() {
       <PageIntro
         eyebrow="Individual Sports · Swimming"
         title="Aquatics & Biomechanical SWOLF Intelligence"
-        text="Measure stroke velocity, flip-turn breakout speed, and hydrodynamic efficiency. SportsMax tracks micro-intervals across 50m Olympic and 25m short-course pools."
+        text="Measure stroke velocity, flip-turn breakout speed, and hydrodynamic efficiency. SportsVectors tracks micro-intervals across 50m Olympic and 25m short-course pools."
         action={
           <div className="flex flex-col items-end gap-3">
             <DemoBadge />
